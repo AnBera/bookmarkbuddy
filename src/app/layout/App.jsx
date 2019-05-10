@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react'
+import BookmarkDashboard from '../../features/BookmarkDashboard/BookmarkDashboard';
 
 function App() {
   return (
     <div className="App">
       Bookmarkbuddy React
-      <br/>
-      <Button icon="smile" content="Test semantic Ui"/>
+      <BookmarkDashboard />
     </div>
   );
 }
