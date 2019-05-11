@@ -1,10 +1,11 @@
 @font-face {
-  font-family: 'Rubik';
-  src: local('Rubik'), url(./app/assets/fonts/Rubik-Medium.ttf) format('woff');
+  font-family: "Rubik";
+  src: local("Rubik"), url(./app/assets/fonts/Rubik-Medium.ttf) format("woff");
 }
 @font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat'), url(./app/assets/fonts/Montserrat-Regular.ttf) format('woff');
+  font-family: "Montserrat";
+  src: local("Montserrat"),
+    url(./app/assets/fonts/Montserrat-Regular.ttf) format("woff");
 }
 
 body {
@@ -17,7 +18,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body, a, a:hover {
+body,
+a,
+a:hover {
   color: #fff;
 }
 
@@ -38,12 +41,18 @@ code {
 .ui.cards > .card .meta {
   color: #fff;
   font-size: 0.85em;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: bold;
+  margin-top: 0.5em;
 }
 
+/* div::first-letter {
+  -webkit-initial-letter: 2;
+  initial-letter: 2;
+} */
+
 .ui.card .url-heading {
-  font-family: 'Rubik';
+  font-family: "Rubik";
   font-size: 1.25em;
 }
 

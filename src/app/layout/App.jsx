@@ -1,5 +1,5 @@
-import React from 'react';
-import BookmarkDashboard from '../../features/BookmarkDashboard/BookmarkDashboard';
+import React from "react";
+import BookmarkDashboard from "../../features/BookmarkDashboard/BookmarkDashboard";
 
 function App() {
   return (
