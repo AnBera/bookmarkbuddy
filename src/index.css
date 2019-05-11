@@ -1,15 +1,53 @@
+@font-face {
+  font-family: 'Rubik';
+  src: local('Rubik'), url(./app/assets/fonts/Rubik-Medium.ttf) format('woff');
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(./app/assets/fonts/Montserrat-Regular.ttf) format('woff');
+}
+
 body {
-  background-color: #282c34;
+  background-color: #161626;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body, a, a:hover {
+  color: #fff;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.ui.card,
+.ui.cards > .card {
+  background-color: #282c34;
+  -moz-box-shadow: inset 0 0 25px #33373f;
+  -webkit-box-shadow: inset 0 0 25px #33373f;
+  box-shadow: inset 0 0 25px #33373f;
+}
+
+.ui.card .meta,
+.ui.cards > .card .meta {
+  color: #fff;
+  font-size: 0.85em;
+  font-family: 'Montserrat';
+  font-weight: bold;
+}
+
+.ui.card .url-heading {
+  font-family: 'Rubik';
+  font-size: 1.25em;
+}
+
+.ui.label {
+  background-color: #393939;
+  color: #efefef;
 }

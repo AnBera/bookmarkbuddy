@@ -14,7 +14,7 @@ class BookmarkCard extends Component {
                 src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
               />
               {/* use onclick to filter */}
-              <div>
+              <div className="url-heading">
                 <Icon name="user" />
                 Linkedin
               </div>
