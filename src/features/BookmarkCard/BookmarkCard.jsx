@@ -1,12 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Grid, Segment } from 'semantic-ui-react';
 
 class BookmarkCard extends Component {
   render() {
     return (
-      <div>
-        Actual cards will be shown here...
-      </div>
-    )
+      <>
+        <Grid.Column>
+          <Segment>Content...</Segment>
+        </Grid.Column>
+        {/* <Grid.Column>
+          <Segment>Content</Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>Content</Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>Content</Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>Content</Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>Content</Segment>
+        </Grid.Column> */}
+      </>
+    );
   }
 }
 

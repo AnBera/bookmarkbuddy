@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 
 class BookmarkDashboard extends Component {
   render() {
     return (
-      <Grid>
-        <Grid.Column width={16}>
-          <BookmarkCard />
-        </Grid.Column>
+      <Grid container columns={3} doubling stackable>
+        <BookmarkCard />
+        <BookmarkCard />
       </Grid>
     );
   }
