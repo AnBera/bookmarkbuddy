@@ -5,7 +5,12 @@ import BookmarkCard from "../BookmarkCard/BookmarkCard";
 class BookmarkDashboard extends Component {
   render() {
     return (
-      <Grid container columns={4} doubling stackable>
+      <Grid container columns={3} doubling stackable>
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
         <BookmarkCard />
         <BookmarkCard />
         <BookmarkCard />
