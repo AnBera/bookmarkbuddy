@@ -17,7 +17,7 @@ class BookmarkDashboard extends Component {
   }
 
   getBookmarks = () => {
-    console.log("new2 getbookmark-called");
+    console.log("new4 getbookmark-called");
     let flattenedBookmarks = [];
     chrome.bookmarks.getTree(treeNode => {
       flattenNode(treeNode[0], flattenedBookmarks);
@@ -29,7 +29,7 @@ class BookmarkDashboard extends Component {
     return (
       <Grid container columns={3} doubling stackable>
         {this.state.bookmarks.map(bookmark =>
-          <BookmarkCard bookmark={bookmark} />
+          <BookmarkCard key={bookmark.id} bookmark={bookmark} />
         )}
       </Grid>
     );
