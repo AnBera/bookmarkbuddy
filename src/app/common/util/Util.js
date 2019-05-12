@@ -1,4 +1,4 @@
-import Bookmark from "../class/Bookmark";
+import Bookmark from "../model/Bookmark";
 
 export const flattenNode = (node, result) => {
   if (node.children) {

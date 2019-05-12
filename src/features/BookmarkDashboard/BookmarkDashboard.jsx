@@ -17,7 +17,7 @@ class BookmarkDashboard extends Component {
   }
 
   getBookmarks = () => {
-    console.log("new1 getbookmark-called");
+    console.log("new2 getbookmark-called");
     let flattenedBookmarks = [];
     chrome.bookmarks.getTree(treeNode => {
       flattenNode(treeNode[0], flattenedBookmarks);

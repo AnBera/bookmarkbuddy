@@ -8,7 +8,7 @@ class BookmarkCard extends Component {
     return (
       <Grid.Column>
         <Card fluid>
-          <Card.Content href="https://react.semantic-ui.com/">
+          <Card.Content href={bookmark.url}>
             <Image
               floated="right"
               size="tiny"
