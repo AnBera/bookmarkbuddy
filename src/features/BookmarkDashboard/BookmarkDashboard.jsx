@@ -7,6 +7,7 @@ class BookmarkDashboard extends Component {
     return (
       <Grid container columns={3} doubling stackable>
         <BookmarkCard />
+        {/* <BookmarkCard />
         <BookmarkCard />
         <BookmarkCard />
         <BookmarkCard />
@@ -15,8 +16,7 @@ class BookmarkDashboard extends Component {
         <BookmarkCard />
         <BookmarkCard />
         <BookmarkCard />
-        <BookmarkCard />
-        <BookmarkCard />
+        <BookmarkCard /> */}
       </Grid>
     );
   }
