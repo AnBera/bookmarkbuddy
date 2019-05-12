@@ -4,7 +4,6 @@ import BookmarkDashboard from "../../features/BookmarkDashboard/BookmarkDashboar
 function App() {
   return (
     <div className="App">
-      Bookmarkbuddy React
       <BookmarkDashboard />
     </div>
   );

@@ -20,7 +20,7 @@ class BookmarkCard extends Component {
               {extractHostname(bookmark.url)}
             </div>
             <Card.Meta>{bookmark.title}</Card.Meta>
-            <Label attached="bottom right">UI/UX</Label>
+            <Label attached="bottom right">{bookmark.category}</Label>
           </Card.Content>
         </Card>
       </Grid.Column>
