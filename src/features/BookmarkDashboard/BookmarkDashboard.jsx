@@ -22,11 +22,10 @@ class BookmarkDashboard extends Component {
     chrome.bookmarks.getTree(treeNode => {
       this.flattenNode(treeNode[0], flattenedBookmarks);
       this.setState({bookmarks: flattenedBookmarks}); //TODO need to think of destructuring
-      //   console.log("=====flattened bookmarks=========");
-      //   console.log(bookmarks);
     });
   };
 
+  //TODO move it to util
   flattenNode = (node, result) => {
     if (node.children) {
       node.children.forEach(child => {
