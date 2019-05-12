@@ -60,3 +60,7 @@ code {
   background-color: #393939;
   color: #efefef;
 }
+
+.padding-right-medium {
+  padding-right: .4em;
+}

@@ -16,7 +16,7 @@ class BookmarkCard extends Component {
             />
             {/*TODO use onclick to filter */}
             <div className="url-heading">
-              <Icon name="user" />
+              <Image className="padding-right-medium" src={`chrome://favicon/${bookmark.Url}`} />
               {extractHostname(bookmark.url)}
             </div>
             <Card.Meta>{bookmark.title}</Card.Meta>
