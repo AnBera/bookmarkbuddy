@@ -36,6 +36,8 @@ export const extractHostname = url => {
   hostname = hostname.split(":")[0];
   //find & remove "?"
   hostname = hostname.split("?")[0];
+  //replace initial www.
+  hostname = hostname.replace(/^www./gi,'');
 
   return hostname;
 };
