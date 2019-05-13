@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { Component } from "react";
-import { Grid, Segment, Image } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import { flattenNode } from "../../app/common/util/Util";
 
@@ -27,24 +27,11 @@ class BookmarkDashboard extends Component {
 
   render() {
     return (
-      //   <Grid container columns="equal" stackable>
-      //     <Grid.Row>
-      //       <Grid.Column>
-      //         <Segment>1</Segment>
-      //         <Segment>1</Segment>
-      //         <Segment>1</Segment>
-      //         <Segment>2</Segment>
-      //       </Grid.Column>
-      //       <Grid.Column>
-      //         <Segment>1</Segment>
-      //         <Segment>2</Segment>
-      //       </Grid.Column>
-      //       <Grid.Column>
-      //         <Segment>1</Segment>
-      //         <Segment>1</Segment>
-      //         <Segment>2</Segment>
-      //       </Grid.Column>
-      //     </Grid.Row>
+      // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
+      //   <Grid container columns={3} doubling stackable>
+      //   {this.state.bookmarks.map(bookmark =>
+      //     <BookmarkCard key={bookmark.id} bookmark={bookmark} />
+      //   )}
       //   </Grid>
 
       <Grid container columns="equal" stackable>
