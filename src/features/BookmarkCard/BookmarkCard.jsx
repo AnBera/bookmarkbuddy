@@ -6,7 +6,7 @@ class BookmarkCard extends Component {
   render() {
     const { bookmark } = this.props;
     return (
-      <Grid.Column>
+    //   <Grid.Column>
         <Card fluid>
           <Card.Content href={bookmark.url}>
             <Image
@@ -23,7 +23,7 @@ class BookmarkCard extends Component {
             <Label attached="bottom right">{bookmark.category}</Label>
           </Card.Content>
         </Card>
-      </Grid.Column>
+    //   </Grid.Column>
     );
   }
 }
