@@ -14,7 +14,7 @@ class BookmarkCard extends Component {
             size="tiny"
             src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
           />
-          {/*TODO use onclick to filter */}
+          {/*TODO use onclick to filter based on sitename */}
           <div className="url-heading">
             <Image
               className="padding-right-medium"
