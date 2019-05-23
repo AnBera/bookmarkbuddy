@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 import { previewBookmarkService } from '../../services/PreviewBookmarkService';
 
-import * as ReduxActions from '../../redux/Actions/'
+import * as ReduxActions from '../../redux/Actions/ReduxActions'
 
 export function* previewBookmarkSaga(siteUrl) {
   try {

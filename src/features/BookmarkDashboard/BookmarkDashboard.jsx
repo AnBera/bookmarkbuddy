@@ -5,6 +5,7 @@ import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import { flattenNode } from "../../app/common/util/Util";
 import { connect } from 'react-redux';
 import { setMostVisitedSites,setBookmarks } from "../../redux/Actions/ActionTypes/DashBoardActions";
+import SearchComponent from "../Search/SearchBookmark";
 
 class BookmarkDashboard extends Component {
   componentWillMount() {
@@ -24,6 +25,19 @@ class BookmarkDashboard extends Component {
   };
 
   render() {
+    let Bookamrks=[];
+    if(this.props.FilteredBookmarks.length>0 && this.props.searchTerm!=='-- Select all --')
+    {
+    Bookamrks=[...this.props.FilteredBookmarks]
+    }
+    else if(this.props.searchTerm!=='' && this.props.searchTerm!=='-- Select all --')
+    {
+      Bookamrks=[...this.props.FilteredBookmarks]
+    }
+    else{ 
+    Bookamrks=[...this.props.bookmarks]
+    }
+
         return (
       // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
       //   <Grid container columns={3} doubling stackable>
@@ -32,21 +46,24 @@ class BookmarkDashboard extends Component {
       //   )}
       //   </Grid>
       <Grid container columns="equal" stackable>
+        {this.props.bookmarks.length>0 && <Grid.Row>
+             <SearchComponent bookmarks={Bookamrks}></SearchComponent>
+         </Grid.Row>}
         <Grid.Row>
           <Grid.Column>
-            {this.props.bookmarks.map((bookmark, i) => {
+            {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 0)
                 return <BookmarkCard key={bookmark.id} bookmark={bookmark} />;
             })}
           </Grid.Column>
           <Grid.Column>
-            {this.props.bookmarks.map((bookmark, i) => {
+            {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 1)
                 return <BookmarkCard key={bookmark.id} bookmark={bookmark} />;
             })}
           </Grid.Column>
           <Grid.Column>
-            {this.props.bookmarks.map((bookmark, i) => {
+            {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 2)
                 return <BookmarkCard key={bookmark.id} bookmark={bookmark} />;
             })}
@@ -69,8 +86,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = (state) =>( {
-    bookmarks:state.DashBoardReducer.Bookmarks
-
+    bookmarks:state.DashBoardReducer.Bookmarks,
+    FilteredBookmarks:state.DashBoardReducer.FilteredBookmarks,
+    searchTerm: state.DashBoardReducer.searchTerm,
+    selectedFolder: state.DashBoardReducer.selectedFolder
 })
 
 

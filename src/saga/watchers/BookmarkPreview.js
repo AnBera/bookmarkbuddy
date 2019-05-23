@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
 import { previewBookmarkSaga } from '../sagas/previewBookmarkSaga';
 
-import * as SagaActions from '../Actions';
+import * as SagaActions from '../Actions/SagaActions';
 
 
 export default function* watchUserAuthentication() {
