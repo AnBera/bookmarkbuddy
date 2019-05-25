@@ -5,9 +5,9 @@ import './search.css';
 
 class SearchAndFilter extends Component {
     
-    actiavteSearch=()=>{
-      this.props.actiavteSearch();
-    }
+    // actiavteSearch=()=>{
+    //   this.props.actiavteSearch();
+    // }
 
     open_closeDropdown=()=>{
     this.props.open_CloseDropdown()
@@ -17,51 +17,53 @@ class SearchAndFilter extends Component {
         this.props.setSelectedFolder(folderName)
     }
 
-    onSearchClick = () => {
-        if (!this.props.IsSearchActive) {
-            this.actiavteSearch();
-        }        
-    };
+    // onSearchClick = () => {
+    //     if (!this.props.IsSearchActive) {
+    //         this.actiavteSearch();
+    //     }        
+    // };
 
     onSearch = (e) => {
         this.props.setSearchedText(e.target.value);
     };
 
-    onBarClick = () => {
-        this.actiavteSearch();
-    };
+    // onBarClick = () => {
+    //     this.actiavteSearch();
+    // };
     
     onClearClick = () => {
         if(this.props.SearchedText!=="") {
             this.props.setSearchedText("");   
         } else {
-            this.actiavteSearch();
+            // this.actiavteSearch();
         }
     };
 
     render() {    
-        const select = this.props.IsSearchActive ? (
-            <div className="select-inactive" onClick={this.onBarClick}>
-                <Icon name='bars'  />
-            </div>
-        ) : (
+        const select = 
+        // this.props.IsSearchActive ? (
+        //     <div onClick={this.onBarClick}>
+        //         <Icon name='bars'  />
+        //     </div>
+        // ) : (
             <Select 
                 options={this.props.optionList}
                 IsDropDownOpen={this.props.IsDropDownOpen}
                 setSelectedFolder={this.setSelectedFolder}
                 SelectedFolder={this.props.SelectedFolder}
                 open_closeDropdown={this.open_closeDropdown}
-            />
-        );
+            />;
+        // );
         
-        const input = this.props.IsSearchActive ? (
+        const input = 
+        // this.props.IsSearchActive ? (
             <input 
                 className="inputSearch"
                 placeholder="Search here"
                 onChange={this.onSearch}
                 value={this.props.SearchedText}
-            />
-        ) : null;
+            />;
+        // ) : null;
         
         const clearIcon = this.props.IsSearchActive ? (
             <span className="clear" onClick={this.onClearClick}>
@@ -69,21 +71,21 @@ class SearchAndFilter extends Component {
             </span>
         ) : null;
         
-        const searchIcon = (
-            <span className="searchIcon">
-                <Icon name='search' />
-            </span>
-        );
+        // const searchIcon = (
+        //     <span className="searchIcon">
+        //         <Icon name='search' />
+        //     </span>
+        // );
         
         return (
-            <div className="container">
-                <div className={`search ${this.props.IsSearchActive ? 'searchActive' : null}`} 
+            <div className="search-container">
+                <div className="text-wrapper" 
                     onClick={this.onSearchClick}>
-                    {searchIcon}
+                    {/* {searchIcon} */}
                     {input}
                     {clearIcon}
                 </div>
-                <div className={`select ${this.props.IsSearchActive ? 'searchActive' : null}`} >
+                <div className="filter-wrapper" >
                     {select}
                 </div>
             </div>

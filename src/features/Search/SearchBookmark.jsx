@@ -1,7 +1,7 @@
 import React,{ Component} from "react";
 import { Grid } from "semantic-ui-react";
 import { connect } from 'react-redux';
-import {setFilteredBookmarks,setBookmarkFolders,setSearchActive,setSearchedTerm,setSelectedFolder,setIsSearchFolderDropDownOpen} from '../../redux/Actions/ActionTypes/DashBoardActions';
+import {setFilteredBookmarks,setBookmarkFolders,setSearchedTerm,setSelectedFolder,setIsSearchFolderDropDownOpen} from '../../redux/Actions/ActionTypes/DashBoardActions';
 import SearchAndFilter from './SearchandFilter';
 
 
@@ -20,9 +20,9 @@ class SearchComponent extends Component{
           this.props.setBookmarkFolders(folders);
         }  
     }
-    actiavteSearch=()=>{
-      this.props.setSearchActive();
-    }
+    // actiavteSearch=()=>{
+    //   this.props.setSearchActive();
+    // }
 
     searchBookmark=(searchedText)=>{
       this.props.setSearchedTerm(searchedText);
@@ -57,20 +57,23 @@ class SearchComponent extends Component{
 
     render(){
     return(
-      <Grid>
-       {this.props.bookmarkFolders.length>0 &&  
-        <Grid.Row>
-        <SearchAndFilter actiavteSearch={this.actiavteSearch} 
+      // <Grid>
+      //  {this.props.bookmarkFolders.length>0 &&  
+      <Grid.Column width={16}>
+        <SearchAndFilter 
+        // actiavteSearch={this.actiavteSearch} 
         optionList={this.props.bookmarkFolders}
         setSearchedText={this.searchBookmark} 
         setSelectedFolder={this.searchBookmarkWithinFolder} 
         open_CloseDropdown={this.open_CloseDropdown}
-        IsSearchActive={this.props.searchActive} SearchedText={this.props.searchTerm} 
+        // IsSearchActive={this.props.searchActive} 
+        SearchedText={this.props.searchTerm} 
         SelectedFolder={this.props.selectedFolder}
         IsDropDownOpen={this.props.isDropDownOpen}
         ></SearchAndFilter>
-        </Grid.Row>}
-      </Grid>
+      </Grid.Column>
+      // }
+      // </Grid>
     ) 
     }
 }
@@ -80,9 +83,9 @@ const mapDispatchToProps = dispatch => {
       setBookmarkFolders:(folders)=>{
         dispatch(setBookmarkFolders(folders))
       },
-      setSearchActive:()=>{
-        dispatch(setSearchActive())
-      },
+      // setSearchActive:()=>{
+      //   dispatch(setSearchActive())
+      // },
       setSearchedTerm:(text)=>{
         dispatch(setSearchedTerm(text))
       },
@@ -100,7 +103,7 @@ const mapDispatchToProps = dispatch => {
   
   const mapStateToProps = (state) =>( {
       bookmarks:state.DashBoardReducer.Bookmarks,
-      searchActive: state.DashBoardReducer.searchActive,
+      // searchActive: state.DashBoardReducer.searchActive,
       searchTerm: state.DashBoardReducer.searchTerm,
       selectedFolder: state.DashBoardReducer.selectedFolder,
       bookmarkFolders:state.DashBoardReducer.bookmarkFolders,

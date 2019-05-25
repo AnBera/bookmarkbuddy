@@ -30,11 +30,11 @@ export const setBookmarkFolders = (folders) => {
   }
 };
 
-export const setSearchActive = () => {
-  return {
-    type: types.SET_SEARCH_ACTIVE
-  }
-};
+// export const setSearchActive = () => {
+//   return {
+//     type: types.SET_SEARCH_ACTIVE
+//   }
+// };
 
 export const setSearchedTerm = (searchedText) => {
   return {

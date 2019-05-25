@@ -24,13 +24,13 @@ class Select extends React.Component {
            ); 
         })
         const dropDown = this.props.IsDropDownOpen ? (
-            <div className="dropDown">
+            <div className="dropDown-items">
                 {optionList}
             </div>
         ) : null;
         
         return (
-            <div className="selectContainer" onClick={()=>this.onSelectClick()}>
+            <div className="select-folder" onClick={()=>this.onSelectClick()}>
                 {this.props.SelectedFolder || 'Select option'}
                 <Icon name="caret down" />
                 {dropDown}

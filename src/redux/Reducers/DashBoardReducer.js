@@ -6,7 +6,7 @@ const INITIAL_STATE = Immutable({
    Bookmarks:[],
    FilteredBookmarks:[],
    bookmarkFolders:[],
-   searchActive: false,
+  //  searchActive: false,
    searchTerm: '',
    selectedFolder: '',
    isDropDownOpen:false
@@ -27,8 +27,8 @@ export const DashBoardReducer=(state = INITIAL_STATE, action)=>{
     case types.SET_BOOKMARK_FOLDERS:
       return  { ...state, bookmarkFolders:action.Folders };
 
-    case types.SET_SEARCH_ACTIVE:
-        return  { ...state, searchActive:!state.searchActive };  
+    // case types.SET_SEARCH_ACTIVE:
+    //     return  { ...state, searchActive:!state.searchActive };  
 
     case types.SET_SEARCHED_TERM:
       return  { ...state, searchTerm:action.SearchedText };
