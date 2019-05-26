@@ -27,7 +27,7 @@
 }
 
 .search-container .select-folder {
-  padding: .8em;
+  padding: 0.8em;
   position: relative;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .search-container .select-folder .dropDown-items .option {
-  padding: .3em .8em;
+  padding: 0.3em 0.8em;
   font-weight: 500;
 }
 

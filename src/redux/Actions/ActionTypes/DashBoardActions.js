@@ -1,33 +1,31 @@
-import * as types from '../ReduxActions';
+import * as types from "../ReduxActions";
 
-export const setMostVisitedSites = (sites) => {
-
+export const setMostVisitedSites = sites => {
   return {
     type: types.SET_MOST_VISITED_SITES,
     sites
-  }
+  };
 };
 
-
-export const setBookmarks = ({bookmarks}) => {
+export const setBookmarks = ({ bookmarks }) => {
   return {
     type: types.SET_BOOKMARKS,
-    Bookmarks:bookmarks
-  }
+    Bookmarks: bookmarks
+  };
 };
 
-export const setFilteredBookmarks = ({bookmarks}) => {
+export const setFilteredBookmarks = ({ bookmarks }) => {
   return {
     type: types.SET_FILTERED_BOOKMARKS,
-    Bookmarks:bookmarks
-  }
+    Bookmarks: bookmarks
+  };
 };
 
-export const setBookmarkFolders = (folders) => {
+export const setBookmarkFolders = folders => {
   return {
     type: types.SET_BOOKMARK_FOLDERS,
-    Folders:folders
-  }
+    Folders: folders
+  };
 };
 
 // export const setSearchActive = () => {
@@ -36,22 +34,22 @@ export const setBookmarkFolders = (folders) => {
 //   }
 // };
 
-export const setSearchedTerm = (searchedText) => {
+export const setSearchedTerm = searchedText => {
   return {
     type: types.SET_SEARCHED_TERM,
-    SearchedText:searchedText
-  }
+    SearchedText: searchedText
+  };
 };
 
-export const setSelectedFolder = (folderName) => {
+export const setSelectedFolder = folderName => {
   return {
     type: types.SET_SELECTED_FOLDER,
-    FolderName:folderName
-  }
+    FolderName: folderName
+  };
 };
 
 export const setIsSearchFolderDropDownOpen = () => {
   return {
     type: types.OPEN_CLOSE_DROPDOWN_OPEN
-  }
+  };
 };

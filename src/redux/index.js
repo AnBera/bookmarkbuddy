@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import {DashBoardReducer} from './Reducers/DashBoardReducer';
+import { combineReducers } from "redux";
+import { DashBoardReducer } from "./Reducers/DashBoardReducer";
 
 const rootReducer = combineReducers({
-    DashBoardReducer
+  DashBoardReducer
 });
 
 export default rootReducer;
