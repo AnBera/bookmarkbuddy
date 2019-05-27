@@ -50,14 +50,21 @@ class SearchComponent extends Component {
   searchBookmarkWithinFolder = selectedFolder => {
     this.props.setSelectedFolder(selectedFolder);
     let filteredBookmarks = [...this.props.bookmarks];
-    if (selectedFolder !== "-- Select all --")
+    if (selectedFolder !== "-- Select all --") {
       filteredBookmarks = filteredBookmarks.filter(
         element =>
           element.category !== "-- Select all --" &&
-          element.category === selectedFolder
-      );
+          element.category === selectedFolder &&
+          (element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
+      )
+    } else {
+      filteredBookmarks = filteredBookmarks.filter(
+        element =>
+          element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase())
+      )
+    };
     this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
-  };
+  }
 
   open_CloseDropdown = () => {
     this.props.setOpenCloseDropDown();
