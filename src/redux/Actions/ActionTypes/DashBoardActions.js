@@ -1,25 +1,55 @@
-import * as types from '../index';
+import * as types from "../ReduxActions";
 
-export const setMostVisitedSites = (sites) => {
-
+export const setMostVisitedSites = sites => {
   return {
     type: types.SET_MOST_VISITED_SITES,
     sites
-  }
+  };
 };
 
-
-export const setBookmarks = ({bookmarks}) => {
+export const setBookmarks = ({ bookmarks }) => {
   return {
     type: types.SET_BOOKMARKS,
-    Bookmarks:bookmarks
-  }
+    Bookmarks: bookmarks
+  };
 };
 
+export const setFilteredBookmarks = ({ bookmarks }) => {
+  return {
+    type: types.SET_FILTERED_BOOKMARKS,
+    Bookmarks: bookmarks
+  };
+};
 
-// export const setBookmarkPreviews = (image) => {
+export const setBookmarkFolders = folders => {
+  return {
+    type: types.SET_BOOKMARK_FOLDERS,
+    Folders: folders
+  };
+};
+
+// export const setSearchActive = () => {
 //   return {
-//     type: types.CALL_PREVIEW_BOOKMARK_API,
-//     image
+//     type: types.SET_SEARCH_ACTIVE
 //   }
 // };
+
+export const setSearchedTerm = searchedText => {
+  return {
+    type: types.SET_SEARCHED_TERM,
+    SearchedText: searchedText
+  };
+};
+
+export const setSelectedFolder = folderName => {
+  return {
+    type: types.SET_SELECTED_FOLDER,
+    FolderName: folderName
+  };
+};
+
+export const setIsSearchFolderDropDownOpen = () => {
+  return {
+    type: types.OPEN_CLOSE_DROPDOWN_OPEN
+  };
+};
