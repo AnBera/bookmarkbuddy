@@ -29,18 +29,16 @@ class SearchComponent extends Component {
     this.props.setSearchedTerm(searchedText);
     let filteredBookmarks = [...this.props.bookmarks];
     if (searchedText !== "") {
-      if (
-        this.props.selectedFolder !== "-- Select all --" &&
-        this.props.selectedFolder !== ""
-      ) {
+      if (this.props.selectedFolder !== "-- Select all --" && this.props.selectedFolder !== "") {
         filteredBookmarks = filteredBookmarks.filter(
           element =>
             element.category === this.props.selectedFolder &&
-            element.title.toLowerCase().includes(searchedText.toLowerCase())
+            (element.title.toLowerCase().includes(searchedText.toLowerCase()) ||
+              element.url.toLowerCase().includes(searchedText.toLowerCase()))
         );
       } else {
         filteredBookmarks = filteredBookmarks.filter(element =>
-          element.title.toLowerCase().includes(searchedText.toLowerCase())
+          element.title.toLowerCase().includes(searchedText.toLowerCase()) || element.url.toLowerCase().includes(searchedText.toLowerCase())
         );
       }
       this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
