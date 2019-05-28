@@ -52,7 +52,7 @@ class SearchAndFilter extends Component {
 
     return (
       <div className="search-container">
-        <div className="text-wrapper" onClick={this.onSearchClick}>
+        <div className="text-wrapper">
           {input}
           {clearIcon}
         </div>

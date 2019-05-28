@@ -4,10 +4,7 @@ import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import { flattenNode } from "../../app/common/util/Util";
 import { connect } from "react-redux";
-import {
-  setMostVisitedSites,
-  setBookmarks
-} from "../../redux/Actions/ActionTypes/DashBoardActions";
+import { setMostVisitedSites, setBookmarks, setSelectedFolder, setFilteredBookmarks, setSearchedTerm } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 
 class BookmarkDashboard extends Component {
@@ -26,6 +23,20 @@ class BookmarkDashboard extends Component {
       flattenNode(treeNode[0], flattenedBookmarks);
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
     });
+  };
+
+  setSelectedFolderAndFilter = (selectedFolder) => {
+    this.props.setSelectedFolder(selectedFolder);
+    this.props.setSearchedTerm("");
+    let filteredBookmarks = [...this.props.bookmarks];
+    if (selectedFolder !== "-- Select all --") {
+      filteredBookmarks = filteredBookmarks.filter(
+        element =>
+          element.category !== "-- Select all --" &&
+          element.category === selectedFolder
+      )
+    }
+    this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
   };
 
   render() {
@@ -61,19 +72,19 @@ class BookmarkDashboard extends Component {
           <Grid.Column>
             {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 0)
-                return <BookmarkCard key={bookmark.id} bookmark={bookmark} />;
+                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} />;
             })}
           </Grid.Column>
           <Grid.Column>
             {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 1)
-                return <BookmarkCard key={bookmark.id} bookmark={bookmark} />;
+                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} />;
             })}
           </Grid.Column>
           <Grid.Column>
             {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 2)
-                return <BookmarkCard key={bookmark.id} bookmark={bookmark} />;
+                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} />;
             })}
           </Grid.Column>
         </Grid.Row>
@@ -89,6 +100,15 @@ const mapDispatchToProps = dispatch => {
     },
     setBookmarks: bookmarks => {
       dispatch(setBookmarks(bookmarks));
+    },
+    setSelectedFolder: folder => {
+      dispatch(setSelectedFolder(folder));
+    },
+    setFilteredBookmarks: (bookmarks = []) => {
+      dispatch(setFilteredBookmarks(bookmarks));
+    },
+    setSearchedTerm: text => {
+      dispatch(setSearchedTerm(text));
     }
   };
 };
