@@ -9,7 +9,10 @@ class BookmarkCard extends Component {
   };
 
   render() {
-    const { bookmark } = this.props;
+    const { bookmark, colorsMap } = this.props;
+    let style = {
+      borderBottomColor: colorsMap[bookmark.category]
+    };
     return (
       //   <Grid.Column>
       <Card fluid>
@@ -30,7 +33,7 @@ class BookmarkCard extends Component {
           <Card.Meta>{bookmark.title}</Card.Meta>
           <Label attached="bottom right" onClick={this.onCategoryClick}>
             {bookmark.category}
-            <span className="category"></span>
+            <span className="category" style={style}></span>
           </Label>
         </Card.Content>
       </Card>

@@ -72,19 +72,19 @@ class BookmarkDashboard extends Component {
           <Grid.Column>
             {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 0)
-                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} />;
+                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} colorsMap={this.props.colorsMap} />;
             })}
           </Grid.Column>
           <Grid.Column>
             {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 1)
-                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} />;
+                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} colorsMap={this.props.colorsMap} />;
             })}
           </Grid.Column>
           <Grid.Column>
             {Bookamrks.map((bookmark, i) => {
               if (i % 3 === 2)
-                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} />;
+                return <BookmarkCard key={bookmark.id} bookmark={bookmark} setSelectedFolderAndFilter={this.setSelectedFolderAndFilter} colorsMap={this.props.colorsMap} />;
             })}
           </Grid.Column>
         </Grid.Row>
@@ -117,7 +117,8 @@ const mapStateToProps = state => ({
   bookmarks: state.DashBoardReducer.Bookmarks,
   FilteredBookmarks: state.DashBoardReducer.FilteredBookmarks,
   searchTerm: state.DashBoardReducer.searchTerm,
-  selectedFolder: state.DashBoardReducer.selectedFolder
+  selectedFolder: state.DashBoardReducer.selectedFolder,
+  colorsMap: state.DashBoardReducer.colorsMap
 });
 
 export default connect(

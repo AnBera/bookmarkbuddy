@@ -53,3 +53,10 @@ export const setIsSearchFolderDropDownOpen = () => {
     type: types.OPEN_CLOSE_DROPDOWN_OPEN
   };
 };
+
+export const setColorsMap = colorsMap => {
+  return {
+    type: types.SET_COLORS_MAP,
+    colorsMap: colorsMap
+  };
+};
