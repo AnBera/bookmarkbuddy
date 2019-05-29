@@ -3,8 +3,16 @@ import { Card, Image, Label } from "semantic-ui-react";
 import { extractHostname } from "../../app/common/util/Util";
 
 class BookmarkCard extends Component {
+  onCategoryClick = (e) => {
+    e.preventDefault();
+    this.props.setSelectedFolderAndFilter(e.target.innerText);
+  };
+
   render() {
-    const { bookmark } = this.props;
+    const { bookmark, colorsMap } = this.props;
+    let style = {
+      borderBottomColor: colorsMap[bookmark.category]
+    };
     return (
       //   <Grid.Column>
       <Card fluid>
@@ -23,7 +31,10 @@ class BookmarkCard extends Component {
             {extractHostname(bookmark.url)}
           </div>
           <Card.Meta>{bookmark.title}</Card.Meta>
-          <Label attached="bottom right">{bookmark.category}</Label>
+          <Label attached="bottom right" onClick={this.onCategoryClick}>
+            {bookmark.category}
+            <span className="category" style={style}></span>
+          </Label>
         </Card.Content>
       </Card>
       //   </Grid.Column>

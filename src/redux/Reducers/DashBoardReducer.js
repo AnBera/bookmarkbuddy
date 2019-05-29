@@ -8,7 +8,8 @@ const INITIAL_STATE = Immutable({
   bookmarkFolders: [],
   searchTerm: "",
   selectedFolder: "",
-  isDropDownOpen: false
+  isDropDownOpen: false,
+  colorsMap: {}
 });
 
 export const DashBoardReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +34,9 @@ export const DashBoardReducer = (state = INITIAL_STATE, action) => {
 
     case types.OPEN_CLOSE_DROPDOWN_OPEN:
       return { ...state, isDropDownOpen: !state.isDropDownOpen };
+
+    case types.SET_COLORS_MAP:
+      return { ...state, colorsMap: action.colorsMap };
 
     default:
       return state;

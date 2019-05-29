@@ -6,9 +6,11 @@ import {
   setBookmarkFolders,
   setSearchedTerm,
   setSelectedFolder,
-  setIsSearchFolderDropDownOpen
+  setIsSearchFolderDropDownOpen,
+  setColorsMap
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchAndFilter from "./SearchandFilter";
+import { populateRandomColor } from '../../app/common/util/Util';
 
 class SearchComponent extends Component {
   componentWillMount = () => {
@@ -22,6 +24,7 @@ class SearchComponent extends Component {
       folders.sort();
       folders.unshift("-- Select all --");
       this.props.setBookmarkFolders(folders);
+      this.props.setColorsMap(populateRandomColor(folders));
     }
   };
 
@@ -103,6 +106,9 @@ const mapDispatchToProps = dispatch => {
     },
     setFilteredBookmarks: (bookmarks = []) => {
       dispatch(setFilteredBookmarks(bookmarks));
+    },
+    setColorsMap: (colorsMap) => {
+      dispatch(setColorsMap(colorsMap));
     }
   };
 };

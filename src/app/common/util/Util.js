@@ -41,3 +41,20 @@ export const extractHostname = url => {
 
   return hostname;
 };
+
+export const populateRandomColor = (folderNames) => {
+  let letters = '012345'.split('');
+  let color = '#'; 
+  let colorsMap = {};
+  // let alphabet = "abcdefghijklmnopqrstuvwxyz".split('');       
+  // color += letters[Math.round(Math.random() * 5)];
+  letters = '0123456789ABCDEF'.split('');
+  for (let i = 0; i < folderNames.length; i++){
+    for (let j = 0; j < 6; j++) {
+      color += letters[Math.round(Math.random() * 15)];
+    }
+    colorsMap[folderNames[i]] = color;
+    color = '#';
+  }
+  return colorsMap;
+};
