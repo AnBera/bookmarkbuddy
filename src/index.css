@@ -33,6 +33,7 @@ code {
 .ui.cards > .card {
   background-color: #282c34;
   overflow: hidden;
+  margin-bottom: 1.4em;
   -moz-box-shadow: inset 0 0 25px #33373f;
   -webkit-box-shadow: inset 0 0 25px #33373f;
   box-shadow: inset 0 0 25px #33373f;
