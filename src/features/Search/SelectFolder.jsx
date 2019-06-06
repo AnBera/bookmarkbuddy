@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import "./search.css";
 import { Icon } from "semantic-ui-react";
 
-class Select extends React.Component {
+class Select extends Component {
   onSelectClick = () => {
     this.props.open_closeDropdown();
   };
