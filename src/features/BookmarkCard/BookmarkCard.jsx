@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Image, Label } from "semantic-ui-react";
 import { extractHostname } from "../../app/common/util/Util";
+import Hover from "../../app/common/Component/Hover";
 
 class BookmarkCard extends Component {
   onCategoryClick = (e) => {
@@ -30,7 +31,9 @@ class BookmarkCard extends Component {
             />
             {extractHostname(bookmark.url)}
           </div>
+         <Hover onHover={<div> `{bookmark.title}` </div>}>
           <Card.Meta>{bookmark.title}</Card.Meta>
+          </Hover>
           <Label attached="bottom right" onClick={this.onCategoryClick}>
             {bookmark.category}
             <span className="category" style={style}></span>
