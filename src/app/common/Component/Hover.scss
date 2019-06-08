@@ -1,5 +1,5 @@
 .hover {
-    position: relative;
+    // position: relative;
   
     &:hover &__no-hover {
       opacity: 0;
@@ -10,7 +10,7 @@
     }
   
     &__hover {
-      position: absolute;
+      // position: absolute;
       top: 0;
       opacity: 0;
     }

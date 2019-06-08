@@ -14,6 +14,9 @@ class BookmarkCard extends Component {
     let style = {
       borderBottomColor: colorsMap[bookmark.category]
     };
+    // let hoverStyle = {
+    //   backgroundColor: colorsMap[bookmark.category],
+    // };
     return (
       //   <Grid.Column>
       <Card fluid>
@@ -31,13 +34,16 @@ class BookmarkCard extends Component {
             />
             {extractHostname(bookmark.url)}
           </div>
-         <Hover onHover={<div> `{bookmark.title}` </div>}>
           <Card.Meta>{bookmark.title}</Card.Meta>
-          </Hover>
+         <Hover onHover={<Label attached="bottom right" style={{backgroundColor: colorsMap[bookmark.category]}} onClick={this.onCategoryClick}>
+            {bookmark.category}
+            <span className="category"></span>
+          </Label>}>
           <Label attached="bottom right" onClick={this.onCategoryClick}>
             {bookmark.category}
             <span className="category" style={style}></span>
           </Label>
+          </Hover>
         </Card.Content>
       </Card>
       //   </Grid.Column>

@@ -61,15 +61,49 @@ code {
 .ui.label {
   background-color: #393939;
   color: #efefef;
+
+  /* -webkit-transition: background-image 1000ms linear;
+    -moz-transition: background-image 1000ms linear;
+    -o-transition: background-image 1000ms linear;
+    -ms-transition: background-image 1000ms linear;
+    transition: background-image 1000ms linear; */
+  
+  /* -webkit-transition: background-color 1s ease-out 1s;
+  transition: background-color 1s ease-out 1s; */
+  /* -webkit-transition-property: background-color background-image;
+  -webkit-transition-duration:2s;
+  -webkit-transition-delay:0.5s;
+  -webkit-transition-timing-function: linear;
+  transition-property: background-color background-image;
+  transition-duration:2s;
+  transition-delay:0.5s;
+  transition-timing-function: linear; */
 }
 
 .ui.label:hover {
-  background: linear-gradient(135deg,rgba(220,49,14,0.4) 0,#f58a51 100%);
+  /* background: linear-gradient(135deg,rgba(220,49,14,0.4) 0,#f58a51 100%); */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4) 100%, rgba(0, 0, 0, 0.9));
+  
+  
+  /* -webkit-transition-property: background-color background-image;
+  -webkit-transition-duration:2s;
+  -webkit-transition-delay:0.5s;
+  -webkit-transition-timing-function: linear;
+  transition-property: background-color background-image;
+  transition-duration:2s;
+  transition-delay:0.5s;
+  transition-timing-function: linear; */
 }
+
+/* .hover.__hover .ui.label:hover{
+  -webkit-transition: background-image 3000ms linear;
+    -ms-transition: background-image 3000ms linear;
+    transition: background-image 3000ms linear;
+} */
 
 .ui.card span.category {
   content: " ";
-  border-bottom: 13px solid #dd4f39;
+  border-bottom: 13px solid transparent;
   border-left: 13px solid transparent;
   width: 0;
   position: absolute;
