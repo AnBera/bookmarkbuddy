@@ -33,7 +33,7 @@ code {
 .ui.cards > .card {
   background-color: #282c34;
   overflow: hidden;
-  margin-bottom: 1.4em;
+  margin-bottom: 1.7em;
   -moz-box-shadow: inset 0 0 25px #33373f;
   -webkit-box-shadow: inset 0 0 25px #33373f;
   box-shadow: inset 0 0 25px #33373f;
@@ -104,11 +104,11 @@ code {
 .ui.card span.category {
   content: " ";
   border-bottom: 13px solid transparent;
-  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
   width: 0;
   position: absolute;
   bottom: 0;
-  right: 0;
+  left: 0;
 }
 
 .padding-right-medium {
