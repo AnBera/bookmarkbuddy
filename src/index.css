@@ -83,7 +83,7 @@ code {
 .ui.label:hover {
   /* background: linear-gradient(135deg,rgba(220,49,14,0.4) 0,#f58a51 100%); */
   background-image: linear-gradient(rgba(0, 0, 0, 0.4) 100%, rgba(0, 0, 0, 0.9));
-  
+  box-shadow: 10px 0px 25px 5px rgba(0, 0, 0, 0.40);
   
   /* -webkit-transition-property: background-color background-image;
   -webkit-transition-duration:2s;
@@ -113,4 +113,26 @@ code {
 
 .padding-right-medium {
   padding-right: 0.4em;
+}
+
+.imageContainer {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4) 100%, rgba(0, 0, 0, 0.9));
+  box-shadow: inset -1px 0px 38px 5px rgba(0, 0, 0, 0.40);
+  min-height: 7em;
+  border-radius: 5px;
+  /* display: inline-block; */
+  float: right;
+  position: relative;
+}
+
+.initialAltText {
+  font-size: 5em;
+  position: absolute;
+  /* font-family: "Lato"; */
+  font-weight: 100;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
 }

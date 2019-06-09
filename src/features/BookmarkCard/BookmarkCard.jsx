@@ -21,11 +21,14 @@ class BookmarkCard extends Component {
       //   <Grid.Column>
       <Card fluid>
         <Card.Content href={bookmark.url}>
+        <div className="imageContainer" style={{backgroundColor: colorsMap[bookmark.category]}}>
+          <span className="initialAltText">{extractHostname(bookmark.url).charAt(0)}</span>
           <Image
             floated="right"
             size="tiny"
-            src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
+            src=""
           />
+        </div>
           {/*TODO use onclick to filter based on sitename */}
           <div className="url-heading">
             <Image
