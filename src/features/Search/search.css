@@ -1,7 +1,7 @@
 .search-container {
   margin-top: 2em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #282c34;
+  border-radius: 7px;
 }
 
 .search-container .text-wrapper {
@@ -11,10 +11,12 @@
 
 .search-container .inputSearch {
   width: 100%;
+  background-color: #333842;
+  color: #fff;
   min-height: 3.3em;
   border: none;
   padding: 0 1em;
-  box-shadow: inset 0 0 15px #b5b7bb;
+  /* box-shadow: inset 0 0 15px #b5b7bb; */
   font-family: "Montserrat";
 }
 
