@@ -38,11 +38,11 @@ class BookmarkCard extends Component {
             {extractHostname(bookmark.url)}
           </div>
           <Card.Meta>{bookmark.title}</Card.Meta>
-         <Hover onHover={<Label attached="bottom right" style={{backgroundColor: colorsMap[bookmark.category]}} onClick={this.onCategoryClick}>
+         <Hover onHover={<Label attached="bottom left" style={{backgroundColor: colorsMap[bookmark.category]}} onClick={this.onCategoryClick}>
             {bookmark.category}
             <span className="category"></span>
           </Label>}>
-          <Label attached="bottom right" onClick={this.onCategoryClick}>
+          <Label attached="bottom left" onClick={this.onCategoryClick}>
             {bookmark.category}
             <span className="category" style={style}></span>
           </Label>
