@@ -14,6 +14,13 @@ export const setBookmarks = ({ bookmarks }) => {
   };
 };
 
+export const setRecentBookmarks = ({ bookmarks }) => {
+  return {
+    type: types.SET_RECENT_BOOKMARKS,
+    Bookmarks: bookmarks
+  };
+};
+
 export const setFilteredBookmarks = ({ bookmarks }) => {
   return {
     type: types.SET_FILTERED_BOOKMARKS,

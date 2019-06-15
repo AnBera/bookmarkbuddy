@@ -4,6 +4,7 @@ import Immutable from "seamless-immutable";
 const INITIAL_STATE = Immutable({
   mostVisitedSites: [],
   Bookmarks: [],
+  recentBookmarks: [],
   FilteredBookmarks: [],
   bookmarkFolders: [],
   searchTerm: "",
@@ -19,6 +20,9 @@ export const DashBoardReducer = (state = INITIAL_STATE, action) => {
 
     case types.SET_BOOKMARKS:
       return { ...state, Bookmarks: action.Bookmarks };
+    
+    case types.SET_RECENT_BOOKMARKS:
+      return { ...state, recentBookmarks: action.Bookmarks };
 
     case types.SET_FILTERED_BOOKMARKS:
       return { ...state, FilteredBookmarks: action.Bookmarks };

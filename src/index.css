@@ -29,6 +29,11 @@ code {
     monospace;
 }
 
+a.ui.card:hover {
+  background: inherit;
+  box-shadow: 0 0px 5px 0 #ccc, 0 0 0 1px #282c34;
+}
+
 .ui.card,
 .ui.cards > .card {
   background-color: #282c34;
