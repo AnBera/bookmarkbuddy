@@ -58,6 +58,21 @@ code {
   font-size: 1.25em;
 }
 
+.ui.card>.content>.header {
+  font-family: "Rubik";
+  font-size: 1.25em;
+  color: #fff;
+}
+
+.ui.card>.content>.description {
+  color: #fff;
+  font-family: "Montserrat";
+}
+
+.ui.card>.content>.header:not(.ui) {
+  font-weight: normal;
+}
+
 .ui.label {
   background-color: #393939;
   color: #efefef;
