@@ -29,6 +29,15 @@ code {
     monospace;
 }
 
+a.ui.card:hover, .ui.fluid.card:hover {
+  background-color: #282c34;
+  box-shadow: 0 0px 5px 0 #ccc, 0 0 0 1px #282c34;
+}
+
+.ui.fluid.card:hover {
+  transform: translateY(-3px);
+}
+
 .ui.card,
 .ui.cards > .card {
   background-color: #282c34;
@@ -56,6 +65,21 @@ code {
 .ui.card .url-heading {
   font-family: "Rubik";
   font-size: 1.25em;
+}
+
+.ui.card>.content>.header {
+  font-family: "Rubik";
+  font-size: 1.25em;
+  color: #fff;
+}
+
+.ui.card>.content>.description {
+  color: #fff;
+  font-family: "Montserrat";
+}
+
+.ui.card>.content>.header:not(.ui) {
+  font-weight: normal;
 }
 
 .ui.label {
