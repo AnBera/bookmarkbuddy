@@ -12,7 +12,7 @@ class BookmarkDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recentBookmarks: [],
+      // recentBookmarks: [],
       bookmarks:[]
     };
   }
@@ -24,7 +24,7 @@ class BookmarkDashboard extends Component {
 //     this.recursive();
 //  }
 
- localRecentBookmarks = [];
+//  localRecentBookmarks = [];
  localBookmarks = [];
 
   getBookmarks = () => {
@@ -41,8 +41,8 @@ class BookmarkDashboard extends Component {
     // // this.setState({recentBookmarks : recentBookmarks});
     
     chrome.bookmarks.getRecent(4, bookmarksArr => {
-      // this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
-      this.localRecentBookmarks.push(...bookmarksArr);
+      this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
+      // this.localRecentBookmarks.push(...bookmarksArr);
       console.log(new Date());
       // this.setState({ recentBookmarks: bookmarksArr })
     });
@@ -122,7 +122,7 @@ class BookmarkDashboard extends Component {
       //   </Grid>
       <Grid container columns="equal" stackable>
         <Grid.Row>
-          {this.state.recentBookmarks.map((bookmark, idx) => {
+          {this.props.recentBookmarks.map((bookmark, idx) => {
             return (<Grid.Column>
               <BookmarkRecentCard bookmark={bookmark} key={bookmark.id} />
             </Grid.Column>);
