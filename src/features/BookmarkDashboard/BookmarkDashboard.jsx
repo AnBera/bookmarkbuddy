@@ -9,13 +9,22 @@ import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
 
 class BookmarkDashboard extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {recentBookmarks: []};
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      recentBookmarks: [],
+      bookmarks:[]
+    };
+  }
   componentWillMount() {
     this.getBookmarks();
   }
+  
+  componentDidMount() {
+    this.recursive();
+ }
+
+ localRecentBookmarks = [];
 
   getBookmarks = () => {
     console.log("new6 getbookmark-called");
@@ -27,10 +36,13 @@ class BookmarkDashboard extends Component {
 
     // let recentBookmarks =[];
     // flattenNode(bookmarks, recentBookmarks);
-    // this.props.setRecentBookmarks({bookmarks : recentBookmarks});
+    // this.localRecentBookmarks.push(...recentBookmarks);
+    // // this.setState({recentBookmarks : recentBookmarks});
     
     chrome.bookmarks.getRecent(4, bookmarksArr => {
-      this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
+      // this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
+      this.localRecentBookmarks.push(...bookmarksArr);
+      console.log(new Date());
       // this.setState({ recentBookmarks: bookmarksArr })
     });
 
@@ -43,6 +55,7 @@ class BookmarkDashboard extends Component {
     chrome.bookmarks.getTree(treeNode => {
       flattenNode(treeNode[0], flattenedBookmarks);
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
+      console.log(new Date());
     });
   };
 
@@ -60,6 +73,25 @@ class BookmarkDashboard extends Component {
     this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
   };
 
+  // recursive = () => {
+  //   setTimeout(() => {
+  //     let hasMore = this.state.recentBookmarks.length + 1 < this.localRecentBookmarks.length;
+  //     this.setState( (prev, props) => ({
+  //       recentBookmarks: this.localRecentBookmarks.slice(0, prev.recentBookmarks.length + 1)
+  //     }));
+  //     if (hasMore) this.recursive();
+  //   }, 0);
+  // }
+  recursive = () => {
+    setTimeout(() => {
+      let hasMore = this.state.bookmarks.length + 1 < this.props.bookmarks.length;
+      this.setState( (prev, props) => ({
+        bookmarks: props.bookmarks.slice(0, prev.bookmarks.length + 1)
+      }));
+      if (hasMore) this.recursive();
+    }, 0);
+  }
+
   render() {
     let Bookamrks = [];
     if (
@@ -73,7 +105,7 @@ class BookmarkDashboard extends Component {
     ) {
       Bookamrks = [...this.props.FilteredBookmarks];
     } else {
-      Bookamrks = [...this.props.bookmarks];
+      Bookamrks = [...this.state.bookmarks];
     };
 
     return (
@@ -85,7 +117,7 @@ class BookmarkDashboard extends Component {
       //   </Grid>
       <Grid container columns="equal" stackable>
         <Grid.Row>
-          {this.props.recentBookmarks.map((bookmark, idx) => {
+          {this.state.recentBookmarks.map((bookmark, idx) => {
             return (<Grid.Column>
               <BookmarkRecentCard bookmark={bookmark} key={bookmark.id} />
             </Grid.Column>);
