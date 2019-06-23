@@ -20,11 +20,12 @@ class BookmarkDashboard extends Component {
     this.getBookmarks();
   }
   
-  componentDidMount() {
-    this.recursive();
- }
+//   componentDidMount() {
+//     this.recursive();
+//  }
 
  localRecentBookmarks = [];
+ localBookmarks = [];
 
   getBookmarks = () => {
     console.log("new6 getbookmark-called");
@@ -54,6 +55,8 @@ class BookmarkDashboard extends Component {
 
     chrome.bookmarks.getTree(treeNode => {
       flattenNode(treeNode[0], flattenedBookmarks);
+      this.localBookmarks.push(...flattenedBookmarks);
+      this.recursive();
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
       console.log(new Date());
     });
@@ -84,9 +87,11 @@ class BookmarkDashboard extends Component {
   // }
   recursive = () => {
     setTimeout(() => {
-      let hasMore = this.state.bookmarks.length + 1 < this.props.bookmarks.length;
+      console.log(this.props.bookmarks.length);
+      console.log(this.localBookmarks.length);
+      let hasMore = this.state.bookmarks.length + 1 < this.localBookmarks.length;
       this.setState( (prev, props) => ({
-        bookmarks: props.bookmarks.slice(0, prev.bookmarks.length + 1)
+        bookmarks: this.localBookmarks.slice(0, prev.bookmarks.length + 1)
       }));
       if (hasMore) this.recursive();
     }, 0);
