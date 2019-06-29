@@ -96,7 +96,7 @@ class BookmarkDashboard extends Component {
           // if the scroll is more than 90% from the top, load more content.
           if(scrollPercentage > 0.9) {
           // Load more content!
-          this.addBookmarksInState(6);
+          this.addBookmarksInState(21);
         }
       }, 100);
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
@@ -119,10 +119,15 @@ class BookmarkDashboard extends Component {
 
   addBookmarksInState = (numberOfBookmarks) => {
     setTimeout(() => {
-      if(this.state.bookmarks.length + numberOfBookmarks < this.localBookmarks.length)//this.localBookmarks.length;
+      if(this.state.bookmarks.length + numberOfBookmarks < this.localBookmarks.length) {
         this.setState((prev, props) => ({
           bookmarks: this.localBookmarks.slice(0, prev.bookmarks.length + numberOfBookmarks)
         }));
+      } else if((this.localBookmarks.length - this.state.bookmarks.length) > 0 && (this.localBookmarks.length - this.state.bookmarks.length)  < numberOfBookmarks) {
+        this.setState((prev, props) => ({
+          bookmarks: this.localBookmarks.slice(0)
+        }));
+      }
     }, 0);
   };
 
