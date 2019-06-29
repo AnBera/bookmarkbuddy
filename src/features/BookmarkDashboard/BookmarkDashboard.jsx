@@ -88,13 +88,13 @@ class BookmarkDashboard extends Component {
       window.onscroll = debounce(() => {
           let scrollTop = document.documentElement.scrollTop;
           let windowHeight = window.innerHeight;
-          let bodyHeight = window.document.body.offsetHeight - windowHeight;
+          let bodyHeight = document.documentElement.scrollHeight - windowHeight;
           let scrollPercentage = (scrollTop / bodyHeight);
 
           console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
   
-          // if the scroll is more than 90% from the top, load more content.
-          if(scrollPercentage > 0.9) {
+          // if the scroll is more than 70% from the top, load more content.
+          if(scrollPercentage > 0.7) {
           // Load more content!
           this.addBookmarksInState(21);
         }
