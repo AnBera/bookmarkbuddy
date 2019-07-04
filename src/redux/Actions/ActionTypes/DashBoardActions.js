@@ -1,5 +1,5 @@
 import * as types from "../ReduxActions";
-
+import * as Sagatypes from "../../../saga/Actions/SagaActions";
 export const setMostVisitedSites = sites => {
   return {
     type: types.SET_MOST_VISITED_SITES,
@@ -35,12 +35,6 @@ export const setBookmarkFolders = folders => {
   };
 };
 
-// export const setSearchActive = () => {
-//   return {
-//     type: types.SET_SEARCH_ACTIVE
-//   }
-// };
-
 export const setSearchedTerm = searchedText => {
   return {
     type: types.SET_SEARCHED_TERM,
@@ -67,3 +61,11 @@ export const setColorsMap = colorsMap => {
     colorsMap: colorsMap
   };
 };
+
+export const generatePreviewImages = urls => {
+  return {
+    type: Sagatypes.CALL_CONVERT_IMAGES_API,
+    urls: urls
+  };
+};
+

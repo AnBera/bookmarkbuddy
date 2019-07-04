@@ -37,19 +37,19 @@ export const extractHostname = url => {
   //find & remove "?"
   hostname = hostname.split("?")[0];
   //replace initial www.
-  hostname = hostname.replace(/^www./gi,'');
+  hostname = hostname.replace(/^www./gi, '');
 
   return hostname;
 };
 
 export const populateRandomColor = (folderNames) => {
   let letters = '012345'.split('');
-  let color = '#'; 
+  let color = '#';
   let colorsMap = {};
   // let alphabet = "abcdefghijklmnopqrstuvwxyz".split('');       
   // color += letters[Math.round(Math.random() * 5)];
   letters = '0123456789ABCDEF'.split('');
-  for (let i = 0; i < folderNames.length; i++){
+  for (let i = 0; i < folderNames.length; i++) {
     for (let j = 0; j < 6; j++) {
       color += letters[Math.round(Math.random() * 15)];
     }
@@ -58,3 +58,13 @@ export const populateRandomColor = (folderNames) => {
   }
   return colorsMap;
 };
+
+export const generateURLs = (Objurls) => {
+  let urls = [];
+  if (Objurls) {
+    Objurls.map((item) => {
+      urls.push("https://" + extractHostname(item.url));
+    })
+  }
+  return urls;
+}

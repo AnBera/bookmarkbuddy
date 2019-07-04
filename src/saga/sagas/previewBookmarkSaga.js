@@ -1,5 +1,5 @@
 import { put, call } from "redux-saga/effects";
-import { previewBookmarkService } from "../../services/PreviewBookmarkService";
+import { previewBookmarkService, convertPreviewImagesService } from "../../services/PreviewBookmarkService";
 import * as ReduxActions from "../../redux/Actions/ReduxActions";
 
 export function* previewBookmarkSaga(siteUrl) {
@@ -11,13 +11,11 @@ export function* previewBookmarkSaga(siteUrl) {
   }
 }
 
-// export function* loginSaga(payload) {
-//   try {
-//     const response = yield call(loginUserService, payload);
-//     yield [
-//       put({ type: types.LOGIN_USER_SUCCESS, response })
-//     ];
-//   } catch(error) {
-//     yield put({ type: types.LOGIN_USER_ERROR, error })
-//   }
-//}
+export function* convertPreviewImagesSaga(imagesUrls) {
+  try {
+    const response = yield call(convertPreviewImagesService, imagesUrls.urls);
+    yield [put({ type: ReduxActions.GOT_IMAGES_SUCCESSFULLY, response })];
+  } catch (error) {
+    yield put({ type: ReduxActions.FAILED_TO_GET_IMAGES, error });
+  }
+}

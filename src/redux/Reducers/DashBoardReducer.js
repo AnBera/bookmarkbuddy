@@ -10,7 +10,8 @@ const INITIAL_STATE = Immutable({
   searchTerm: "",
   selectedFolder: "",
   isDropDownOpen: false,
-  colorsMap: {}
+  colorsMap: {},
+  isImagesConverted: false
 });
 
 export const DashBoardReducer = (state = INITIAL_STATE, action) => {
@@ -20,7 +21,7 @@ export const DashBoardReducer = (state = INITIAL_STATE, action) => {
 
     case types.SET_BOOKMARKS:
       return { ...state, Bookmarks: action.Bookmarks };
-    
+
     case types.SET_RECENT_BOOKMARKS:
       return { ...state, recentBookmarks: action.Bookmarks };
 
@@ -41,6 +42,10 @@ export const DashBoardReducer = (state = INITIAL_STATE, action) => {
 
     case types.SET_COLORS_MAP:
       return { ...state, colorsMap: action.colorsMap };
+    case types.GOT_IMAGES_SUCCESSFULLY:
+      return { ...state, isImagesConverted: true };
+    case types.FAILED_TO_GET_IMAGES:
+      return { ...state, colorsMap: INITIAL_STATE.isImagesConverted };
 
     default:
       return state;
