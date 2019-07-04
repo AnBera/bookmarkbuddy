@@ -226,17 +226,31 @@ class BookmarkDashboard extends Component {
             style={{ top: "auto", height: "auto", width: "100%" }}
           >
             <Sticky context={this.state.context2}>
-              <Segment inverted color="yellow">
-                ToolBar
+              <Segment inverted color="black">
+                <Grid container columns="equal" stackable>
+                  {this.props.bookmarks.length > 0 && (
+                    <Grid.Row>
+                      <SearchComponent
+                        context={this.state.context2}
+                        bookmarks={Bookamrks}
+                      />
+                    </Grid.Row>
+                  )}
+                </Grid>
               </Segment>
             </Sticky>
           </Rail>
-          <Grid container columns="equal" stackable>
-            {this.props.bookmarks.length > 0 && (
+          <Grid
+            container
+            columns="equal"
+            stackable
+            style={{ marginTop: "7em" }}
+          >
+            {/* {this.props.bookmarks.length > 0 && (
               <Grid.Row>
-                <SearchComponent bookmarks={Bookamrks} />
+                <SearchComponent context={this.state.context2} bookmarks={Bookamrks} />
               </Grid.Row>
-            )}
+            )} */}
             <Grid.Row>
               <Grid.Column>
                 {Bookamrks.map((bookmark, i) => {
