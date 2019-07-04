@@ -14,13 +14,23 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
+import {
+  Menu,
+  Breadcrumb,
+  Header,
+  Sticky,
+  Rail,
+  Segment
+} from "semantic-ui-react";
 
 class BookmarkDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookmarks: []
+      bookmarks: [],
+      context: null,
+      context2: null
     };
   }
   componentWillMount() {
@@ -28,6 +38,14 @@ class BookmarkDashboard extends Component {
   }
 
   localBookmarks = [];
+
+  handleContextRef = ref => {
+    this.setState({ context: ref });
+  };
+
+  handleContextRef2 = ref => {
+    this.setState({ context2: ref });
+  };
 
   getBookmarks = () => {
     console.log("getbookmark called");
@@ -46,7 +64,7 @@ class BookmarkDashboard extends Component {
     //       var scrollPercentage = (scrollTop / bodyHeight);
 
     //       console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
-  
+
     //       // if the scroll is more than 90% from the top, load more content.
     //       if(scrollPercentage > 0.9) {
     //         // Load content
@@ -63,7 +81,6 @@ class BookmarkDashboard extends Component {
     // this.props.setBookmarks({ bookmarks: flattenedBookmarks });
     //============
 
-    
     // let recentBookmarks =[];
     // flattenNode(bookmarks, recentBookmarks);
     // this.localRecentBookmarks.push(...recentBookmarks);
@@ -86,15 +103,15 @@ class BookmarkDashboard extends Component {
       this.localBookmarks.push(...flattenedBookmarks);
       this.addBookmarksInState(18);
       window.onscroll = debounce(() => {
-          let scrollTop = document.documentElement.scrollTop;
-          let windowHeight = window.innerHeight;
-          let bodyHeight = document.documentElement.scrollHeight - windowHeight;
-          let scrollPercentage = (scrollTop / bodyHeight);
+        let scrollTop = document.documentElement.scrollTop;
+        let windowHeight = window.innerHeight;
+        let bodyHeight = document.documentElement.scrollHeight - windowHeight;
+        let scrollPercentage = scrollTop / bodyHeight;
 
-          console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
-  
-          // if the scroll is more than 70% from the top, load more content.
-          if(scrollPercentage > 0.7) {
+        console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
+
+        // if the scroll is more than 70% from the top, load more content.
+        if (scrollPercentage > 0.7) {
           // Load more content!
           this.addBookmarksInState(21);
         }
@@ -117,13 +134,23 @@ class BookmarkDashboard extends Component {
     this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
   };
 
-  addBookmarksInState = (numberOfBookmarks) => {
+  addBookmarksInState = numberOfBookmarks => {
     setTimeout(() => {
-      if(this.state.bookmarks.length + numberOfBookmarks < this.localBookmarks.length) {
+      if (
+        this.state.bookmarks.length + numberOfBookmarks <
+        this.localBookmarks.length
+      ) {
         this.setState((prev, props) => ({
-          bookmarks: this.localBookmarks.slice(0, prev.bookmarks.length + numberOfBookmarks)
+          bookmarks: this.localBookmarks.slice(
+            0,
+            prev.bookmarks.length + numberOfBookmarks
+          )
         }));
-      } else if((this.localBookmarks.length - this.state.bookmarks.length) > 0 && (this.localBookmarks.length - this.state.bookmarks.length)  < numberOfBookmarks) {
+      } else if (
+        this.localBookmarks.length - this.state.bookmarks.length > 0 &&
+        this.localBookmarks.length - this.state.bookmarks.length <
+          numberOfBookmarks
+      ) {
         this.setState((prev, props) => ({
           bookmarks: this.localBookmarks.slice(0)
         }));
@@ -154,63 +181,112 @@ class BookmarkDashboard extends Component {
       //     <BookmarkCard key={bookmark.id} bookmark={bookmark} />
       //   )}
       //   </Grid>
-      <Grid container columns="equal" stackable>
-        <Grid.Row>
-          {this.props.recentBookmarks.map((bookmark, idx) => {
-            return (
+      <>
+        <div ref={this.handleContextRef} style={{ marginBottom: "2em" }}>
+          <Rail
+            internal
+            position="left"
+            attached
+            style={{ top: "auto", height: "auto", width: "100%" }}
+          >
+            <Sticky context={this.state.context}>
+              <Menu inverted style={{ margin: 0 }}>
+                <Menu.Item>Home</Menu.Item>
+                <Menu.Item>Users</Menu.Item>
+                <Menu.Item position="right">Logout</Menu.Item>
+              </Menu>
+
+              <div style={{ backgroundColor: "#e5dfdf" }}>
+                <Breadcrumb>
+                  <Breadcrumb.Section link>Users</Breadcrumb.Section>
+                  <Breadcrumb.Divider icon="right chevron" />
+                  <Breadcrumb.Section>John Doe</Breadcrumb.Section>
+                </Breadcrumb>
+              </div>
+            </Sticky>
+          </Rail>
+          <Grid container columns="equal" stackable>
+            <Grid.Row>
+              {this.props.recentBookmarks.map((bookmark, idx) => {
+                return (
+                  <Grid.Column>
+                    <BookmarkRecentCard bookmark={bookmark} key={bookmark.id} />
+                  </Grid.Column>
+                );
+              })}
+            </Grid.Row>
+          </Grid>
+        </div>
+
+        <div ref={this.handleContextRef2} style={{ padding: "1em" }}>
+          <Rail
+            internal
+            position="left"
+            attached
+            style={{ top: "auto", height: "auto", width: "100%" }}
+          >
+            <Sticky context={this.state.context2}>
+              <Segment inverted color="yellow">
+                ToolBar
+              </Segment>
+            </Sticky>
+          </Rail>
+          <Grid container columns="equal" stackable>
+            {this.props.bookmarks.length > 0 && (
+              <Grid.Row>
+                <SearchComponent bookmarks={Bookamrks} />
+              </Grid.Row>
+            )}
+            <Grid.Row>
               <Grid.Column>
-                <BookmarkRecentCard bookmark={bookmark} key={bookmark.id} />
+                {Bookamrks.map((bookmark, i) => {
+                  if (i % 3 === 0)
+                    return (
+                      <BookmarkCard
+                        key={bookmark.id}
+                        bookmark={bookmark}
+                        setSelectedFolderAndFilter={
+                          this.setSelectedFolderAndFilter
+                        }
+                        colorsMap={this.props.colorsMap}
+                      />
+                    );
+                })}
               </Grid.Column>
-            );
-          })}
-        </Grid.Row>
-        {this.props.bookmarks.length > 0 && (
-          <Grid.Row>
-            <SearchComponent bookmarks={Bookamrks} />
-          </Grid.Row>
-        )}
-        <Grid.Row>
-          <Grid.Column>
-            {Bookamrks.map((bookmark, i) => {
-              if (i % 3 === 0)
-                return (
-                  <BookmarkCard
-                    key={bookmark.id}
-                    bookmark={bookmark}
-                    setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
-                    colorsMap={this.props.colorsMap}
-                  />
-                );
-            })}
-          </Grid.Column>
-          <Grid.Column>
-            {Bookamrks.map((bookmark, i) => {
-              if (i % 3 === 1)
-                return (
-                  <BookmarkCard
-                    key={bookmark.id}
-                    bookmark={bookmark}
-                    setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
-                    colorsMap={this.props.colorsMap}
-                  />
-                );
-            })}
-          </Grid.Column>
-          <Grid.Column>
-            {Bookamrks.map((bookmark, i) => {
-              if (i % 3 === 2)
-                return (
-                  <BookmarkCard
-                    key={bookmark.id}
-                    bookmark={bookmark}
-                    setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
-                    colorsMap={this.props.colorsMap}
-                  />
-                );
-            })}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              <Grid.Column>
+                {Bookamrks.map((bookmark, i) => {
+                  if (i % 3 === 1)
+                    return (
+                      <BookmarkCard
+                        key={bookmark.id}
+                        bookmark={bookmark}
+                        setSelectedFolderAndFilter={
+                          this.setSelectedFolderAndFilter
+                        }
+                        colorsMap={this.props.colorsMap}
+                      />
+                    );
+                })}
+              </Grid.Column>
+              <Grid.Column>
+                {Bookamrks.map((bookmark, i) => {
+                  if (i % 3 === 2)
+                    return (
+                      <BookmarkCard
+                        key={bookmark.id}
+                        bookmark={bookmark}
+                        setSelectedFolderAndFilter={
+                          this.setSelectedFolderAndFilter
+                        }
+                        colorsMap={this.props.colorsMap}
+                      />
+                    );
+                })}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+      </>
     );
   }
 }
