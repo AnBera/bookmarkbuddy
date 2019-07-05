@@ -19,35 +19,23 @@ export const previewBookmarkService = request => {
     });
 };
 
-export const convertPreviewImagesService = requestBody => {
+//export async function convertPreviewImagesService(requestBody) {
+export const convertPreviewImagesService = (requestBody) => {
   const convertImages_ENDPOINT = Configs.baseUrl + "thumbnail";
-  fetch(convertImages_ENDPOINT, {
-    method: "POST",
-    // mode: "cors",
-    headers: {
-      // "Accept": "application/json',
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
-    },
-    body: JSON.stringify(["https://www.amazon.in", "https://www.google.com", "https://www.yahoo.com"])
-  })
+  return fetch(convertImages_ENDPOINT, {
+      method: "POST",
+      // mode: "cors",
+      headers: {
+        // "Accept": "application/json',
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(requestBody)
+    })
     .then(response => {
       return response.json();
     })
     .then(json => {
       return json;
     });
-
-  // const parameters = {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     'Access-Control-Allow-Origin': "*"
-  //   },
-  //   mode: 'no-cors',
-  //   body: JSON.stringify(requestBody)
-  // };
-  // let response = await fetch(convertImages_ENDPOINT, parameters);
-  // let data = await response.json();
-  // return data;
 };

@@ -32,7 +32,7 @@ class BookmarkDashboard extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks && !this.props.isImagesConverted) {
-      // this.props.callGenerateImages(generateURLs(nextProps.bookmarks));
+     // this.props.callGenerateImages(generateURLs(nextProps.bookmarks));
       this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
     }
   }
@@ -213,6 +213,7 @@ class BookmarkDashboard extends Component {
                   <BookmarkCard
                     key={bookmark.id}
                     bookmark={bookmark}
+                    isImagesConverted={this.props.isImagesConverted}
                     setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
                     colorsMap={this.props.colorsMap}
                   />

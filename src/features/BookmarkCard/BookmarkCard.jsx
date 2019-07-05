@@ -5,7 +5,7 @@ import Hover from "../../app/common/Component/Hover";
 import Configs from "../../app/common/constants";
 
 class BookmarkCard extends Component {
-  onCategoryClick = (e) => {
+  onCategoryClick = e => {
     e.preventDefault();
     this.props.setSelectedFolderAndFilter(e.target.innerText);
   };
@@ -22,23 +22,29 @@ class BookmarkCard extends Component {
       //   <Grid.Column>
       <Card fluid>
         <Card.Content href={bookmark.url}>
-          {this.props.isconvertedSuccessfully && <div className="imageContainer" style={{ backgroundColor: colorsMap[bookmark.category] }}>
-            {/* <span className="initialAltText">{extractHostname(bookmark.url).charAt(0)}</span> */}
-            <Image
-              floated="right"
-              size="tiny"
-              src={Configs.imageurl + "amazon.in.png"}
-            // src={`${this.props.IssuccessfullyConverted? bookmark.url.:""}`}
-            />
-          </div>}
-          {!this.props.isconvertedSuccessfully && <div className="imageContainer" style={{ backgroundColor: colorsMap[bookmark.category] }}>
-            <span className="initialAltText">{extractHostname(bookmark.url).charAt(0)}</span>
-            <Image
-              floated="right"
-              size="tiny"
-              src=""
-            />
-          </div>}
+          {this.props.isconvertedSuccessfully && (
+            <div
+              className="imageContainer"
+              style={{ backgroundColor: colorsMap[bookmark.category] }}
+            >
+              <Image
+                floated="right"
+                size="tiny"
+                src={Configs.imageurl + "amazon.com.png"}
+              />
+            </div>
+          )}
+          {!this.props.isconvertedSuccessfully && (
+            <div
+              className="imageContainer"
+              style={{ backgroundColor: colorsMap[bookmark.category] }}
+            >
+              <span className="initialAltText">
+                {extractHostname(bookmark.url).charAt(0)}
+              </span>
+              <Image floated="right" size="tiny" src="" />
+            </div>
+          )}
           {/*TODO use onclick to filter based on sitename */}
           <div className="url-heading">
             <Image
@@ -48,13 +54,21 @@ class BookmarkCard extends Component {
             {extractHostname(bookmark.url)}
           </div>
           <Card.Meta>{bookmark.title}</Card.Meta>
-          <Hover onHover={<Label attached="bottom left" style={{ backgroundColor: colorsMap[bookmark.category] }} onClick={this.onCategoryClick}>
-            {bookmark.category}
-            <span className="category"></span>
-          </Label>}>
+          <Hover
+            onHover={
+              <Label
+                attached="bottom left"
+                style={{ backgroundColor: colorsMap[bookmark.category] }}
+                onClick={this.onCategoryClick}
+              >
+                {bookmark.category}
+                <span className="category" />
+              </Label>
+            }
+          >
             <Label attached="bottom left" onClick={this.onCategoryClick}>
               {bookmark.category}
-              <span className="category" style={style}></span>
+              <span className="category" style={style} />
             </Label>
           </Hover>
         </Card.Content>
