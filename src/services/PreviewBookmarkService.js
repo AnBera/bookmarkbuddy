@@ -1,5 +1,4 @@
 import Configs from "../app/common/constants";
-import $ from 'jquery';
 
 export const previewBookmarkService = request => {
   const preview_ENDPOINT = Configs.baseUrl + "thumbnail?url=" + request;
@@ -20,17 +19,24 @@ export const previewBookmarkService = request => {
     });
 };
 
-export const convertPreviewImagesService = (requestBody) => {
+export const convertPreviewImagesService = requestBody => {
   const convertImages_ENDPOINT = Configs.baseUrl + "thumbnail";
-  return fetch(convertImages_ENDPOINT, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: new Headers({
+  fetch(convertImages_ENDPOINT, {
+    method: "POST",
+    // mode: "cors",
+    headers: {
+      // "Accept": "application/json',
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': "*"
+      "Access-Control-Allow-Origin": "*"
+    },
+    body: JSON.stringify(["https://www.amazon.in", "https://www.google.com", "https://www.yahoo.com"])
+  })
+    .then(response => {
+      return response.json();
     })
-  }).then(response => { return response.json() }).then(json => { return json; });
-
+    .then(json => {
+      return json;
+    });
 
   // const parameters = {
   //   method: "POST",
@@ -44,6 +50,4 @@ export const convertPreviewImagesService = (requestBody) => {
   // let response = await fetch(convertImages_ENDPOINT, parameters);
   // let data = await response.json();
   // return data;
-
-}
-
+};
