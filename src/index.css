@@ -143,6 +143,7 @@ a.ui.card:hover, .ui.fluid.card:hover {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4) 100%, rgba(0, 0, 0, 0.9));
   box-shadow: inset -1px 0px 38px 5px rgba(0, 0, 0, 0.40);
   min-height: 7em;
+  min-width: 6.58em;
   border-radius: 5px;
   /* display: inline-block; */
   float: right;

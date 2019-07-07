@@ -66,7 +66,7 @@ export const DashBoardReducer = (state = INITIAL_STATE, action) => {
       };
     case types.FAILED_TO_GET_IMAGES:
       return {
-        ...state, colorsMap: INITIAL_STATE.isImagesConverted
+        ...state, isImagesConverted: INITIAL_STATE.isImagesConverted
       };
 
     default:

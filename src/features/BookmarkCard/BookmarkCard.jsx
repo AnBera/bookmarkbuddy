@@ -10,6 +10,18 @@ class BookmarkCard extends Component {
     this.props.setSelectedFolderAndFilter(e.target.innerText);
   };
 
+  isImageLoaded = true;
+
+  onImageLoad = (e)=> {
+    e.target.style = { visibility: "visible" };
+  };
+
+  onImageError = (e) => {
+    // this.props.setImageReceiveFailure();
+    this.isImageLoaded = false;
+    // e.target.src = 'some default image url'
+  };
+
   render() {
     const { bookmark, colorsMap } = this.props;
     let style = {
@@ -18,24 +30,31 @@ class BookmarkCard extends Component {
     // let hoverStyle = {
     //   backgroundColor: colorsMap[bookmark.category],
     // };
+
     return (
       //   <Grid.Column>
       <Card fluid>
         <Card.Content href={bookmark.url}>
-          {this.props.isconvertedSuccessfully && (
+          {this.isImageLoaded && (
             <div
               className="imageContainer"
               style={{ backgroundColor: colorsMap[bookmark.category] }}
             >
+              <span className="initialAltText">
+                {extractHostname(bookmark.url).charAt(0)}
+              </span>
               <Image
                 className="imageThubmbnail"
                 floated="right"
                 size="tiny"
                 src={Configs.imageurl + extractHostname(bookmark.url) + '.png'}
+                style={{ visibility: "hidden" }}
+                onLoad={this.onImageLoad}
+                onError={this.onImageError}
               />
             </div>
           )}
-          {!this.props.isconvertedSuccessfully && (
+          {!this.isImageLoaded && (
             <div
               className="imageContainer"
               style={{ backgroundColor: colorsMap[bookmark.category] }}
