@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode, generateURLs } from "../../app/common/util/Util";
+import { flattenNode, extractUrlsFromBookmarks } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -49,8 +49,8 @@ class BookmarkDashboard extends Component {
   };
   componentWillReceiveProps(nextProps) {
     if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks && !this.props.isImagesConverted) {
-     // this.props.callGenerateImages(generateURLs(nextProps.bookmarks));
-      this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
+      this.props.callGenerateImages(extractUrlsFromBookmarks(nextProps.bookmarks).slice(0, 6));
+      // this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
     }
   }
 

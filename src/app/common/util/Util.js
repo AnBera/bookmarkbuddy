@@ -59,11 +59,20 @@ export const populateRandomColor = (folderNames) => {
   return colorsMap;
 };
 
-export const generateURLs = (Objurls) => {
+export const extractUrlsFromBookmarks = (bookmarks) => {
   let urls = [];
-  if (Objurls) {
-    Objurls.map((item) => {
-      urls.push("https://" + extractHostname(item.url));
+
+  if (bookmarks.length) {
+    bookmarks.forEach((bookmark) => {
+      let hostname;
+
+      //find & remove protocol (http, ftp, etc.) and get hostname
+      if (bookmark.url.indexOf("//") > -1) {
+        hostname = bookmark.url.split("//")[0] + "//"+ bookmark.url.split("/")[2];
+      } else {
+        hostname = bookmark.url.split("/")[0];
+      }
+      urls.push(hostname);
     })
   }
   return urls;

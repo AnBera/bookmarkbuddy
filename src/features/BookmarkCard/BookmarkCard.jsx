@@ -28,9 +28,10 @@ class BookmarkCard extends Component {
               style={{ backgroundColor: colorsMap[bookmark.category] }}
             >
               <Image
+                className="imageThubmbnail"
                 floated="right"
                 size="tiny"
-                src={Configs.imageurl + "amazon.com.png"}
+                src={Configs.imageurl + extractHostname(bookmark.url) + '.png'}
               />
             </div>
           )}
