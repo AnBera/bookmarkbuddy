@@ -7,8 +7,10 @@ class BookmarkRecentCard extends Component {
     const { bookmark } = this.props;
     return (
       <Card fluid style={{"margin-top": "3rem"}} href={bookmark.url}>
-        <div className="imageContainer" style={{backgroundColor: "green"}}>
-          <span className="initialAltText">B</span>
+        <div className="imageContainer" style={{backgroundColor: "grey"}}>
+          <span className="initialAltText">
+          {extractHostname(bookmark.url).charAt(0)}
+          </span>
           <Image
             floated="right"
             size="tiny"
@@ -18,10 +20,10 @@ class BookmarkRecentCard extends Component {
         <Card.Content>
           <Card.Header>{extractHostname(bookmark.url)}</Card.Header>
           <Card.Meta>
-            <span className="date">Joined in 2015</span>
+            <span className="date">Added in {bookmark.dateAdded}</span>
           </Card.Meta>
           <Card.Description>
-            Matthew is a musician living in Nashville.
+            {bookmark.title}
           </Card.Description>
         </Card.Content>
       </Card>
