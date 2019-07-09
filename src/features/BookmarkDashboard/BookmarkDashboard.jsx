@@ -24,6 +24,7 @@ import {
   Rail,
   Segment
 } from "semantic-ui-react";
+import BookmarkbuddyLogo from "../../app/assets/images/BookmarkbuddyLogo.png";
 
 class BookmarkDashboard extends Component {
   constructor(props) {
@@ -185,30 +186,26 @@ class BookmarkDashboard extends Component {
       //   )}
       //   </Grid>
       <>
-        <div ref={this.handleContextRef} style={{ marginBottom: "2em" }}>
+        <div ref={this.handleContextRef} style={{ marginTop: "2em" }}>
           <Rail
             internal
             position="left"
             attached
-            style={{ top: "auto", height: "auto", width: "100%" }}
+            style={{ top: "auto", height: "80px", width: "100%" }}
           >
             <Sticky context={this.state.context}>
-              <Menu inverted style={{ margin: 0 }}>
+              {/* <Menu inverted style={{ margin: 0 }}>
                 <Menu.Item>Home</Menu.Item>
                 <Menu.Item>Users</Menu.Item>
                 <Menu.Item position="right">Logout</Menu.Item>
-              </Menu>
+              </Menu> */}
 
-              <div style={{ backgroundColor: "#e5dfdf" }}>
-                <Breadcrumb>
-                  <Breadcrumb.Section link>Users</Breadcrumb.Section>
-                  <Breadcrumb.Divider icon="right chevron" />
-                  <Breadcrumb.Section>John Doe</Breadcrumb.Section>
-                </Breadcrumb>
+              <div style={{ backgroundColor: "#161626", textAlign:"center", height:"60px" }}>
+                <img src={BookmarkbuddyLogo} alt="BookmarkBuddy"/>
               </div>
             </Sticky>
           </Rail>
-          <Grid container columns="equal" stackable>
+          <Grid container columns="equal" stackable style={{paddingTop:"2em"}}>
             <Grid.Row>
               {this.props.recentBookmarks.map((bookmark, idx) => {
                 return (
@@ -229,7 +226,7 @@ class BookmarkDashboard extends Component {
             style={{ top: "auto", height: "auto", width: "100%" }}
           >
             <Sticky context={this.state.context2}>
-              <Segment inverted color="black">
+              <Segment inverted style={{ backgroundColor:"#161626" }}>
                 <Grid container columns="equal" stackable>
                   {this.props.bookmarks.length > 0 && (
                     <Grid.Row>
