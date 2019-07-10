@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode, generateURLs } from "../../app/common/util/Util";
+import { flattenNode, extractUrlsFromBookmarks } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -15,13 +15,24 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
+import {
+  Menu,
+  Breadcrumb,
+  Header,
+  Sticky,
+  Rail,
+  Segment
+} from "semantic-ui-react";
+import BookmarkbuddyLogo from "../../app/assets/images/BookmarkbuddyLogo.png";
 
 class BookmarkDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookmarks: []
+      bookmarks: [],
+      context: null,
+      context2: null
     };
   }
   componentWillMount() {
@@ -30,10 +41,17 @@ class BookmarkDashboard extends Component {
 
   localBookmarks = [];
 
+  handleContextRef = ref => {
+    this.setState({ context: ref });
+  };
+
+  handleContextRef2 = ref => {
+    this.setState({ context2: ref });
+  };
   componentWillReceiveProps(nextProps) {
     if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks && !this.props.isImagesConverted) {
-     // this.props.callGenerateImages(generateURLs(nextProps.bookmarks));
-      this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
+      this.props.callGenerateImages(extractUrlsFromBookmarks(nextProps.bookmarks).slice(0, 6));
+      // this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
     }
   }
 
@@ -70,6 +88,13 @@ class BookmarkDashboard extends Component {
     // }, 100);
     // this.props.setBookmarks({ bookmarks: flattenedBookmarks });
     //============
+
+    // let recentBookmarks =[];
+    // flattenNode(bookmarks, recentBookmarks);
+    // this.localRecentBookmarks.push(...recentBookmarks);
+    // // this.setState({recentBookmarks : recentBookmarks});
+
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     chrome.bookmarks.getRecent(4, bookmarksArr => {
       this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
@@ -119,13 +144,17 @@ class BookmarkDashboard extends Component {
     this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
   };
 
-  addBookmarksInState = (numberOfBookmarks) => {
+  addBookmarksInState = numberOfBookmarks => {
     setTimeout(() => {
       if (this.state.bookmarks.length + numberOfBookmarks < this.localBookmarks.length) {
         this.setState((prev, props) => ({
-          bookmarks: this.localBookmarks.slice(0, prev.bookmarks.length + numberOfBookmarks)
+          bookmarks: this.localBookmarks.slice(
+            0,
+            prev.bookmarks.length + numberOfBookmarks
+          )
         }));
-      } else if ((this.localBookmarks.length - this.state.bookmarks.length) > 0 && (this.localBookmarks.length - this.state.bookmarks.length) < numberOfBookmarks) {
+      } else if ((this.localBookmarks.length - this.state.bookmarks.length) > 0 && 
+        (this.localBookmarks.length - this.state.bookmarks.length) < numberOfBookmarks) {
         this.setState((prev, props) => ({
           bookmarks: this.localBookmarks.slice(0)
         }));
@@ -156,66 +185,124 @@ class BookmarkDashboard extends Component {
       //     <BookmarkCard key={bookmark.id} bookmark={bookmark} />
       //   )}
       //   </Grid>
-      <Grid container columns="equal" stackable>
-        <Grid.Row>
-          {this.props.recentBookmarks.map((bookmark, idx) => {
-            return (
+      <>
+        <div ref={this.handleContextRef} style={{ marginTop: "2em" }}>
+          <Rail
+            internal
+            position="left"
+            attached
+            style={{ top: "auto", height: "80px", width: "100%" }}
+          >
+            <Sticky context={this.state.context}>
+              {/* <Menu inverted style={{ margin: 0 }}>
+                <Menu.Item>Home</Menu.Item>
+                <Menu.Item>Users</Menu.Item>
+                <Menu.Item position="right">Logout</Menu.Item>
+              </Menu> */}
+
+              <div style={{ backgroundColor: "#161626", textAlign:"center", height:"60px" }}>
+                <img src={BookmarkbuddyLogo} alt="BookmarkBuddy"/>
+              </div>
+            </Sticky>
+          </Rail>
+          <Grid container columns="equal" stackable style={{paddingTop:"2em"}}>
+            <Grid.Row>
+              {this.props.recentBookmarks.map((bookmark, idx) => {
+                return (
+                  <Grid.Column>
+                    <BookmarkRecentCard bookmark={bookmark} key={bookmark.id} />
+                  </Grid.Column>
+                );
+              })}
+            </Grid.Row>
+          </Grid>
+        </div>
+
+        <div ref={this.handleContextRef2} style={{ padding: "1em" }}>
+          <Rail
+            internal
+            position="left"
+            attached
+            style={{ top: "auto", height: "auto", width: "100%" }}
+          >
+            <Sticky context={this.state.context2}>
+              <Segment inverted style={{ backgroundColor:"#161626" }}>
+                <Grid container columns="equal" stackable>
+                  {this.props.bookmarks.length > 0 && (
+                    <Grid.Row>
+                      <SearchComponent
+                        context={this.state.context2}
+                        bookmarks={Bookamrks}
+                      />
+                    </Grid.Row>
+                  )}
+                </Grid>
+              </Segment>
+            </Sticky>
+          </Rail>
+          <Grid
+            container
+            columns="equal"
+            stackable
+            style={{ marginTop: "7em" }}
+          >
+            {/* {this.props.bookmarks.length > 0 && (
+              <Grid.Row>
+                <SearchComponent context={this.state.context2} bookmarks={Bookamrks} />
+              </Grid.Row>
+            )} */}
+            <Grid.Row>
               <Grid.Column>
-                <BookmarkRecentCard bookmark={bookmark} key={bookmark.id} />
+                {Bookamrks.map((bookmark, i) => {
+                  if (i % 3 === 0)
+                    return (
+                      <BookmarkCard
+                        key={bookmark.id}
+                        isconvertedSuccessfully={this.props.isImagesConverted}
+                        bookmark={bookmark}
+                        setSelectedFolderAndFilter={
+                          this.setSelectedFolderAndFilter
+                        }
+                        colorsMap={this.props.colorsMap}
+                      />
+                    );
+                })}
               </Grid.Column>
-            );
-          })}
-        </Grid.Row>
-        {this.props.bookmarks.length > 0 && (
-          <Grid.Row>
-            <SearchComponent bookmarks={Bookamrks} />
-          </Grid.Row>
-        )}
-        <Grid.Row>
-          <Grid.Column>
-            {Bookamrks.map((bookmark, i) => {
-              if (i % 3 === 0)
-                return (
-                  <BookmarkCard
-                    isconvertedSuccessfully={this.props.isImagesConverted}
-                    key={bookmark.id}
-                    bookmark={bookmark}
-                    setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
-                    colorsMap={this.props.colorsMap}
-                  />
-                );
-            })}
-          </Grid.Column>
-          <Grid.Column>
-            {Bookamrks.map((bookmark, i) => {
-              if (i % 3 === 1)
-                return (
-                  <BookmarkCard
-                    isconvertedSuccessfully={this.props.isImagesConverted}
-                    key={bookmark.id}
-                    bookmark={bookmark}
-                    setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
-                    colorsMap={this.props.colorsMap}
-                  />
-                );
-            })}
-          </Grid.Column>
-          <Grid.Column>
-            {Bookamrks.map((bookmark, i) => {
-              if (i % 3 === 2)
-                return (
-                  <BookmarkCard
-                    key={bookmark.id}
-                    bookmark={bookmark}
-                    isImagesConverted={this.props.isImagesConverted}
-                    setSelectedFolderAndFilter={this.setSelectedFolderAndFilter}
-                    colorsMap={this.props.colorsMap}
-                  />
-                );
-            })}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              <Grid.Column>
+                {Bookamrks.map((bookmark, i) => {
+                  if (i % 3 === 1)
+                    return (
+                      <BookmarkCard
+                        key={bookmark.id}
+                        isconvertedSuccessfully={this.props.isImagesConverted}
+                        bookmark={bookmark}
+                        setSelectedFolderAndFilter={
+                          this.setSelectedFolderAndFilter
+                        }
+                        colorsMap={this.props.colorsMap}
+                      />
+                    );
+                })}
+              </Grid.Column>
+              <Grid.Column>
+                {Bookamrks.map((bookmark, i) => {
+                  if (i % 3 === 2)
+                    return (
+                      <BookmarkCard
+                        key={bookmark.id}
+                        bookmark={bookmark}
+                        setSelectedFolderAndFilter={
+                          this.setSelectedFolderAndFilter
+                        }
+                        colorsMap={this.props.colorsMap}
+                      />
+                    );
+                })}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+      </>
     );
   }
 }
