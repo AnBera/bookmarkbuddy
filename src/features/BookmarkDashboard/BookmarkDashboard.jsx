@@ -24,7 +24,7 @@ import {
   Rail,
   Segment
 } from "semantic-ui-react";
-import BookmarkbuddyLogo from "../../app/assets/images/BookmarkbuddyLogo.png";
+import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
 
 class BookmarkDashboard extends Component {
   constructor(props) {
@@ -89,10 +89,10 @@ class BookmarkDashboard extends Component {
     // this.props.setBookmarks({ bookmarks: flattenedBookmarks });
     //============
 
-    // let recentBookmarks =[];
-    // flattenNode(bookmarks, recentBookmarks);
-    // this.localRecentBookmarks.push(...recentBookmarks);
-    // // this.setState({recentBookmarks : recentBookmarks});
+    // let recentBookmarks = [{ "dateAdded": 1557765974569, "id": "33", "index": 0, "parentId": "34", "title": "GitHub - AnBera/bookmarkbuddy", "url": "https://github.com/AnBera/bookmarkbuddy" }];
+    // // flattenNode(bookmarks, recentBookmarks);
+    // // this.localRecentBookmarks.push(...recentBookmarks);
+    // this.props.setRecentBookmarks({bookmarks : recentBookmarks});
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -201,7 +201,7 @@ class BookmarkDashboard extends Component {
               </Menu> */}
 
               <div style={{ backgroundColor: "#161626", textAlign:"center", height:"60px" }}>
-                <img src={BookmarkbuddyLogo} alt="BookmarkBuddy"/>
+                <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy"/>
               </div>
             </Sticky>
           </Rail>

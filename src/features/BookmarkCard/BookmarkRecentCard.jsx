@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Image } from "semantic-ui-react";
-import { extractHostname } from "../../app/common/util/Util";
+import { extractHostname, chromeTimeValueToDate } from "../../app/common/util/Util";
 
 class BookmarkRecentCard extends Component {
   render() {
@@ -20,7 +20,7 @@ class BookmarkRecentCard extends Component {
         <Card.Content>
           <Card.Header>{extractHostname(bookmark.url)}</Card.Header>
           <Card.Meta>
-            <span className="date">Added in {bookmark.dateAdded}</span>
+            <span className="date">Added in {chromeTimeValueToDate(bookmark.dateAdded)}</span>
           </Card.Meta>
           <Card.Description>
             {bookmark.title}

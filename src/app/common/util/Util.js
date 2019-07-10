@@ -77,3 +77,16 @@ export const extractUrlsFromBookmarks = (bookmarks) => {
   }
   return urls;
 }
+
+export const chromeTimeValueToDate = (timestamp) => {
+  // var microseconds = parseInt(timestamp, 10);
+  //  var millis = microseconds / 1000;
+   var past = new Date(1970, 0, 1).getTime();
+   return new Date(past + timestamp).toString();
+
+  // var myDate = new Date(); // Your timezone!
+  // var epoch = myDate.getTime()/1000.0;
+  // // var epoch = -11644473600000;
+  // console.log(new Date(epoch + timestamp / 1000));
+  // return new Date(epoch + timestamp / 1000).toDateString();
+}
