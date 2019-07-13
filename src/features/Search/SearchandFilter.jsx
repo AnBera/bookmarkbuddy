@@ -2,36 +2,53 @@ import React, { Component } from "react";
 import Select from "./SelectFolder";
 import { Icon } from "semantic-ui-react";
 import "./search.css";
+import debounce from "lodash.debounce";
 
-class SearchAndFilter extends Component {
-  open_closeDropdown = () => {
-    this.props.open_CloseDropdown();
+const SearchAndFilter=(props) =>{
+  //{optionList,setSearchedText,setSelectedFolder,open_CloseDropdown,SearchedText,SelectedFolder,IsDropDownOpen}
+  debugger;
+  
+  
+  const open_closeDropdown = () => {
+    props.open_CloseDropdown();
   };
 
-  setSelectedFolder = folderName => {
-    this.props.setSelectedFolder(folderName);
+  const setSelectedFolderLocal = (folderName) => {
+    props.setSelectedFolder(folderName);
   };
 
-  onSearch = e => {
-    this.props.setSearchedText(e.target.value);
+  //   function debounce(a,b,c)
+  //   {
+  //     var d,e;
+  //     return function(){function h(){d=null,c||(e=a.apply(f,g))}var f=this,g=arguments;
+  //     return clearTimeout(d),d=setTimeout(h,b),c&&!d&&(e=a.apply(f,g)),e}
+  //   }
+  //   setSearchTerm = debounce((e) => {
+  //     this.setState({ searchTerm: e.target.value })
+  // }, 250)
+
+  const doDebouncedAction =(e)=> debounce(this.onSearch(e), 250);
+
+  const onSearch = e => {
+    console.log(e.target.value);
+    props.setSearchedText(e.target.value);
   };
 
-  onClearClick = () => {
+  const onClearClick = () => {
     if (this.props.SearchedText !== "") {
-      this.props.setSearchedText("");
+      props.setSearchedText("");
     } else {
       // this.actiavteSearch();
     }
   };
 
-  render() {
-    const select = (
+    const select =(   
       <Select
-        options={this.props.optionList}
-        IsDropDownOpen={this.props.IsDropDownOpen}
-        setSelectedFolder={this.setSelectedFolder}
-        SelectedFolder={this.props.SelectedFolder}
-        open_closeDropdown={this.open_closeDropdown}
+        options={props.optionList}
+        IsDropDownOpen={props.IsDropDownOpen}
+        setSelectedFolder={setSelectedFolderLocal}
+        SelectedFolder={props.SelectedFolder}
+        open_closeDropdown={open_closeDropdown}
       />
     );
 
@@ -39,13 +56,13 @@ class SearchAndFilter extends Component {
       <input
         className="inputSearch"
         placeholder="Search here"
-        onChange={this.onSearch}
-        value={this.props.SearchedText}
+        onChange={()=>doDebouncedAction}
+        value={props.SearchedText}
       />
     );
 
-    const clearIcon = this.props.IsSearchActive ? (
-      <span className="clear" onClick={this.onClearClick}>
+    const clearIcon = props.IsSearchActive ? (
+      <span className="clear" onClick={onClearClick}>
         <Icon name="remove circle" />
       </span>
     ) : null;
@@ -60,6 +77,5 @@ class SearchAndFilter extends Component {
       </div>
     );
   }
-}
 
 export default SearchAndFilter;

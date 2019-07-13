@@ -29,6 +29,7 @@ class SearchComponent extends Component {
   };
 
   searchBookmark = searchedText => {
+    debugger;
     this.props.setSearchedTerm(searchedText);
     let filteredBookmarks = [...this.props.bookmarks];
     if (searchedText !== "") {
