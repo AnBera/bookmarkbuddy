@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode, extractUrlsFromBookmarks } from "../../app/common/util/Util";
+import { flattenNode, extractUrlsFromBookmarks, extractHostname } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -22,9 +22,11 @@ import {
   Header,
   Sticky,
   Rail,
-  Segment
+  Segment,
+  List
 } from "semantic-ui-react";
 import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
+import { SortTypes } from '../../app/common/constants';
 
 class BookmarkDashboard extends Component {
   constructor(props) {
@@ -32,11 +34,26 @@ class BookmarkDashboard extends Component {
     this.state = {
       bookmarks: [],
       context: null,
-      context2: null
+      context2: null,
+      activeItem: 'home'
     };
   }
   componentWillMount() {
     this.getBookmarks();
+  }
+
+  onSortCategoryClick = (sortcategory) => () => {
+    this.localBookmarks.sort((a,b) => {
+      if(sortcategory === SortTypes.URL) {
+        return (extractHostname(a[sortcategory]) > extractHostname(b[sortcategory])) ? 1 : ((extractHostname(b[sortcategory]) > extractHostname(a[sortcategory])) ? -1 : 0);
+      }
+      if(sortcategory === SortTypes.DATE_ADDED) {
+        return (a[sortcategory] > b[sortcategory]) ? -1 : ((b[sortcategory] > a[sortcategory]) ? 1 : 0);
+      }
+      return (a[sortcategory] > b[sortcategory]) ? 1 : ((b[sortcategory] > a[sortcategory]) ? -1 : 0);
+    });
+    this.setState({bookmarks: []});
+    this.addBookmarksInState(18);
   }
 
   localBookmarks = [];
@@ -163,6 +180,7 @@ class BookmarkDashboard extends Component {
   };
 
   render() {
+    // const { activeItem } = this.state;
     let Bookamrks = [];
     if (
       this.props.FilteredBookmarks.length > 0 &&
@@ -226,7 +244,7 @@ class BookmarkDashboard extends Component {
             style={{ top: "auto", height: "auto", width: "100%" }}
           >
             <Sticky context={this.state.context2}>
-              <Segment inverted style={{ backgroundColor:"#161626" }}>
+              <Segment inverted style={{ backgroundColor: "#161626" }}>
                 <Grid container columns="equal" stackable>
                   {this.props.bookmarks.length > 0 && (
                     <Grid.Row>
@@ -234,6 +252,16 @@ class BookmarkDashboard extends Component {
                         context={this.state.context2}
                         bookmarks={Bookamrks}
                       />
+                      <Grid.Column width={16}>
+                        <List floated='right' horizontal>
+                          <List.Item disabled href='#'>
+                            Sort : 
+                          </List.Item>
+                          <span className="item" onClick={this.onSortCategoryClick("dateAdded")}>Date Added</span>
+                          <span className="item" onClick={this.onSortCategoryClick("title")} href="#">Title</span>
+                          <span className="item"  onClick={this.onSortCategoryClick("url")} href="#">Url</span>
+                        </List>
+                      </Grid.Column>                      
                     </Grid.Row>
                   )}
                 </Grid>
