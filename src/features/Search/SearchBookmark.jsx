@@ -44,6 +44,8 @@ class SearchComponent extends Component {
           element.title.toLowerCase().includes(searchedText.toLowerCase()) || element.url.toLowerCase().includes(searchedText.toLowerCase())
         );
       }
+      this.props.setLocalBookmarks(filteredBookmarks);
+      this.props.addBookmarksInState(15);
       this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
     } else {
       this.searchBookmarkWithinFolder(this.props.selectedFolder);
@@ -66,6 +68,8 @@ class SearchComponent extends Component {
           element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase())
       )
     };
+    this.props.setLocalBookmarks(filteredBookmarks);
+    this.props.addBookmarksInState(15);
     this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
   }
 

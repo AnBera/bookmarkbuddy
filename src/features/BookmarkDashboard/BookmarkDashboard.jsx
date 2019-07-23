@@ -58,6 +58,13 @@ class BookmarkDashboard extends Component {
 
   localBookmarks = [];
 
+  setLocalBookmarks = bookmarks => {
+    this.localBookmarks = [];
+    this.localBookmarks.push(...bookmarks);
+    //TODO move it to another method, reset the bookmarks in state
+    this.setState({bookmarks : []});
+  }
+
   handleContextRef = ref => {
     this.setState({ context: ref });
   };
@@ -66,6 +73,13 @@ class BookmarkDashboard extends Component {
     this.setState({ context2: ref });
   };
   componentWillReceiveProps(nextProps) {
+
+    // if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks) {
+    //   this.localBookmarks = this.props.FilteredBookmarks;
+    //   this.setState({bookmarks : []});
+    //   this.addBookmarksInState(18);
+    // }
+
     if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks && !this.props.isImagesConverted) {
       this.props.callGenerateImages(extractUrlsFromBookmarks(nextProps.bookmarks).slice(0, 6));
       // this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
@@ -158,6 +172,8 @@ class BookmarkDashboard extends Component {
           element.category === selectedFolder
       );
     }
+    this.setLocalBookmarks(filteredBookmarks);
+    this.addBookmarksInState(15);
     this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
   };
 
@@ -181,20 +197,21 @@ class BookmarkDashboard extends Component {
 
   render() {
     // const { activeItem } = this.state;
-    let Bookamrks = [];
-    if (
-      this.props.FilteredBookmarks.length > 0 &&
-      this.props.searchTerm !== "-- Select all --"
-    ) {
-      Bookamrks = [...this.props.FilteredBookmarks];
-    } else if (
-      this.props.searchTerm !== "" &&
-      this.props.searchTerm !== "-- Select all --"
-    ) {
-      Bookamrks = [...this.props.FilteredBookmarks];
-    } else {
-      Bookamrks = [...this.state.bookmarks];
-    }
+    let Bookamrks = [...this.state.bookmarks];
+    // if (this.props.FilteredBookmarks.length > 0 && this.props.searchTerm !== "-- Select all --") {
+    //   this.localBookmarks = this.props.FilteredBookmarks;
+    //   this.setState({bookmarks : []});
+    //   this.addBookmarksInState(18);
+    //   // Bookamrks = [...this.props.FilteredBookmarks];
+    // } else if (this.props.searchTerm !== "" && this.props.searchTerm !== "-- Select all --") {
+    //   // this.setState({bookmarks : this.props.FilteredBookmarks});
+    //   this.localBookmarks = this.props.FilteredBookmarks;
+    //   this.setState({bookmarks : []});
+    //   this.addBookmarksInState(18);
+    //   // Bookamrks = [...this.props.FilteredBookmarks];
+    // } else {
+    //   Bookamrks = [...this.state.bookmarks];
+    // }
 
     return (
       // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
@@ -251,6 +268,8 @@ class BookmarkDashboard extends Component {
                       <SearchComponent
                         context={this.state.context2}
                         bookmarks={Bookamrks}
+                        addBookmarksInState={this.addBookmarksInState}
+                        setLocalBookmarks={this.setLocalBookmarks}
                       />
                       <Grid.Column width={16}>
                         <List floated='right' horizontal>
