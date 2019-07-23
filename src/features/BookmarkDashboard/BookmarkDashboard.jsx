@@ -272,13 +272,13 @@ class BookmarkDashboard extends Component {
                         setLocalBookmarks={this.setLocalBookmarks}
                       />
                       <Grid.Column width={16}>
-                        <List floated='right' horizontal>
+                        <List floated='right' horizontal className="sortContainer">
                           <List.Item disabled href='#'>
                             Sort : 
                           </List.Item>
                           <span className="item" onClick={this.onSortCategoryClick("dateAdded")}>Date Added</span>
-                          <span className="item" onClick={this.onSortCategoryClick("title")} href="#">Title</span>
-                          <span className="item"  onClick={this.onSortCategoryClick("url")} href="#">Url</span>
+                          <span className="item" onClick={this.onSortCategoryClick("title")}>Title</span>
+                          <span className="item"  onClick={this.onSortCategoryClick("url")}>Url</span>
                         </List>
                       </Grid.Column>                      
                     </Grid.Row>

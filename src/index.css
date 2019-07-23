@@ -167,4 +167,12 @@ a.ui.card:hover, .ui.fluid.card:hover {
   margin-left: 0;
   width:100%;
   border-radius: 3px;
+  opacity: .8;
+}
+.ui.fluid.card:hover .imageContainer .imageThubmbnail {
+  opacity: 1;
+}
+
+.sortContainer span.item {
+  cursor: pointer
 }
