@@ -35,6 +35,9 @@ class BookmarkCard extends Component {
       //   <Grid.Column>
       <Card fluid>
         <Card.Content href={bookmark.url}>
+        {/* <Label as='a' color='teal' ribbon='right'>
+          Reviews
+        </Label> */}
           {this.isImageLoaded && (
             <div
               className="imageContainer"
