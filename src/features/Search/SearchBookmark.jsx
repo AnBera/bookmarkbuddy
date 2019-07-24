@@ -28,6 +28,47 @@ class SearchComponent extends Component {
     }
   };
 
+  filterList = (q, list) => {
+    function escapeRegExp(s) {
+      return s.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    }
+    const words = q
+      .split(/\s+/g)
+      .map(s => s.trim())
+      .filter(s => !!s);
+    const hasTrailingSpace = q.endsWith(" ");
+    let result =[];
+    const searchRegex = new RegExp(
+      words
+        .map((word, i) => {
+          if (i + 1 === words.length && !hasTrailingSpace) {
+            // The last word - ok with the word being "startswith"-like
+            return `(?=.*\\b${escapeRegExp(word)})`;
+          } else {
+            // Not the last word - expect the whole word exactly
+            return `(?=.*\\b${escapeRegExp(word)}\\b)`;
+          }
+        })
+        .join("") + ".+",
+      "gi"
+    );
+    result = list.filter(item => {
+      return searchRegex.test(item.title);
+    });
+    result.push(...list.filter(item => {
+      return searchRegex.test(item.url);
+    }));
+
+    return result.reduce((acc, current) => {
+        const x = acc.find(item => item.id === current.id);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
+  }
+
   searchBookmark = searchedText => {
     this.props.setSearchedTerm(searchedText);
     let filteredBookmarks = [...this.props.bookmarks];
@@ -40,9 +81,11 @@ class SearchComponent extends Component {
               element.url.toLowerCase().includes(searchedText.toLowerCase()))
         );
       } else {
-        filteredBookmarks = filteredBookmarks.filter(element =>
-          element.title.toLowerCase().includes(searchedText.toLowerCase()) || element.url.toLowerCase().includes(searchedText.toLowerCase())
-        );
+        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
+
+        // filteredBookmarks = filteredBookmarks.filter(element =>
+        //   element.title.toLowerCase().includes(searchedText.toLowerCase()) || element.url.toLowerCase().includes(searchedText.toLowerCase())
+        // );
       }
       this.props.setLocalBookmarks(filteredBookmarks);
       this.props.addBookmarksInState(15);
