@@ -28,6 +28,7 @@ class SearchComponent extends Component {
     }
   };
 
+  //https://codesandbox.io/s/62x4mmxr0n
   filterList = (q, list) => {
     function escapeRegExp(s) {
       return s.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
@@ -74,18 +75,14 @@ class SearchComponent extends Component {
     let filteredBookmarks = [...this.props.bookmarks];
     if (searchedText !== "") {
       if (this.props.selectedFolder !== "-- Select all --" && this.props.selectedFolder !== "") {
-        filteredBookmarks = filteredBookmarks.filter(
-          element =>
-            element.category === this.props.selectedFolder &&
-            (element.title.toLowerCase().includes(searchedText.toLowerCase()) ||
-              element.url.toLowerCase().includes(searchedText.toLowerCase()))
-        );
+        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks.filter(
+          element => element.category === this.props.selectedFolder 
+        ));
+        //  filteredBookmarks.filter(
+        //   element => element.category === this.props.selectedFolder 
+        // );
       } else {
         filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
-
-        // filteredBookmarks = filteredBookmarks.filter(element =>
-        //   element.title.toLowerCase().includes(searchedText.toLowerCase()) || element.url.toLowerCase().includes(searchedText.toLowerCase())
-        // );
       }
       this.props.setLocalBookmarks(filteredBookmarks);
       this.props.addBookmarksInState(15);
