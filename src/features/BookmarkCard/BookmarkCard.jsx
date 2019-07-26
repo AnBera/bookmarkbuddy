@@ -14,6 +14,7 @@ class BookmarkCard extends Component {
 
   onImageLoad = (e)=> {
     e.target.style = { visibility: "visible" };
+    e.target.parentElement.style = { visibility: "visible" };
   };
 
   onImageError = (e) => {
@@ -46,15 +47,17 @@ class BookmarkCard extends Component {
               <span className="initialAltText">
                 {extractHostname(bookmark.url).charAt(0)}
               </span>
-              <Image
-                className="imageThubmbnail"
-                floated="right"
-                size="tiny"
-                src={Configs.imageurl + extractHostname(bookmark.url) + '.png'}
-                style={{ visibility: "hidden" }}
-                onLoad={this.onImageLoad}
-                onError={this.onImageError}
-              />
+              <div className="overlay" style={{ visibility: "hidden" }}>
+                <Image
+                  className="imageThubmbnail"
+                  floated="right"
+                  size="tiny"
+                  src={Configs.imageurl + extractHostname(bookmark.url) + '.png'}
+                  style={{ visibility: "hidden" }}
+                  onLoad={this.onImageLoad}
+                  onError={this.onImageError}
+                />
+              </div>
             </div>
           )}
           {!this.isImageLoaded && (
