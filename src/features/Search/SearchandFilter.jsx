@@ -9,7 +9,7 @@ class SearchAndFilter extends Component {
   };
 
   setSelectedFolder = folderName => {
-    this.props.setSelectedFolder(folderName);
+    this.props.setSelectedFolder("", folderName);
   };
 
   onSearch = e => {

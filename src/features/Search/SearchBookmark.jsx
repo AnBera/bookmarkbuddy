@@ -88,25 +88,41 @@ class SearchComponent extends Component {
       this.props.addBookmarksInState(15);
       this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
     } else {
-      this.searchBookmarkWithinFolder(this.props.selectedFolder);
+      this.searchBookmarkWithinFolder(searchedText, this.props.selectedFolder);
     }
   };
 
-  searchBookmarkWithinFolder = selectedFolder => {
+  searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
     this.props.setSelectedFolder(selectedFolder);
-    let filteredBookmarks = [...this.props.bookmarks];
-    if (selectedFolder !== "-- Select all --") {
-      filteredBookmarks = filteredBookmarks.filter(
-        element =>
-          element.category !== "-- Select all --" &&
-          element.category === selectedFolder &&
-          (element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
-      )
-    } else {
-      filteredBookmarks = filteredBookmarks.filter(
-        element =>
-          element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase())
-      )
+    let filteredBookmarks = [];
+    
+    //no folder selected
+    if (selectedFolder === "-- Select all --" || selectedFolder === "") {
+      //no folder selected no searchtext selected
+      if(searchedText === "")
+        filteredBookmarks = [...this.props.bookmarks];
+      //no folder selected some searchtext selected
+      else
+        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
+    //some folder selected
+    } else { 
+      //some folder selected no searchtext selected
+      if(searchedText === "")
+        filteredBookmarks =  this.props.bookmarks.filter(
+          element => element.category === selectedFolder 
+        );
+      //some folder selected some searchtext selected
+      else
+        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks.filter(
+          element => element.category === selectedFolder 
+        ));
+      
+      // filteredBookmarks.filter(
+      //   element =>
+      //     // element.category !== "-- Select all --" &&
+      //     element.category === selectedFolder &&
+      //     (element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
+      // )
     };
     this.props.setLocalBookmarks(filteredBookmarks);
     this.props.addBookmarksInState(15);

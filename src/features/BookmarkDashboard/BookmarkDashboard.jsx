@@ -187,7 +187,7 @@ class BookmarkDashboard extends Component {
           )
         }));
       } else if ((this.localBookmarks.length - this.state.bookmarks.length) > 0 && 
-        (this.localBookmarks.length - this.state.bookmarks.length) < numberOfBookmarks) {
+        (this.localBookmarks.length - this.state.bookmarks.length) <= numberOfBookmarks) {
         this.setState((prev, props) => ({
           bookmarks: this.localBookmarks.slice(0)
         }));
