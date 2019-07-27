@@ -70,29 +70,8 @@ class SearchComponent extends Component {
       }, []);
   }
 
-  searchBookmark = searchedText => {
-    this.props.setSearchedTerm(searchedText);
-    let filteredBookmarks = [...this.props.bookmarks];
-    if (searchedText !== "") {
-      if (this.props.selectedFolder !== "-- Select all --" && this.props.selectedFolder !== "") {
-        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks.filter(
-          element => element.category === this.props.selectedFolder 
-        ));
-        //  filteredBookmarks.filter(
-        //   element => element.category === this.props.selectedFolder 
-        // );
-      } else {
-        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
-      }
-      this.props.setLocalBookmarks(filteredBookmarks);
-      this.props.addBookmarksInState(15);
-      this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
-    } else {
-      this.searchBookmarkWithinFolder(searchedText, this.props.selectedFolder);
-    }
-  };
-
   searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
+    this.props.setSearchedTerm(searchedText);
     this.props.setSelectedFolder(selectedFolder);
     let filteredBookmarks = [];
     
@@ -138,7 +117,7 @@ class SearchComponent extends Component {
       <Grid.Column width={16}>
         <SearchAndFilter
           optionList={this.props.bookmarkFolders}
-          setSearchedText={this.searchBookmark}
+          setSearchedText={this.searchBookmarkWithinFolder}
           setSelectedFolder={this.searchBookmarkWithinFolder}
           open_CloseDropdown={this.open_CloseDropdown}
           SearchedText={this.props.searchTerm}

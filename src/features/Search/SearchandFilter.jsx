@@ -9,16 +9,16 @@ class SearchAndFilter extends Component {
   };
 
   setSelectedFolder = folderName => {
-    this.props.setSelectedFolder("", folderName);
+    this.props.setSelectedFolder(this.props.searchTerm || "", folderName);
   };
 
   onSearch = e => {
-    this.props.setSearchedText(e.target.value);
+    this.props.setSearchedText(e.target.value, this.props.SelectedFolder);
   };
 
   onClearClick = () => {
     if (this.props.SearchedText !== "") {
-      this.props.setSearchedText("");
+      this.props.setSearchedText("", this.props.SelectedFolder);
     } else {
       // this.actiavteSearch();
     }
