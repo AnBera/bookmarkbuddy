@@ -8,8 +8,8 @@ class SearchAndFilter extends Component {
     this.props.open_CloseDropdown();
   };
 
-  setSelectedFolder = folderName => {
-    this.props.setSelectedFolder(this.props.searchTerm || "", folderName);
+  setSelectedFolder = (searchTerm, folderName) => {
+    this.props.setSelectedFolder(searchTerm || "", folderName);
   };
 
   onSearch = e => {
