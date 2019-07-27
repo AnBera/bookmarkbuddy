@@ -82,7 +82,7 @@ export const chromeTimeValueToDate = (timestamp) => {
   // var microseconds = parseInt(timestamp, 10);
   //  var millis = microseconds / 1000;
    var past = new Date(1970, 0, 1).getTime();
-   return new Date(past + timestamp).toString();
+   return new Date(past + timestamp).toDateString();
 
   // var myDate = new Date(); // Your timezone!
   // var epoch = myDate.getTime()/1000.0;
