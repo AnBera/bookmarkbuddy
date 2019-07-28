@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Label } from "semantic-ui-react";
+import { Card, Image, Label, Icon } from "semantic-ui-react";
 import { extractHostname } from "../../app/common/util/Util";
 import Hover from "../../app/common/Component/Hover";
 import Configs from "../../app/common/constants";
@@ -36,8 +36,14 @@ class BookmarkCard extends Component {
       //   <Grid.Column>
       <Card fluid>
         <Card.Content href={bookmark.url}>
-        {/* <Label as='a' color='teal' ribbon='right'>
-          Reviews
+        <span className="ui transparent floating label context-icons">
+          <Icon name='pin' />
+          <Icon name='edit' />
+          <Icon name='delete' />
+        </span>
+      
+        {/* <Label as='a' color='grey' ribbon='right'>
+          <Icon name='pin' />
         </Label> */}
           {this.isImageLoaded && (
             <div
