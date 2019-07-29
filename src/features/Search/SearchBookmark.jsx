@@ -70,43 +70,38 @@ class SearchComponent extends Component {
       }, []);
   }
 
-  searchBookmark = searchedText => {
+  searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
     this.props.setSearchedTerm(searchedText);
-    let filteredBookmarks = [...this.props.bookmarks];
-    if (searchedText !== "") {
-      if (this.props.selectedFolder !== "-- Select all --" && this.props.selectedFolder !== "") {
-        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks.filter(
-          element => element.category === this.props.selectedFolder 
-        ));
-        //  filteredBookmarks.filter(
-        //   element => element.category === this.props.selectedFolder 
-        // );
-      } else {
-        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
-      }
-      this.props.setLocalBookmarks(filteredBookmarks);
-      this.props.addBookmarksInState(15);
-      this.props.setFilteredBookmarks({ bookmarks: filteredBookmarks });
-    } else {
-      this.searchBookmarkWithinFolder(this.props.selectedFolder);
-    }
-  };
-
-  searchBookmarkWithinFolder = selectedFolder => {
     this.props.setSelectedFolder(selectedFolder);
-    let filteredBookmarks = [...this.props.bookmarks];
-    if (selectedFolder !== "-- Select all --") {
-      filteredBookmarks = filteredBookmarks.filter(
-        element =>
-          element.category !== "-- Select all --" &&
-          element.category === selectedFolder &&
-          (element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
-      )
-    } else {
-      filteredBookmarks = filteredBookmarks.filter(
-        element =>
-          element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase())
-      )
+    let filteredBookmarks = [];
+    
+    //no folder selected
+    if (selectedFolder === "-- Select all --" || selectedFolder === "") {
+      //no folder selected no searchtext selected
+      if(searchedText === "")
+        filteredBookmarks = [...this.props.bookmarks];
+      //no folder selected some searchtext selected
+      else
+        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
+    //some folder selected
+    } else { 
+      //some folder selected no searchtext selected
+      if(searchedText === "")
+        filteredBookmarks =  this.props.bookmarks.filter(
+          element => element.category === selectedFolder 
+        );
+      //some folder selected some searchtext selected
+      else
+        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks.filter(
+          element => element.category === selectedFolder 
+        ));
+      
+      // filteredBookmarks.filter(
+      //   element =>
+      //     // element.category !== "-- Select all --" &&
+      //     element.category === selectedFolder &&
+      //     (element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
+      // )
     };
     this.props.setLocalBookmarks(filteredBookmarks);
     this.props.addBookmarksInState(15);
@@ -122,7 +117,7 @@ class SearchComponent extends Component {
       <Grid.Column width={16}>
         <SearchAndFilter
           optionList={this.props.bookmarkFolders}
-          setSearchedText={this.searchBookmark}
+          setSearchedText={this.searchBookmarkWithinFolder}
           setSelectedFolder={this.searchBookmarkWithinFolder}
           open_CloseDropdown={this.open_CloseDropdown}
           SearchedText={this.props.searchTerm}

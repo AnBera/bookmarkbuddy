@@ -6,8 +6,8 @@ class Select extends Component {
     this.props.open_closeDropdown();
   };
 
-  onOptionClick = value => {
-    this.props.setSelectedFolder(value);
+  onOptionClick = (searchText, selectedFolder) => {
+    this.props.setSelectedFolder(searchText, selectedFolder);
   };
 
   render() {
@@ -16,7 +16,8 @@ class Select extends Component {
         <div
           key={index}
           className={"option"}
-          onClick={() => this.onOptionClick(option)}
+          onClick={(e) => this.onOptionClick(e.target.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.value,
+            option)}
         >
           {option}
         </div>

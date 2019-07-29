@@ -8,17 +8,17 @@ class SearchAndFilter extends Component {
     this.props.open_CloseDropdown();
   };
 
-  setSelectedFolder = folderName => {
-    this.props.setSelectedFolder(folderName);
+  setSelectedFolder = (searchTerm, folderName) => {
+    this.props.setSelectedFolder(searchTerm || "", folderName);
   };
 
   onSearch = e => {
-    this.props.setSearchedText(e.target.value);
+    this.props.setSearchedText(e.target.value, this.props.SelectedFolder);
   };
 
   onClearClick = () => {
     if (this.props.SearchedText !== "") {
-      this.props.setSearchedText("");
+      this.props.setSearchedText("", this.props.SelectedFolder);
     } else {
       // this.actiavteSearch();
     }
