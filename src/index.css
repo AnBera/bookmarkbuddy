@@ -223,3 +223,7 @@ a.ui.card:hover, .ui.fluid.card:hover {
 .sortContainer span.item {
   cursor: pointer
 }
+
+.ui.container.stackable.three.column.grid.analytics-container {
+  color: black;
+}

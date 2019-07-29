@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/stream": "^0.59.3",
     "axios": "^0.18.0",
     "lodash.debounce": "^4.0.8",
     "node-sass": "^4.12.0",

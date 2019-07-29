@@ -107,3 +107,22 @@ export const extractUrls_Images = async(bookmarks) => {
   }
   return await urls;
 }
+
+export const createTotalBookmarksAnalyticsData = (bookmarks) => {
+  let today = new Date()
+  let priorDate = new Date().setDate(today.getDate()-30);
+  let bookmarksCountByFolder = {};
+  let last30DaysBookmark = bookmarks.filter((item) => {
+    return new Date(chromeTimeValueToDate(item.dateAdded)) > new Date(priorDate);
+  });
+
+  last30DaysBookmark.forEach((bookmark) => {
+    if (bookmarksCountByFolder[bookmark.category]) {
+      bookmarksCountByFolder[bookmark.category] = bookmarksCountByFolder[bookmark.category] ++;
+    } else {
+      bookmarksCountByFolder[bookmark.category] = 1
+    }
+  });
+
+  return bookmarksCountByFolder;
+}
