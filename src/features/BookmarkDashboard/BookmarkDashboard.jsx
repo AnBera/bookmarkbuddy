@@ -16,6 +16,7 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
+import BookmarkGrowthAnalytics from '../AnalyticsCard/BookmarkGrowthAnalytics';
 import TotalBookmarksAnalytics from '../AnalyticsCard/TotalBookmarksAnalytics';
 import FolderDistributionAnalytics from '../AnalyticsCard/FolderDistributionAnalytics';
 import debounce from "lodash.debounce";
@@ -279,6 +280,172 @@ class BookmarkDashboard extends Component {
         "color": "hsl(195, 70%, 50%)"
       }
     ];
+    const dataBookmarkGrowthAnalytics = [
+      {
+        "id": "Total Number of Bookmarks",
+        "color": "hsl(275, 70%, 50%)",
+        "data": [
+          {
+            "x": "Jan",
+            "y": 10
+          },
+          {
+            "x": "Feb",
+            "y": 25
+          },
+          {
+            "x": "Mar",
+            "y": 30
+          },
+          {
+            "x": "Apr",
+            "y": 60
+          },
+          {
+            "x": "May",
+            "y": 80
+          },
+          {
+            "x": "Jun",
+            "y": 75
+          },
+          {
+            "x": "Jul",
+            "y": 80
+          },
+          {
+            "x": "Aug",
+            "y": 81
+          },
+          {
+            "x": "Sep",
+            "y": 90
+          },
+          {
+            "x": "Oct",
+            "y": 95
+          },
+          {
+            "x": "Nov",
+            "y": 93
+          },
+          {
+            "x": "Dec",
+            "y": 100
+          }
+        ]
+      }
+      // ,
+      // {
+      //   "id": "JS",
+      //   "color": "hsl(231, 70%, 50%)",
+      //   "data": [
+      //     {
+      //       "x": "plane",
+      //       "y": 13
+      //     },
+      //     {
+      //       "x": "helicopter",
+      //       "y": 141
+      //     },
+      //     {
+      //       "x": "boat",
+      //       "y": 274
+      //     },
+      //     {
+      //       "x": "train",
+      //       "y": 153
+      //     },
+      //     {
+      //       "x": "subway",
+      //       "y": 150
+      //     },
+      //     {
+      //       "x": "bus",
+      //       "y": 45
+      //     },
+      //     {
+      //       "x": "car",
+      //       "y": 292
+      //     },
+      //     {
+      //       "x": "moto",
+      //       "y": 238
+      //     },
+      //     {
+      //       "x": "bicycle",
+      //       "y": 23
+      //     },
+      //     {
+      //       "x": "horse",
+      //       "y": 258
+      //     },
+      //     {
+      //       "x": "skateboard",
+      //       "y": 100
+      //     },
+      //     {
+      //       "x": "others",
+      //       "y": 165
+      //     }
+      //   ]
+      // },
+      // {
+      //   "id": "Finance",
+      //   "color": "hsl(41, 70%, 50%)",
+      //   "data": [
+      //     {
+      //       "x": "plane",
+      //       "y": 13
+      //     },
+      //     {
+      //       "x": "helicopter",
+      //       "y": 282
+      //     },
+      //     {
+      //       "x": "boat",
+      //       "y": 110
+      //     },
+      //     {
+      //       "x": "train",
+      //       "y": 154
+      //     },
+      //     {
+      //       "x": "subway",
+      //       "y": 110
+      //     },
+      //     {
+      //       "x": "bus",
+      //       "y": 296
+      //     },
+      //     {
+      //       "x": "car",
+      //       "y": 157
+      //     },
+      //     {
+      //       "x": "moto",
+      //       "y": 26
+      //     },
+      //     {
+      //       "x": "bicycle",
+      //       "y": 170
+      //     },
+      //     {
+      //       "x": "horse",
+      //       "y": 281
+      //     },
+      //     {
+      //       "x": "skateboard",
+      //       "y": 153
+      //     },
+      //     {
+      //       "x": "others",
+      //       "y": 110
+      //     }
+      //   ]
+      // }
+    ];
+
 
     return (
       // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
@@ -320,15 +487,15 @@ class BookmarkDashboard extends Component {
             </Grid.Row>
           </Grid> */}
 
-          <Grid container columns={3} stackable className="analytics-container" style={{paddingTop:"2em"}}>
+          <Grid container columns={3} stackable className="analytics-container" style={{paddingTop:"6em"}}>
             <Grid.Column style={{ height:"250px", width:"33%"}}>
-              <TotalBookmarksAnalytics data={data} />
+              <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics} />
             </Grid.Column>
             <Grid.Column style={{ height:"250px", width:"33%"}}>
               <FolderDistributionAnalytics data={dataFolderDistribution} />
             </Grid.Column>
-            <Grid.Column>
-              {/* <TotalBookmarksAnalytics /> */}
+            <Grid.Column style={{ height:"250px", width:"33%"}}>
+              <TotalBookmarksAnalytics data={data} />
             </Grid.Column>
           </Grid>
         </div>

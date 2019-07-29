@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/line": "^0.59.3",
     "@nivo/pie": "^0.59.1",
     "@nivo/stream": "^0.59.3",
     "axios": "^0.18.0",
