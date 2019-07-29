@@ -17,8 +17,9 @@ import {
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
 import BookmarkGrowthAnalytics from '../AnalyticsCard/BookmarkGrowthAnalytics';
-import TotalBookmarksAnalytics from '../AnalyticsCard/TotalBookmarksAnalytics';
 import FolderDistributionAnalytics from '../AnalyticsCard/FolderDistributionAnalytics';
+import PopularBookmarkLinkAnalytics from '../AnalyticsCard/PopularBookmarkLinkAnalytics';
+// import TotalBookmarksAnalytics from '../AnalyticsCard/TotalBookmarksAnalytics';
 import debounce from "lodash.debounce";
 import {
   Menu,
@@ -445,6 +446,23 @@ class BookmarkDashboard extends Component {
       //   ]
       // }
     ];
+    const dataPopularBookmarkLinkAnalytics = [
+      {
+        "country": "Youtube",
+        "Number of times added": 14,
+        "Number of times addedColor": "hsl(106, 70%, 50%)",
+      },
+      {
+        "country": "Udemy",
+        "Number of times added": 20,
+        "Number of times addedColor": "hsl(294, 70%, 50%)",
+      },
+      {
+        "country": "TOI",
+        "Number of times added": 27,
+        "Number of times addedColor": "hsl(235, 70%, 50%)",
+      }
+    ];
 
 
     return (
@@ -495,7 +513,7 @@ class BookmarkDashboard extends Component {
               <FolderDistributionAnalytics data={dataFolderDistribution} />
             </Grid.Column>
             <Grid.Column style={{ height:"250px", width:"33%"}}>
-              <TotalBookmarksAnalytics data={data} />
+              <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics} />
             </Grid.Column>
           </Grid>
         </div>
