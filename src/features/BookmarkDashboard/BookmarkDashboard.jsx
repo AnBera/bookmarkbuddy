@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode, extractUrlsFromBookmarks, extractHostname } from "../../app/common/util/Util";
+import { flattenNode,extractUrls_Images, extractUrlsFromBookmarks, extractHostname } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -11,7 +11,8 @@ import {
   setFilteredBookmarks,
   setSearchedTerm,
   setRecentBookmarks,
-  generatePreviewImages
+  generatePreviewImages,
+  saveUrlsToDB
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
@@ -73,17 +74,10 @@ class BookmarkDashboard extends Component {
     this.setState({ context2: ref });
   };
   componentWillReceiveProps(nextProps) {
-
-    // if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks) {
-    //   this.localBookmarks = this.props.FilteredBookmarks;
-    //   this.setState({bookmarks : []});
-    //   this.addBookmarksInState(18);
-    // }
-
-    if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks && !this.props.isImagesConverted) {
-      this.props.callGenerateImages(extractUrlsFromBookmarks(nextProps.bookmarks).slice(0, 6));
-      // this.props.callGenerateImages(["https://www.google.com", "https://www.flipkart.com", "https://www.amazon.com", "https://www.github.com", "https://www.youtube.com"]);
-    }
+    if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks) {
+      extractUrls_Images(nextProps.bookmarks).then((urls)=>{
+        this.props.callSaveUrls(urls);
+      }).catch((err)=>console.log(err));}
   }
 
   getBookmarks = () => {
@@ -120,10 +114,10 @@ class BookmarkDashboard extends Component {
     // this.props.setBookmarks({ bookmarks: flattenedBookmarks });
     //============
 
-    // let recentBookmarks = [{ "dateAdded": 1557765974569, "id": "33", "index": 0, "parentId": "34", "title": "GitHub - AnBera/bookmarkbuddy", "url": "https://github.com/AnBera/bookmarkbuddy" }];
-    // // flattenNode(bookmarks, recentBookmarks);
-    // // this.localRecentBookmarks.push(...recentBookmarks);
-    // this.props.setRecentBookmarks({bookmarks : recentBookmarks});
+    let recentBookmarks = [{ "dateAdded": 1557765974569, "id": "33", "index": 0, "parentId": "34", "title": "GitHub - AnBera/bookmarkbuddy", "url": "https://github.com/AnBera/bookmarkbuddy" }];
+    // flattenNode(bookmarks, recentBookmarks);
+    // this.localRecentBookmarks.push(...recentBookmarks);
+    this.props.setRecentBookmarks({bookmarks : recentBookmarks});
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -133,7 +127,7 @@ class BookmarkDashboard extends Component {
       // this.setState({ recentBookmarks: bookmarksArr })
     });
 
-    //// not working
+    // not working
     // chrome.topSites.get(sites => {
     //   // flattenNode(treeNode[0], flattenedBookmarks);
     //   console.log(sites);
@@ -376,6 +370,9 @@ const mapDispatchToProps = dispatch => {
     },
     callGenerateImages: urls => {
       dispatch(generatePreviewImages(urls))
+    },
+    callSaveUrls: objs => {
+      dispatch(saveUrlsToDB(objs))
     }
   };
 };

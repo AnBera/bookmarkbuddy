@@ -68,7 +68,7 @@ export const extractUrlsFromBookmarks = (bookmarks) => {
 
       //find & remove protocol (http, ftp, etc.) and get hostname
       if (bookmark.url.indexOf("//") > -1) {
-        hostname = bookmark.url.split("//")[0] + "//"+ bookmark.url.split("/")[2];
+        hostname = bookmark.url.split("//")[0] + "//" + bookmark.url.split("/")[2];
       } else {
         hostname = bookmark.url.split("/")[0];
       }
@@ -81,12 +81,29 @@ export const extractUrlsFromBookmarks = (bookmarks) => {
 export const chromeTimeValueToDate = (timestamp) => {
   // var microseconds = parseInt(timestamp, 10);
   //  var millis = microseconds / 1000;
-   var past = new Date(1970, 0, 1).getTime();
-   return new Date(past + timestamp).toDateString();
+  var past = new Date(1970, 0, 1).getTime();
+  return new Date(past + timestamp).toDateString();
 
   // var myDate = new Date(); // Your timezone!
   // var epoch = myDate.getTime()/1000.0;
   // // var epoch = -11644473600000;
   // console.log(new Date(epoch + timestamp / 1000));
   // return new Date(epoch + timestamp / 1000).toDateString();
+}
+
+export const extractUrls_Images = async(bookmarks) => {
+  let urls = [];
+
+  if (bookmarks.length) {
+    var wordstoRemove = ["http://", "https://", "www.",".html"];
+    var expStr = wordstoRemove.join("|");    
+    bookmarks.forEach((bookmark) => {
+      let imageName=bookmark.url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.]/g ,'').replace('/','').trim()+".png";
+      urls.push({
+        url: bookmark.url,
+        imageName:imageName
+      });
+    })
+  }
+  return await urls;
 }

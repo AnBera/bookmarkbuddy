@@ -69,3 +69,9 @@ export const generatePreviewImages = urls => {
   };
 };
 
+export const saveUrlsToDB = Objurls => {
+  return {
+    type: Sagatypes.CALL_SAVE_URLS_API,
+    urlObj: Objurls
+  };
+};
