@@ -17,6 +17,7 @@ import {
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
 import TotalBookmarksAnalytics from '../AnalyticsCard/TotalBookmarksAnalytics';
+import FolderDistributionAnalytics from '../AnalyticsCard/FolderDistributionAnalytics';
 import debounce from "lodash.debounce";
 import {
   Menu,
@@ -246,6 +247,38 @@ class BookmarkDashboard extends Component {
       }
       
     ] ;
+    const dataFolderDistribution = [
+      {
+        "id": "stylus",
+        "label": "stylus",
+        "value": 69,
+        "color": "hsl(263, 70%, 50%)"
+      },
+      {
+        "id": "python",
+        "label": "python",
+        "value": 182,
+        "color": "hsl(20, 70%, 50%)"
+      },
+      {
+        "id": "c",
+        "label": "c",
+        "value": 227,
+        "color": "hsl(160, 70%, 50%)"
+      },
+      {
+        "id": "erlang",
+        "label": "erlang",
+        "value": 475,
+        "color": "hsl(169, 70%, 50%)"
+      },
+      {
+        "id": "elixir",
+        "label": "elixir",
+        "value": 461,
+        "color": "hsl(195, 70%, 50%)"
+      }
+    ];
 
     return (
       // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
@@ -291,8 +324,8 @@ class BookmarkDashboard extends Component {
             <Grid.Column style={{ height:"250px", width:"33%"}}>
               <TotalBookmarksAnalytics data={data} />
             </Grid.Column>
-            <Grid.Column>
-              {/* <TotalBookmarksAnalytics /> */}
+            <Grid.Column style={{ height:"250px", width:"33%"}}>
+              <FolderDistributionAnalytics data={dataFolderDistribution} />
             </Grid.Column>
             <Grid.Column>
               {/* <TotalBookmarksAnalytics /> */}
