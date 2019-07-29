@@ -41,12 +41,52 @@ a.ui.card:hover, .ui.fluid.card:hover {
 .ui.card,
 .ui.cards > .card {
   background-color: #282c34;
-  overflow: hidden;
+  overflow: visible;
   margin-bottom: 1.7em;
   -moz-box-shadow: inset 0 0 25px #33373f;
   -webkit-box-shadow: inset 0 0 25px #33373f;
   box-shadow: inset 0 0 25px #33373f;
 }
+
+.ui.card .context-icons {
+  background: none;
+  top: -1.8em;
+  left: auto;
+  right: 0;
+}
+
+/* .ui.card .ribbon {
+  z-index: 999;
+} */
+
+.ui.card .context-icons {
+  display: none;
+}
+.ui.card:hover .context-icons {
+  display: initial;
+}
+
+.ui.card:hover .context-icons.ui.label:hover {
+  background: none;
+  box-shadow: none;
+}
+
+.ui.card .context-icons .icon {
+  display: inline;
+}
+
+.ui.attached.label {
+  overflow: hidden;
+}
+
+.ui.label>.delete.icon {
+  margin-left: 0;
+  opacity: 1;
+}
+
+/* .ui[class*="right ribbon"].label {
+  padding-right: .6em;
+} */
 
 .ui.card .meta,
 .ui.cards > .card .meta {
