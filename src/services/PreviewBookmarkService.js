@@ -39,3 +39,22 @@ export const convertPreviewImagesService = (requestBody) => {
       return json;
     });
 };
+
+export const saveUrls = (requestBody) => {
+  const convertImages_ENDPOINT = Configs.baseUrl + "SaveUrlBatchImage";
+  return fetch(convertImages_ENDPOINT, {
+      method: "POST",
+      // mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {
+      return json;
+    });
+};
