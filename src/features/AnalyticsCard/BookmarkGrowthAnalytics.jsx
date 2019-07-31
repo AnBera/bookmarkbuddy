@@ -7,8 +7,8 @@ import { ResponsiveLine } from '@nivo/line'
 // website examples showcase many properties,
 // you'll often use just a few of them.
 const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
-    <Card fluid >
-    <div style={{position: "absolute", padding: "1.5em 0 0 1.7em", color: "#fff"}} className="meta">
+    <Card fluid style={{borderRadius:"7px"}} >
+    <div className="meta" style={{position: "absolute", padding: "1.5em 0 0 1.7em", color: "#fff"}}>
         <div style={{fontSize: "3em"}}>
             1080
         </div>
@@ -16,7 +16,7 @@ const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
             Bookmarks
         </div>
     </div>
-    <Card.Content style={{ height:"250px", width:"100%", padding:"1.5em 0 0 0" }}>
+    <Card.Content style={{ height:"250px", width:"100%", padding:"1.5em 0 0 0", backgroundColor:"#333842", borderRadius:"7px" }}>
     <ResponsiveLine
         data={data}
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
