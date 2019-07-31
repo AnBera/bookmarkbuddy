@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from "semantic-ui-react";
 import { ResponsiveLine } from '@nivo/line'
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -6,6 +7,16 @@ import { ResponsiveLine } from '@nivo/line'
 // website examples showcase many properties,
 // you'll often use just a few of them.
 const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
+    <Card fluid >
+    <div style={{position: "absolute", padding: "1.5em 0 0 1.7em", color: "#fff"}} className="meta">
+        <div style={{fontSize: "3em"}}>
+            1080
+        </div>
+        <div style={{fontSize: "1.2em", paddingTop: ".5em"}}>
+            Bookmarks
+        </div>
+    </div>
+    <Card.Content style={{ height:"250px", width:"100%", padding:"1.5em 0 0 0" }}>
     <ResponsiveLine
         data={data}
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -67,6 +78,16 @@ const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
             // }
         ]}
     />
+    </Card.Content>
+    
+    <Card.Content>
+      <Card.Header>Your Bookmark's growth over time</Card.Header>
+      <Card.Meta>First bookmark added on 14th Jun 2016</Card.Meta>
+      <Card.Description>
+        You have total 1080 Bookmarks. 32 Bookmarks added in last week.
+      </Card.Description>
+    </Card.Content>
+    </Card>
 )
 
 export default BookmarkGrowthAnalytics;

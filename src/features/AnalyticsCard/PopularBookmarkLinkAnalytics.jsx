@@ -5,12 +5,26 @@ import { ResponsiveBar } from '@nivo/bar'
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
+const theme = {
+    axis: {
+        ticks: {
+            line: {
+                stroke: '#fff',
+            },
+            text: {
+                fill: '#efefef',
+                fontSize: 12,
+            }
+        }
+    }
+}
+
 const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     <ResponsiveBar
         data={data}
         keys={[ 'Number of times added']}
         indexBy="country"
-        margin={{ top: 0, right: 0, bottom: 0, left: 20 }}
+        margin={{ top: 0, right: 0, bottom: 0, left: 50 }}
         padding={0.3}
         groupMode="grouped"
         layout="horizontal"
@@ -59,10 +73,11 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'food',
+            legend: '',
             legendPosition: 'middle',
             legendOffset: -40
         }}
+        theme={theme}
         enableGridY={false}
         labelSkipWidth={12}
         labelSkipHeight={12}

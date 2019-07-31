@@ -461,6 +461,16 @@ class BookmarkDashboard extends Component {
         "country": "TOI",
         "Number of times added": 27,
         "Number of times addedColor": "hsl(235, 70%, 50%)",
+      },
+      {
+        "country": "Medium",
+        "Number of times added": 10,
+        "Number of times addedColor": "hsl(235, 70%, 50%)",
+      },
+      {
+        "country": "Netflix",
+        "Number of times added": 2,
+        "Number of times addedColor": "hsl(235, 70%, 50%)",
       }
     ];
 
@@ -506,14 +516,14 @@ class BookmarkDashboard extends Component {
           </Grid> */}
 
           <Grid container columns={3} stackable className="analytics-container" style={{paddingTop:"6em"}}>
-            <Grid.Column style={{ height:"250px", width:"33%"}}>
+            <Grid.Column>
               <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics} />
             </Grid.Column>
             <Grid.Column style={{ height:"250px", width:"33%"}}>
-              <FolderDistributionAnalytics data={dataFolderDistribution} />
+              <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics} />
             </Grid.Column>
             <Grid.Column style={{ height:"250px", width:"33%"}}>
-              <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics} />
+              {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
             </Grid.Column>
           </Grid>
         </div>
