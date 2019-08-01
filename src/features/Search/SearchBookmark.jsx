@@ -11,6 +11,7 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchAndFilter from "./SearchandFilter";
 import { populateRandomColor } from '../../app/common/util/Util';
+import FolderDistributionAnalytics from "../AnalyticsCard/FolderDistributionAnalytics";
 
 class SearchComponent extends Component {
   componentWillMount = () => {
@@ -113,8 +114,23 @@ class SearchComponent extends Component {
   };
 
   render() {
+    // const dataFolderDistribution = [
+    //   {
+    //     "id": "stylus",
+    //     "label": "stylus",
+    //     "value": 69,
+    //     "color": "hsl(263, 70%, 50%)"
+    //   },
+    //   {
+    //     "id": "python",
+    //     "label": "python",
+    //     "value": 182,
+    //     "color": "hsl(0, 0%, 80%)"
+    //   }
+    // ];
     return (
-      <Grid.Column width={16}>
+      <>
+      <Grid.Column width={8}>
         <SearchAndFilter
           optionList={this.props.bookmarkFolders}
           setSearchedText={this.searchBookmarkWithinFolder}
@@ -125,6 +141,10 @@ class SearchComponent extends Component {
           IsDropDownOpen={this.props.isDropDownOpen}
         />
       </Grid.Column>
+      <Grid.Column width={8} style={{ height:"70px", width:"50%"}}>
+        {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
+      </Grid.Column>
+      </>
     );
   }
 }

@@ -10,7 +10,7 @@ const FolderDistributionAnalytics = ({ data /* see data tab */ }) => (
     <ResponsivePie
         data={data}
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-        innerRadius={0.5}
+        innerRadius={0.95}
         padAngle={0.7}
         cornerRadius={3}
         colors={{ scheme: 'nivo' }}
@@ -25,6 +25,7 @@ const FolderDistributionAnalytics = ({ data /* see data tab */ }) => (
         radialLabelsLinkHorizontalLength={24}
         radialLabelsLinkStrokeWidth={1}
         radialLabelsLinkColor={{ from: 'color' }}
+        enableSlicesLabels={false}
         sliceLabel="id"
         slicesLabelsSkipAngle={10}
         slicesLabelsTextColor="#333333"
