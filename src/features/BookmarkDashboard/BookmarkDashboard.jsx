@@ -1,6 +1,11 @@
 /*global chrome*/
 import React, { Component } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Divider, Header, Icon, Menu,
+  Breadcrumb,
+  Sticky,
+  Rail,
+  Segment,
+  List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import { flattenNode,extractUrls_Images, extractUrlsFromBookmarks, extractHostname, createTotalBookmarksAnalyticsData } from "../../app/common/util/Util";
 import { connect } from "react-redux";
@@ -15,21 +20,12 @@ import {
   saveUrlsToDB
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
-import BookmarkRecentCard from "../BookmarkCard/BookmarkRecentCard";
+import BookmarkRecommendationCard from "../BookmarkCard/BookmarkRecommendationCard";
 import BookmarkGrowthAnalytics from '../AnalyticsCard/BookmarkGrowthAnalytics';
 import FolderDistributionAnalytics from '../AnalyticsCard/FolderDistributionAnalytics';
 import PopularBookmarkLinkAnalytics from '../AnalyticsCard/PopularBookmarkLinkAnalytics';
 // import TotalBookmarksAnalytics from '../AnalyticsCard/TotalBookmarksAnalytics';
 import debounce from "lodash.debounce";
-import {
-  Menu,
-  Breadcrumb,
-  Header,
-  Sticky,
-  Rail,
-  Segment,
-  List
-} from "semantic-ui-react";
 import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
 import { SortTypes } from '../../app/common/constants';
 
@@ -515,6 +511,7 @@ class BookmarkDashboard extends Component {
             </Grid.Row>
           </Grid> */}
 
+          {/* {this.props.bookmarks.length > 0 && ( */}
           <Grid container columns={3} stackable className="analytics-container" style={{paddingTop:"6em"}}>
             <Grid.Column>
               <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics} />
@@ -522,10 +519,31 @@ class BookmarkDashboard extends Component {
             <Grid.Column style={{ height:"250px", width:"33%"}}>
               <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics} />
             </Grid.Column>
-            <Grid.Column style={{ height:"250px", width:"33%"}}>
-              {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
+            <Grid.Column style={{ height:"380px", width:"33%", overflowY: "auto", 
+            paddingRight:"0",
+            // paddingTop: "0",
+            paddingBottom: "0"}}>
+            <div style={{background:"linear-gradient(135deg,#333842 0,#161626 100%)",
+              border: "1px solid #4c4c4c",
+              borderTop: "none",
+              borderBottom: "none",
+              // boxShadow: "inset 7px 0 9px -7px rgba(76,76,76,0.7)",
+              borderRight: "none"}}> {/*  #393939 */}
+              {/* <Divider horizontal> */}
+                <Header as='h4' style={{textAlign: "center", paddingTop: "1em", color: "#fff"}}>
+                  <Icon name='bookmark' style={{marginRight: "3px"}} />
+                  Bookmarks Of the Day
+                </Header>
+              {/* </Divider> */}
+              {Bookamrks.slice(0, 4).map((bookmark, i) => {
+                    return (
+                      <BookmarkRecommendationCard bookmark={bookmark} />
+                    );
+                })}
+              </div>
             </Grid.Column>
           </Grid>
+          {/* )} */}
         </div>
 
         <div ref={this.handleContextRef2} style={{ padding: "1em" }}>
