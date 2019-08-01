@@ -534,9 +534,16 @@ class BookmarkDashboard extends Component {
                         setLocalBookmarks={this.setLocalBookmarks}
                       />
                       <Grid.Column width={16}>
+                      <span style={{
+                            color: "grey",
+                            fontSize: ".8em",
+                            marginTop: "-5px",
+                            paddingLeft:".25em",
+                            display: "inline-block"}}
+                        > Displaying 110 items  </span>
                         <List floated='right' horizontal className="sortContainer">
-                          <List.Item disabled href='#'>
-                            Sort : 
+                          <List.Item style={{color:"grey"}}>
+                            Sort By: 
                           </List.Item>
                           <span className="item" onClick={this.onSortCategoryClick("dateAdded")}>Date Added</span>
                           <span className="item" onClick={this.onSortCategoryClick("title")}>Title</span>
