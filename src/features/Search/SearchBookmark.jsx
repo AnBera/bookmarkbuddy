@@ -130,7 +130,7 @@ class SearchComponent extends Component {
     // ];
     return (
       <>
-      <Grid.Column width={8}>
+      <Grid.Column width={11}>
         <SearchAndFilter
           optionList={this.props.bookmarkFolders}
           setSearchedText={this.searchBookmarkWithinFolder}
@@ -141,7 +141,7 @@ class SearchComponent extends Component {
           IsDropDownOpen={this.props.isDropDownOpen}
         />
       </Grid.Column>
-      <Grid.Column width={8} style={{ height:"70px", width:"50%"}}>
+      <Grid.Column width={5} style={{ height:"70px", width:"50%"}}>
         {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
         <div class="folder-perc-container">
             <div id="activeBorder" class="active-border" style={{display:"inline-block", float:"left"}}>
