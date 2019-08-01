@@ -523,8 +523,9 @@ class BookmarkDashboard extends Component {
             paddingRight:"0",
             // paddingTop: "0",
             paddingBottom: "0"}}>
-            <div style={{background:"linear-gradient(135deg,#333842 0,#161626 100%)",
+            <div className="recommendation-card-container" style={{background:"linear-gradient(135deg,#333842 0,#161626 100%)",
               border: "1px solid #4c4c4c",
+              borderRadius: "7px",
               borderTop: "none",
               borderBottom: "none",
               // boxShadow: "inset 7px 0 9px -7px rgba(76,76,76,0.7)",
@@ -537,7 +538,7 @@ class BookmarkDashboard extends Component {
               {/* </Divider> */}
               {Bookamrks.slice(0, 4).map((bookmark, i) => {
                     return (
-                      <BookmarkRecommendationCard bookmark={bookmark} />
+                      <BookmarkRecommendationCard bookmark={bookmark} key={bookmark.id} />
                     );
                 })}
               </div>
