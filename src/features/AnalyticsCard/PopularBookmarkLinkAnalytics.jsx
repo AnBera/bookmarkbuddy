@@ -22,12 +22,15 @@ const theme = {
 
 const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     <Card fluid style={{borderRadius:"7px"}} >
-    <div className="meta" style={{position: "absolute", right:"0", padding: "1.5em 1.5em 0 0", color: "#fff"}}>
-        <div style={{fontSize: "3em"}}>
+    <div className="meta" style={{position: "absolute", right:"0", bottom: "135px", textAlign: "right", padding: "1.5em 1.5em 0 0", color: "#fff"}}>
+        <div style={{fontSize: "3em", marginRight: "0"}}>
             40
         </div>
-        <div style={{fontSize: "1.2em", paddingTop: ".5em"}}>
+        <div style={{fontSize: "1.2em", paddingTop: ".5em", marginRight: "0"}}>
             Bookmarks
+        </div>
+        <div style={{fontSize: "1.2em", paddingTop: ".5em", marginRight: "0"}}>
+            for top 5 sites
         </div>
     </div>
     <Card.Content style={{ height:"250px", width:"100%", padding:"1em", backgroundColor:"#333842", borderRadius:"7px" }}>
