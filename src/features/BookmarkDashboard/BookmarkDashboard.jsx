@@ -184,60 +184,7 @@ class BookmarkDashboard extends Component {
 
   render() {
     let Bookamrks = [...this.state.bookmarks];
-
-    debugger;
-    const data1 = createTotalBookmarksAnalyticsData(this.props.bookmarks);
-    const data = [
-      {
-        "Total Bookmarks": 1024,
-        "JS": 400,
-        "React": 300,
-        "Python": 200
-      },
-      {
-        "Total Bookmarks": 1000,
-        "JS": 398,
-        "React": 297,
-        "Python": 199
-      },
-      {
-        "Total Bookmarks": 990,
-        "JS": 395,
-        "React": 295,
-        "Python": 198
-      },
-      {
-        "Total Bookmarks": 985,
-        "JS": 394,
-        "React": 294,
-        "Python": 197
-      },
-      {
-        "Total Bookmarks": 960,
-        "JS": 390,
-        "React": 293,
-        "Python": 196
-      },
-      {
-        "Total Bookmarks": 944,
-        "JS": 388,
-        "React": 290,
-        "Python": 193
-      },
-      {
-        "Total Bookmarks": 920,
-        "JS": 385,
-        "React": 285,
-        "Python": 193
-      },
-      {
-        "Total Bookmarks": 915,
-        "JS": 384,
-        "React": 283,
-        "Python": 192
-      }
-      
-    ] ;
+    
     const dataBookmarkGrowthAnalytics = [
       {
         "id": "Total Number of Bookmarks",
@@ -448,12 +395,6 @@ class BookmarkDashboard extends Component {
             style={{ top: "auto", height: "80px", width: "100%" }}
           >
             <Sticky context={this.state.context}>
-              {/* <Menu inverted style={{ margin: 0 }}>
-                <Menu.Item>Home</Menu.Item>
-                <Menu.Item>Users</Menu.Item>
-                <Menu.Item position="right">Logout</Menu.Item>
-              </Menu> */}
-
               <div style={{ backgroundColor: "#161626", textAlign:"center", height:"60px" }}>
                 <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy"/>
               </div>
@@ -472,7 +413,6 @@ class BookmarkDashboard extends Component {
             </Grid.Row>
           </Grid> */}
 
-          {/* {this.props.bookmarks.length > 0 && ( */}
           <Grid container columns={3} stackable className="analytics-container">
             <Grid.Column className="analytics-card-container">
               <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics}/>
@@ -484,7 +424,6 @@ class BookmarkDashboard extends Component {
               <BookmarkRecommendationCard bookmarks={Bookamrks} />
             </Grid.Column>
           </Grid>
-          {/* )} */}
         </div>
 
         <div ref={this.handleContextRef2} style={{ padding: "1em" }}>
@@ -522,17 +461,7 @@ class BookmarkDashboard extends Component {
               </Segment>
             </Sticky>
           </Rail>
-          <Grid
-            container
-            columns="equal"
-            stackable
-            style={{ marginTop: "7em" }}
-          >
-            {/* {this.props.bookmarks.length > 0 && (
-              <Grid.Row>
-                <SearchComponent context={this.state.context2} bookmarks={Bookamrks} />
-              </Grid.Row>
-            )} */}
+          <Grid container columns="equal" stackable style={{ marginTop: "7em" }}>
             <Grid.Row>
               <Grid.Column>
                 {Bookamrks.map((bookmark, i) => {
