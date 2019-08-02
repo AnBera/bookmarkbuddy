@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { Component } from "react";
-import { Grid, Header, Icon, Sticky, Rail, Segment, List } from "semantic-ui-react";
+import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import { flattenNode,extractUrls_Images, extractHostname, createTotalBookmarksAnalyticsData } from "../../app/common/util/Util";
 import { connect } from "react-redux";
@@ -481,19 +481,7 @@ class BookmarkDashboard extends Component {
               <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics}/>
             </Grid.Column>
             <Grid.Column className="analytics-card-container" style={{ overflowY: "auto", paddingRight:"0", paddingBottom: "0"}}>
-            <div className="recommendation-card-container"> {/*  #393939 */}
-              {/* <Divider horizontal> */}
-                <Header as='h4' className="recommendation-card-header">
-                  <Icon name='bookmark'/>
-                  Bookmarks Of the Day
-                </Header>
-              {/* </Divider> */}
-              {Bookamrks.slice(0, 4).map((bookmark, i) => {
-                    return (
-                      <BookmarkRecommendationCard bookmark={bookmark} key={bookmark.id} />
-                    );
-                })}
-              </div>
+              <BookmarkRecommendationCard bookmarks={Bookamrks} />
             </Grid.Column>
           </Grid>
           {/* )} */}
