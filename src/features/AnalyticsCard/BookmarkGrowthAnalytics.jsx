@@ -81,7 +81,7 @@ const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
     </Card.Content>
     
     <Card.Content>
-      <Card.Header>Your Bookmark's growth over time</Card.Header>
+      <Card.Header>Bookmark's Weekly growth since begining</Card.Header>
       <Card.Meta>First bookmark added on 14th Jun 2016</Card.Meta>
       <Card.Description>
         You have total 1080 Bookmarks. 32 Bookmarks added in last week.

@@ -294,6 +294,7 @@ a.ui.fluid.card.recommendation-card:last-child {
 
 .ui.container.analytics-container {
   padding-top: 6em;
+  color: black;
 }
 
 .analytics-container .recommendation-card-header i {

@@ -143,17 +143,17 @@ class SearchComponent extends Component {
       </Grid.Column>
       <Grid.Column width={5} style={{ height:"70px", width:"50%"}}>
         {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
-        <div class="folder-perc-container">
-            <div id="activeBorder" class="active-border" style={{display:"inline-block", float:"left"}}>
-                <div id="circle" class="circle">
-                    <span class="prec 270" id="prec">20%</span>
+        <div className="folder-perc-container">
+            <div id="activeBorder" className="active-border" style={{display:"inline-block", float:"left"}}>
+                <div id="circle" className="circle">
+                    <span className="prec 270" id="prec">20%</span>
                 </div>
             </div>
-            <div class="folder-info" style={{display:"inline-block", marginLeft:".75em", marginTop:".6em"}}>
-              <div class="info-header" style={{fontSize: "1.15em"}} >
+            <div className="folder-info" style={{display:"inline-block", marginLeft:".75em", marginTop:".6em"}}>
+              <div className="info-header" style={{fontSize: "1.15em"}} >
               Folder <strong>JS</strong>
               </div>
-            <div class="info-body">Contains 20% of Bookmarks</div></div>
+            <div className="info-body">Contains 20% of Bookmarks</div></div>
         </div>
       </Grid.Column>
       </>
