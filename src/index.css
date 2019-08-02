@@ -224,9 +224,9 @@ a.ui.card:hover, .ui.fluid.card:hover {
   cursor: pointer
 }
 
-.ui.container.stackable.three.column.grid.analytics-container {
+/* .ui.container.stackable.three.column.grid.analytics-container {
   color: black;
-}
+} */
 
 .ui.fluid.card.recommendation-card {
   background-color: transparent;
@@ -274,4 +274,40 @@ a.ui.fluid.card.recommendation-card:last-child {
 
   background-color: orange;
     background-image: linear-gradient(162deg, transparent 50%, #333842 50%), linear-gradient(90deg, #333842 50%, transparent 50%);
+}
+
+.container .recommendation-card-container {
+  background: linear-gradient(135deg,#333842 0,#161626 100%);
+  border: 1px solid #4c4c4c;
+  border-radius: 7px;
+  border-top: none;
+  border-bottom: none;
+  /* boxShadow: "inset 7px 0 9px -7px rgba(76,76,76,0.7)", */
+  border-right: none;
+}
+
+.container .recommendation-card-header {
+  text-align: center; 
+  padding-top: 1em;
+  color: #fff;
+}
+
+.ui.container.analytics-container {
+  padding-top: 6em;
+}
+
+.analytics-container .recommendation-card-header i {
+  margin-right: "3px";
+}
+
+.analytics-container .analytics-card-container {
+  height: 380px;
+}
+
+.container .display-count {
+  color: grey;
+  font-size: .8em;
+  margin-top: -5px;
+  padding-left: .25em;
+  display: inline-block;
 }

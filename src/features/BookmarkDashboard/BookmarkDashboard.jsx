@@ -1,13 +1,8 @@
 /*global chrome*/
 import React, { Component } from "react";
-import { Grid, Divider, Header, Icon, Menu,
-  Breadcrumb,
-  Sticky,
-  Rail,
-  Segment,
-  List } from "semantic-ui-react";
+import { Grid, Header, Icon, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode,extractUrls_Images, extractUrlsFromBookmarks, extractHostname, createTotalBookmarksAnalyticsData } from "../../app/common/util/Util";
+import { flattenNode,extractUrls_Images, extractHostname, createTotalBookmarksAnalyticsData } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -22,9 +17,7 @@ import {
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecommendationCard from "../BookmarkCard/BookmarkRecommendationCard";
 import BookmarkGrowthAnalytics from '../AnalyticsCard/BookmarkGrowthAnalytics';
-import FolderDistributionAnalytics from '../AnalyticsCard/FolderDistributionAnalytics';
 import PopularBookmarkLinkAnalytics from '../AnalyticsCard/PopularBookmarkLinkAnalytics';
-// import TotalBookmarksAnalytics from '../AnalyticsCard/TotalBookmarksAnalytics';
 import debounce from "lodash.debounce";
 import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
 import { SortTypes } from '../../app/common/constants';
@@ -480,27 +473,18 @@ class BookmarkDashboard extends Component {
           </Grid> */}
 
           {/* {this.props.bookmarks.length > 0 && ( */}
-          <Grid container columns={3} stackable className="analytics-container" style={{paddingTop:"6em"}}>
-            <Grid.Column>
-              <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics} />
+          <Grid container columns={3} stackable className="analytics-container">
+            <Grid.Column className="analytics-card-container">
+              <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics}/>
             </Grid.Column>
-            <Grid.Column style={{ height:"250px", width:"33%"}}>
-              <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics} />
+            <Grid.Column className="analytics-card-container">
+              <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics}/>
             </Grid.Column>
-            <Grid.Column style={{ height:"380px", width:"33%", overflowY: "auto", 
-            paddingRight:"0",
-            // paddingTop: "0",
-            paddingBottom: "0"}}>
-            <div className="recommendation-card-container" style={{background:"linear-gradient(135deg,#333842 0,#161626 100%)",
-              border: "1px solid #4c4c4c",
-              borderRadius: "7px",
-              borderTop: "none",
-              borderBottom: "none",
-              // boxShadow: "inset 7px 0 9px -7px rgba(76,76,76,0.7)",
-              borderRight: "none"}}> {/*  #393939 */}
+            <Grid.Column className="analytics-card-container" style={{ overflowY: "auto", paddingRight:"0", paddingBottom: "0"}}>
+            <div className="recommendation-card-container"> {/*  #393939 */}
               {/* <Divider horizontal> */}
-                <Header as='h4' style={{textAlign: "center", paddingTop: "1em", color: "#fff"}}>
-                  <Icon name='bookmark' style={{marginRight: "3px"}} />
+                <Header as='h4' className="recommendation-card-header">
+                  <Icon name='bookmark'/>
                   Bookmarks Of the Day
                 </Header>
               {/* </Divider> */}
@@ -534,13 +518,7 @@ class BookmarkDashboard extends Component {
                         setLocalBookmarks={this.setLocalBookmarks}
                       />
                       <Grid.Column width={16}>
-                      <span style={{
-                            color: "grey",
-                            fontSize: ".8em",
-                            marginTop: "-5px",
-                            paddingLeft:".25em",
-                            display: "inline-block"}}
-                        > Displaying 110 items  </span>
+                        <span className="display-count"> Displaying 110 items  </span>
                         <List floated='right' horizontal className="sortContainer">
                           <List.Item style={{color:"grey"}}>
                             Sort By: 
