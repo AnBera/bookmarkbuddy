@@ -100,32 +100,31 @@ export const chromeTimeValueToDate = (timestamp) => {
 
 export const gruoupDatesByWeek = (dates) => {
     // var dates = [ "1396-10-11 09:07:21" ];
-    debugger;
     
     var resultingXYCoordinateData = [];
-    var groups = dates.reduce( function (acc, date) {
+    var groupByYearMonth = dates.reduce( function (acc, date) {
     
-      var yearWeek = moment(date).year()+'-'+moment(date).week();
+      var yearMonthCombination = moment(date).year()+'-'+moment(date).month();
       
       // check if the week number exists
-      if (typeof acc[yearWeek] === 'undefined') {
-        acc[yearWeek] = [];
+      if (typeof acc[yearMonthCombination] === 'undefined') {
+        acc[yearMonthCombination] = [];
       }
       
-      acc[yearWeek].push(date);
+      acc[yearMonthCombination].push(date);
       
       return acc;
     
     }, {});
 
-    let yearWeekKeys = Object.keys(groups).sort();
-    yearWeekKeys.forEach((yearWeek, index) => {
-      resultingXYCoordinateData.push({x:yearWeek, 
-        y:groups[yearWeek].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
+    let yearMonthKeys = Object.keys(groupByYearMonth).sort();
+    yearMonthKeys.forEach((yearMonthCombination, index) => {
+      resultingXYCoordinateData.push({x:yearMonthCombination, 
+        y:groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
     })
     
-    // console.log(groups);
-    // console.log(resultingXYCoordinateData);
+    console.log(groupByYearMonth);
+    console.log(resultingXYCoordinateData);
     return resultingXYCoordinateData;
 }
 
