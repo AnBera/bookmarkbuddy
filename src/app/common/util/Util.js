@@ -91,14 +91,13 @@ export const chromeTimeValueToDate = (timestamp) => {
   // return new Date(epoch + timestamp / 1000).toDateString();
 }
 
-export const extractUrls_Images = async(bookmarks) => {
+export const generateUrlImagePair = async(bookmarks) => {
   let urls = [];
 
   if (bookmarks.length) {
-    var wordstoRemove = ["http://", "https://", "www.",".html"];
-    var expStr = wordstoRemove.join("|");    
+      
     bookmarks.forEach((bookmark) => {
-      let imageName=bookmark.url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.]/g ,'').replace('/','').trim()+".png";
+      let imageName=generateImageName(bookmark.url);
       urls.push({
         url: bookmark.url,
         imageName:imageName
@@ -107,6 +106,12 @@ export const extractUrls_Images = async(bookmarks) => {
   }
   return await urls;
 }
+export const generateImageName = (url) => {
+  let wordstoRemove = ["http://", "https://", "www.",".html"];
+  let expStr = wordstoRemove.join("|");  
+  return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%]/g ,'').trim()+".png";
+}
+
 
 export const createTotalBookmarksAnalyticsData = (bookmarks) => {
   let today = new Date()

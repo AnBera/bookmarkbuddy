@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Image, Label, Icon } from "semantic-ui-react";
-import { extractHostname } from "../../app/common/util/Util";
+import { extractHostname,generateImageName } from "../../app/common/util/Util";
 import Hover from "../../app/common/Component/Hover";
 import Configs from "../../app/common/constants";
 
@@ -58,7 +58,7 @@ class BookmarkCard extends Component {
                   className="imageThubmbnail"
                   floated="right"
                   size="tiny"
-                  src={Configs.imageurl + extractHostname(bookmark.url) + '.png'}
+                  src={Configs.imageurl+generateImageName(bookmark.url)}
                   style={{ visibility: "hidden" }}
                   onLoad={this.onImageLoad}
                   onError={this.onImageError}
