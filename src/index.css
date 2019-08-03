@@ -300,6 +300,10 @@ a.ui.fluid.card.recommendation-card:last-child {
   color: black;
 }
 
+.ui.container.analytics-container .bookmark-growth-analytics svg+div {
+  z-index: 999 !important;
+}
+
 .analytics-container .recommendation-card-header i {
   margin-right: "3px";
 }
