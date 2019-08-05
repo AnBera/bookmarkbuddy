@@ -109,9 +109,8 @@ export const generateUrlImagePair = async(bookmarks) => {
 export const generateImageName = (url) => {
   let wordstoRemove = ["http://", "https://", "www.",".html"];
   let expStr = wordstoRemove.join("|");  
-  return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%]/g ,'').trim()+".png";
+  return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g ,'').trim()+".png";
 }
-
 
 export const createTotalBookmarksAnalyticsData = (bookmarks) => {
   let today = new Date()
@@ -131,3 +130,13 @@ export const createTotalBookmarksAnalyticsData = (bookmarks) => {
 
   return bookmarksCountByFolder;
 }
+
+export const debounce = (func, delay) => {
+  let debounceTimer;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func.apply(context, args), delay);
+  };
+};

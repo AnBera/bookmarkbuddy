@@ -12,7 +12,8 @@ import {
   setSearchedTerm,
   setRecentBookmarks,
   generatePreviewImages,
-  saveUrlsToDB
+  saveUrlsToDB,
+  updateBookmark
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecommendationCard from "../BookmarkCard/BookmarkRecommendationCard";
@@ -29,12 +30,43 @@ class BookmarkDashboard extends Component {
       bookmarks: [],
       context: null,
       context2: null,
-      activeItem: 'home'
+      activeItem: 'home',
+      userId:''
     };
   }
   componentWillMount() {
     this.getBookmarks();
   }
+
+  componentDidMount(){
+    this.setUserID();
+  }
+
+  
+  setUserID=()=>{
+    chrome.storage.sync.get('uniqueID', function(items) {
+      var userid = items.userid;
+      if (userid) {
+        this.setState({userId:userid});
+      } else {
+          userid = this.getRandomToken();
+          chrome.storage.sync.set({uniqueID: userid}, function() {
+            this.setState({userId:userid});
+          });
+      }
+  });
+  }
+
+  getRandomToken=()=> {
+    let randomPool = new Uint8Array(32);
+    crypto.getRandomValues(randomPool);
+    let hex = '';
+    for (var i = 0; i < randomPool.length; ++i) {
+        hex += randomPool[i].toString(16);
+    }
+    console.log(hex);
+    return hex;
+}
 
   onSortCategoryClick = (sortcategory) => () => {
     this.localBookmarks.sort((a,b) => {
@@ -69,7 +101,8 @@ class BookmarkDashboard extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks) {
       generateUrlImagePair(nextProps.bookmarks).then((urls)=>{
-        this.props.callSaveUrls(urls);
+        let bookmarkObj= {uniqueID:this.state.userId,bookmarks:urls};
+        this.props.callSaveUrls(bookmarkObj);
       }).catch((err)=>console.log(err));}
   }
 
@@ -255,6 +288,7 @@ class BookmarkDashboard extends Component {
     //   "id": "0",
     //   "title": ""
     // }
+
     // flattenNode(bookmarks, flattenedBookmarks);
     // this.localBookmarks.push(...flattenedBookmarks);
     // this.addBookmarksInState(18);
@@ -290,11 +324,11 @@ class BookmarkDashboard extends Component {
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    chrome.bookmarks.getRecent(4, bookmarksArr => {
-      this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
-      // this.localRecentBookmarks.push(...bookmarksArr);
-      // this.setState({ recentBookmarks: bookmarksArr })
-    });
+    // chrome.bookmarks.getRecent(4, bookmarksArr => {
+    //   this.props.setRecentBookmarks({ bookmarks: bookmarksArr }); //TODO need to think of destructuring
+    //   // this.localRecentBookmarks.push(...bookmarksArr);
+    //   // this.setState({ recentBookmarks: bookmarksArr })
+    // });
 
     // not working
     // chrome.topSites.get(sites => {
@@ -357,6 +391,17 @@ class BookmarkDashboard extends Component {
       }
     }, 0);
   };
+
+  updateBookmark=(index,bookmark)=>{
+    let modifiedBookmark=[...this.state.bookmarks];
+    if(modifiedBookmark.length>0 && modifiedBookmark[index].id===bookmark.id){      
+      modifiedBookmark[index].title=bookmark.title;
+      modifiedBookmark[index].url=bookmark.url;
+      this.setState({bookmarks:modifiedBookmark},()=>{
+        this.props.UpdateBookmarks(modifiedBookmark);
+      });
+      }      
+    }
 
   render() {
     let Bookamrks = [...this.state.bookmarks];
@@ -649,7 +694,8 @@ class BookmarkDashboard extends Component {
                         bookmark={bookmark}
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
-                        }
+                        }    
+                        updateBookamark={this.updateBookmark.bind(this,i)}                    
                         colorsMap={this.props.colorsMap}
                       />
                     );
@@ -666,6 +712,7 @@ class BookmarkDashboard extends Component {
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
+                        updateBookamark={this.updateBookmark.bind(this,i)}
                         colorsMap={this.props.colorsMap}
                       />
                     );
@@ -681,6 +728,7 @@ class BookmarkDashboard extends Component {
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
+                        updateBookamark={this.updateBookmark.bind(this,i)}
                         colorsMap={this.props.colorsMap}
                       />
                     );
@@ -715,10 +763,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(setSearchedTerm(text));
     },
     callGenerateImages: urls => {
-      dispatch(generatePreviewImages(urls))
+      dispatch(generatePreviewImages(urls));
     },
     callSaveUrls: objs => {
       dispatch(saveUrlsToDB(objs))
+    },
+    UpdateBookmarks:(bookmarkArray)=>{
+      dispatch(updateBookmark(bookmarkArray));
     }
   };
 };

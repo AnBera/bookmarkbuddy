@@ -75,3 +75,10 @@ export const saveUrlsToDB = Objurls => {
     urlObj: Objurls
   };
 };
+
+export const updateBookmark = (bookmarks) => {
+  return {
+    type: types.UPDATE_BOOKMARK,
+    UpdatedBookmarks: bookmarks
+  };
+};

@@ -1,7 +1,8 @@
 const Configs = {
-    imageurl: "http://bookmarkbuddy.centralus.cloudapp.azure.com/images/",
-    baseUrl: "http://bookmarkbuddy.centralus.cloudapp.azure.com/"
-    //baseUrl: "http://localhost:3000/"
+    // imageurl: "http://bookmarkbuddy.centralus.cloudapp.azure.com/images/",
+    // baseUrl: "http://bookmarkbuddy.centralus.cloudapp.azure.com/"
+    imageurl: "http://localhost:3000/images/",
+    baseUrl: "http://localhost:3000/"
 }
 
 export const SortTypes = {

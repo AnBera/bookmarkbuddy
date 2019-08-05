@@ -68,7 +68,10 @@ export const DashBoardReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state, isImagesConverted: INITIAL_STATE.isImagesConverted
       };
-
+    case types.UPDATE_BOOKMARK:
+        return {
+          ...state, Bookmarks: action.UpdatedBookmarks
+        };
     default:
       return state;
   }
