@@ -2,12 +2,7 @@
 import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import {
-  flattenNode,
-  generateUrlImagePair,
-  extractHostname,
-  createTotalBookmarksAnalyticsData
-} from "../../app/common/util/Util";
+import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, groupDatesByMonth } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -39,6 +34,16 @@ class BookmarkDashboard extends Component {
       userId: ""
     };
   }
+  localBookmarks = [];
+  bookmarkCreationDates = [];
+  dataBookmarkGrowthAnalytics = [
+    {
+      id: "Total Number of Bookmarks",
+      color: "hsl(275, 70%, 50%)",
+      data: []
+    }
+  ];
+
   componentWillMount() {
     this.setUserID();
     this.getBookmarks();
@@ -94,8 +99,6 @@ class BookmarkDashboard extends Component {
     this.setState({ bookmarks: [] });
     this.addBookmarksInState(18);
   };
-
-  localBookmarks = [];
 
   setLocalBookmarks = bookmarks => {
     this.localBookmarks = [];
@@ -305,8 +308,10 @@ class BookmarkDashboard extends Component {
     //   "id": "0",
     //   "title": ""
     // }
+    // flattenNode(bookmarks, flattenedBookmarks, this.bookmarkCreationDates);
+    // debugger;
+    // this.dataBookmarkGrowthAnalytics[0].data = groupDatesByMonth(this.bookmarkCreationDates);
 
-    // flattenNode(bookmarks, flattenedBookmarks);
     // this.localBookmarks.push(...flattenedBookmarks);
     // this.addBookmarksInState(18);
     // window.onscroll = debounce(() => {
@@ -347,14 +352,15 @@ class BookmarkDashboard extends Component {
     //   // this.setState({ recentBookmarks: bookmarksArr })
     // });
 
-    // not working
-    // chrome.topSites.get(sites => {
-    //   // flattenNode(treeNode[0], flattenedBookmarks);
-    //   console.log(sites);
-    // })
+    // // not working
+    // // chrome.topSites.get(sites => {
+    // //   // flattenNode(treeNode[0], flattenedBookmarks);
+    // //   console.log(sites);
+    // // })
 
     chrome.bookmarks.getTree(treeNode => {
-      flattenNode(treeNode[0], flattenedBookmarks);
+      flattenNode(treeNode[0], flattenedBookmarks, this.bookmarkCreationDates);
+      this.dataBookmarkGrowthAnalytics[0].data = groupDatesByMonth(this.bookmarkCreationDates);
       this.localBookmarks.push(...flattenedBookmarks);
       this.addBookmarksInState(18);
       window.onscroll = debounce(() => {
@@ -667,7 +673,7 @@ class BookmarkDashboard extends Component {
 
           <Grid container columns={3} stackable className="analytics-container">
             <Grid.Column className="analytics-card-container">
-              <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics} />
+              <BookmarkGrowthAnalytics data={this.dataBookmarkGrowthAnalytics}/>
             </Grid.Column>
             <Grid.Column className="analytics-card-container">
               <PopularBookmarkLinkAnalytics
@@ -770,6 +776,7 @@ class BookmarkDashboard extends Component {
               </Grid.Column>
               <Grid.Column>
                 {Bookamrks.map((bookmark, i) => {
+                  chromeTimeValueToDate(bookmark.dateAdded);
                   if (i % 3 === 1)
                     return (
                       <BookmarkCard

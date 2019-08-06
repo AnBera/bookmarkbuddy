@@ -191,10 +191,13 @@ a.ui.card:hover, .ui.fluid.card:hover {
 }
 
 .imageContainer .overlay {
-  background-color: #000;
+  background-color: #282c34;
   width: 100%;
   height: 100%;
   position: absolute;
+  overflow: hidden;
+  border: 1px solid #393939;
+  border-radius: 5px;
 }
 
 .initialAltText {
@@ -295,6 +298,10 @@ a.ui.fluid.card.recommendation-card:last-child {
 .ui.container.analytics-container {
   padding-top: 6em;
   color: black;
+}
+
+.ui.container.analytics-container .bookmark-growth-analytics svg+div {
+  z-index: 999 !important;
 }
 
 .analytics-container .recommendation-card-header i {
