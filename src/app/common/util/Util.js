@@ -107,9 +107,12 @@ export const generateUrlImagePair = async(bookmarks) => {
   return await urls;
 }
 export const generateImageName = (url) => {
+ try{
   let wordstoRemove = ["http://", "https://", "www.",".html"];
   let expStr = wordstoRemove.join("|");  
   return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g ,'').trim()+".png";
+ } 
+ catch(err){console.error(err);}
 }
 
 export const createTotalBookmarksAnalyticsData = (bookmarks) => {

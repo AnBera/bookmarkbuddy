@@ -2,7 +2,12 @@
 import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode,generateUrlImagePair, extractHostname, createTotalBookmarksAnalyticsData } from "../../app/common/util/Util";
+import {
+  flattenNode,
+  generateUrlImagePair,
+  extractHostname,
+  createTotalBookmarksAnalyticsData
+} from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -17,11 +22,11 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchComponent from "../Search/SearchBookmark";
 import BookmarkRecommendationCard from "../BookmarkCard/BookmarkRecommendationCard";
-import BookmarkGrowthAnalytics from '../AnalyticsCard/BookmarkGrowthAnalytics';
-import PopularBookmarkLinkAnalytics from '../AnalyticsCard/PopularBookmarkLinkAnalytics';
+import BookmarkGrowthAnalytics from "../AnalyticsCard/BookmarkGrowthAnalytics";
+import PopularBookmarkLinkAnalytics from "../AnalyticsCard/PopularBookmarkLinkAnalytics";
 import debounce from "lodash.debounce";
 import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
-import { SortTypes } from '../../app/common/constants';
+import { SortTypes } from "../../app/common/constants";
 
 class BookmarkDashboard extends Component {
   constructor(props) {
@@ -30,57 +35,65 @@ class BookmarkDashboard extends Component {
       bookmarks: [],
       context: null,
       context2: null,
-      activeItem: 'home',
-      userId:''
+      activeItem: "home",
+      userId: ""
     };
   }
   componentWillMount() {
+    this.setUserID();
     this.getBookmarks();
   }
 
-  componentDidMount(){
-    this.setUserID();
-  }
-
-  
-  setUserID=()=>{
-    chrome.storage.sync.get('uniqueID', function(items) {
-      var userid = items.userid;
-      if (userid) {
-        this.setState({userId:userid});
+  setUserID = () => {
+    chrome.storage.sync.get("uniqueID", items => {
+      if (items) {
+        this.setState({ userId: items.uniqueID });
       } else {
-          userid = this.getRandomToken();
-          chrome.storage.sync.set({uniqueID: userid}, function() {
-            this.setState({userId:userid});
-          });
+        let userid = this.getRandomToken();
+        chrome.storage.sync.set({ uniqueID: userid }, () => {
+          this.setState({ userId: items.uniqueID });
+        });
       }
-  });
-  }
+    });
+  };
 
-  getRandomToken=()=> {
+  getRandomToken = () => {
     let randomPool = new Uint8Array(32);
     crypto.getRandomValues(randomPool);
-    let hex = '';
+    let hex = "";
     for (var i = 0; i < randomPool.length; ++i) {
-        hex += randomPool[i].toString(16);
+      hex += randomPool[i].toString(16);
     }
     console.log(hex);
     return hex;
-}
+  };
 
-  onSortCategoryClick = (sortcategory) => () => {
-    this.localBookmarks.sort((a,b) => {
-      if(sortcategory === SortTypes.URL) {
-        return (extractHostname(a[sortcategory]) > extractHostname(b[sortcategory])) ? 1 : ((extractHostname(b[sortcategory]) > extractHostname(a[sortcategory])) ? -1 : 0);
+  onSortCategoryClick = sortcategory => () => {
+    this.localBookmarks.sort((a, b) => {
+      if (sortcategory === SortTypes.URL) {
+        return extractHostname(a[sortcategory]) >
+          extractHostname(b[sortcategory])
+          ? 1
+          : extractHostname(b[sortcategory]) > extractHostname(a[sortcategory])
+          ? -1
+          : 0;
       }
-      if(sortcategory === SortTypes.DATE_ADDED) {
-        return (a[sortcategory] > b[sortcategory]) ? -1 : ((b[sortcategory] > a[sortcategory]) ? 1 : 0);
+      if (sortcategory === SortTypes.DATE_ADDED) {
+        return a[sortcategory] > b[sortcategory]
+          ? -1
+          : b[sortcategory] > a[sortcategory]
+          ? 1
+          : 0;
       }
-      return (a[sortcategory] > b[sortcategory]) ? 1 : ((b[sortcategory] > a[sortcategory]) ? -1 : 0);
+      return a[sortcategory] > b[sortcategory]
+        ? 1
+        : b[sortcategory] > a[sortcategory]
+        ? -1
+        : 0;
     });
-    this.setState({bookmarks: []});
+    this.setState({ bookmarks: [] });
     this.addBookmarksInState(18);
-  }
+  };
 
   localBookmarks = [];
 
@@ -88,8 +101,8 @@ class BookmarkDashboard extends Component {
     this.localBookmarks = [];
     this.localBookmarks.push(...bookmarks);
     //TODO move it to another method, reset the bookmarks in state
-    this.setState({bookmarks : []});
-  }
+    this.setState({ bookmarks: [] });
+  };
 
   handleContextRef = ref => {
     this.setState({ context: ref });
@@ -99,11 +112,15 @@ class BookmarkDashboard extends Component {
     this.setState({ context2: ref });
   };
   componentWillReceiveProps(nextProps) {
-    if (nextProps.bookmarks.length > 0 && this.props.bookmarks !== nextProps.bookmarks) {
-      generateUrlImagePair(nextProps.bookmarks).then((urls)=>{
-        let bookmarkObj= {uniqueID:this.state.userId,bookmarks:urls};
-        this.props.callSaveUrls(bookmarkObj);
-      }).catch((err)=>console.log(err));}
+    if (
+      nextProps.bookmarks.length > 0 &&
+      this.props.bookmarks !== nextProps.bookmarks
+    ) {
+      generateUrlImagePair(nextProps.bookmarks).then(urls => {
+          let bookmarkObj = { uniqueID: this.state.userId?this.state.userId:"qwerty1234567ojhjhcxfxb", bookmarks: urls };
+          this.props.callSaveUrls(bookmarkObj);
+        }).catch(err => console.error(err));
+    }
   }
 
   getBookmarks = () => {
@@ -344,7 +361,7 @@ class BookmarkDashboard extends Component {
         let scrollTop = document.documentElement.scrollTop;
         let windowHeight = window.innerHeight;
         let bodyHeight = document.documentElement.scrollHeight - windowHeight;
-        let scrollPercentage = (scrollTop / bodyHeight);
+        let scrollPercentage = scrollTop / bodyHeight;
 
         console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
 
@@ -376,15 +393,21 @@ class BookmarkDashboard extends Component {
 
   addBookmarksInState = numberOfBookmarks => {
     setTimeout(() => {
-      if (this.state.bookmarks.length + numberOfBookmarks < this.localBookmarks.length) {
+      if (
+        this.state.bookmarks.length + numberOfBookmarks <
+        this.localBookmarks.length
+      ) {
         this.setState((prev, props) => ({
           bookmarks: this.localBookmarks.slice(
             0,
             prev.bookmarks.length + numberOfBookmarks
           )
         }));
-      } else if ((this.localBookmarks.length - this.state.bookmarks.length) > 0 && 
-        (this.localBookmarks.length - this.state.bookmarks.length) <= numberOfBookmarks) {
+      } else if (
+        this.localBookmarks.length - this.state.bookmarks.length > 0 &&
+        this.localBookmarks.length - this.state.bookmarks.length <=
+          numberOfBookmarks
+      ) {
         this.setState((prev, props) => ({
           bookmarks: this.localBookmarks.slice(0)
         }));
@@ -392,72 +415,75 @@ class BookmarkDashboard extends Component {
     }, 0);
   };
 
-  updateBookmark=(index,bookmark)=>{
-    let modifiedBookmark=[...this.state.bookmarks];
-    if(modifiedBookmark.length>0 && modifiedBookmark[index].id===bookmark.id){      
-      modifiedBookmark[index].title=bookmark.title;
-      modifiedBookmark[index].url=bookmark.url;
-      this.setState({bookmarks:modifiedBookmark},()=>{
+  updateBookmark = (index, bookmark) => {
+    let modifiedBookmark = [...this.state.bookmarks];
+    if (
+      modifiedBookmark.length > 0 &&
+      modifiedBookmark[index].id === bookmark.id
+    ) {
+      modifiedBookmark[index].title = bookmark.title;
+      modifiedBookmark[index].url = bookmark.url;
+      this.setState({ bookmarks: modifiedBookmark }, () => {
         this.props.UpdateBookmarks(modifiedBookmark);
       });
-      }      
     }
+  };
 
   render() {
     let Bookamrks = [...this.state.bookmarks];
-    
+
     const dataBookmarkGrowthAnalytics = [
       {
-        "id": "Total Number of Bookmarks",
-        "color": "hsl(275, 70%, 50%)",
-        "data": [
+        id: "Total Number of Bookmarks",
+        color: "hsl(275, 70%, 50%)",
+        data: [
           {
-            "x": "Jan",
-            "y": 10
+            x: "Jan",
+            y: 10
           },
           {
-            "x": "Feb",
-            "y": 25
+            x: "Feb",
+            y: 25
           },
           {
-            "x": "Mar",
-            "y": 30
+            x: "Mar",
+            y: 30
           },
           {
-            "x": "Apr",
-            "y": 60
+            x: "Apr",
+            y: 60
           },
           {
-            "x": "May",
-            "y": 80
+            x: "May",
+            y: 80
           },
           {
-            "x": "Jun",
-            "y": 75
+            x: "Jun",
+            y: 75
           },
           {
-            "x": "Jul",
-            "y": 80
+            x: "Jul",
+            y: 80
           },
           {
-            "x": "Aug",
-            "y": 81
+            x: "Aug",
+            y: 81
           },
           {
-            "x": "Sep",
-            "y": 90
+            x: "Sep",
+            y: 90
           },
           {
-            "x": "Oct",
-            "y": 95
+            x: "Oct",
+            y: 95
           },
           {
-            "x": "Nov",
-            "y": 93
+            x: "Nov",
+            y: 93
           },
           {
-            "x": "Dec",
-            "y": 100
+            x: "Dec",
+            y: 100
           }
         ]
       }
@@ -573,32 +599,31 @@ class BookmarkDashboard extends Component {
     ];
     const dataPopularBookmarkLinkAnalytics = [
       {
-        "country": "Youtube",
+        country: "Youtube",
         "Number of times added": 2,
-        "Number of times addedColor": "hsl(106, 70%, 50%)",
+        "Number of times addedColor": "hsl(106, 70%, 50%)"
       },
       {
-        "country": "Udemy",
+        country: "Udemy",
         "Number of times added": 10,
-        "Number of times addedColor": "hsl(294, 70%, 50%)",
+        "Number of times addedColor": "hsl(294, 70%, 50%)"
       },
       {
-        "country": "Medium",
+        country: "Medium",
         "Number of times added": 14,
-        "Number of times addedColor": "hsl(235, 70%, 50%)",
+        "Number of times addedColor": "hsl(235, 70%, 50%)"
       },
       {
-        "country": "Netflix",
+        country: "Netflix",
         "Number of times added": 20,
-        "Number of times addedColor": "hsl(235, 70%, 50%)",
+        "Number of times addedColor": "hsl(235, 70%, 50%)"
       },
       {
-        "country": "TOI",
+        country: "TOI",
         "Number of times added": 27,
-        "Number of times addedColor": "hsl(235, 70%, 50%)",
+        "Number of times addedColor": "hsl(235, 70%, 50%)"
       }
     ];
-
 
     return (
       // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
@@ -616,8 +641,14 @@ class BookmarkDashboard extends Component {
             style={{ top: "auto", height: "80px", width: "100%" }}
           >
             <Sticky context={this.state.context}>
-              <div style={{ backgroundColor: "#161626", textAlign:"center", height:"60px" }}>
-                <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy"/>
+              <div
+                style={{
+                  backgroundColor: "#161626",
+                  textAlign: "center",
+                  height: "60px"
+                }}
+              >
+                <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy" />
               </div>
             </Sticky>
           </Rail>
@@ -636,12 +667,21 @@ class BookmarkDashboard extends Component {
 
           <Grid container columns={3} stackable className="analytics-container">
             <Grid.Column className="analytics-card-container">
-              <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics}/>
+              <BookmarkGrowthAnalytics data={dataBookmarkGrowthAnalytics} />
             </Grid.Column>
             <Grid.Column className="analytics-card-container">
-              <PopularBookmarkLinkAnalytics data={dataPopularBookmarkLinkAnalytics}/>
+              <PopularBookmarkLinkAnalytics
+                data={dataPopularBookmarkLinkAnalytics}
+              />
             </Grid.Column>
-            <Grid.Column className="analytics-card-container" style={{ overflowY: "auto", paddingRight:"0", paddingBottom: "0"}}>
+            <Grid.Column
+              className="analytics-card-container"
+              style={{
+                overflowY: "auto",
+                paddingRight: "0",
+                paddingBottom: "0"
+              }}
+            >
               <BookmarkRecommendationCard bookmarks={Bookamrks} />
             </Grid.Column>
           </Grid>
@@ -666,23 +706,50 @@ class BookmarkDashboard extends Component {
                         setLocalBookmarks={this.setLocalBookmarks}
                       />
                       <Grid.Column width={16}>
-                        <span className="display-count"> Displaying 110 items  </span>
-                        <List floated='right' horizontal className="sortContainer">
-                          <List.Item style={{color:"grey"}}>
-                            Sort By: 
+                        <span className="display-count">
+                          {" "}
+                          Displaying 110 items{" "}
+                        </span>
+                        <List
+                          floated="right"
+                          horizontal
+                          className="sortContainer"
+                        >
+                          <List.Item style={{ color: "grey" }}>
+                            Sort By:
                           </List.Item>
-                          <span className="item" onClick={this.onSortCategoryClick("dateAdded")}>Date Added</span>
-                          <span className="item" onClick={this.onSortCategoryClick("title")}>Title</span>
-                          <span className="item"  onClick={this.onSortCategoryClick("url")}>Url</span>
+                          <span
+                            className="item"
+                            onClick={this.onSortCategoryClick("dateAdded")}
+                          >
+                            Date Added
+                          </span>
+                          <span
+                            className="item"
+                            onClick={this.onSortCategoryClick("title")}
+                          >
+                            Title
+                          </span>
+                          <span
+                            className="item"
+                            onClick={this.onSortCategoryClick("url")}
+                          >
+                            Url
+                          </span>
                         </List>
-                      </Grid.Column>                      
+                      </Grid.Column>
                     </Grid.Row>
                   )}
                 </Grid>
               </Segment>
             </Sticky>
           </Rail>
-          <Grid container columns="equal" stackable style={{ marginTop: "7em" }}>
+          <Grid
+            container
+            columns="equal"
+            stackable
+            style={{ marginTop: "7em" }}
+          >
             <Grid.Row>
               <Grid.Column>
                 {Bookamrks.map((bookmark, i) => {
@@ -694,8 +761,8 @@ class BookmarkDashboard extends Component {
                         bookmark={bookmark}
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
-                        }    
-                        updateBookamark={this.updateBookmark.bind(this,i)}                    
+                        }
+                        updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
                       />
                     );
@@ -712,7 +779,7 @@ class BookmarkDashboard extends Component {
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
-                        updateBookamark={this.updateBookmark.bind(this,i)}
+                        updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
                       />
                     );
@@ -728,7 +795,7 @@ class BookmarkDashboard extends Component {
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
-                        updateBookamark={this.updateBookmark.bind(this,i)}
+                        updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
                       />
                     );
@@ -766,9 +833,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(generatePreviewImages(urls));
     },
     callSaveUrls: objs => {
-      dispatch(saveUrlsToDB(objs))
+      dispatch(saveUrlsToDB(objs));
     },
-    UpdateBookmarks:(bookmarkArray)=>{
+    UpdateBookmarks: bookmarkArray => {
       dispatch(updateBookmark(bookmarkArray));
     }
   };
