@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, gruoupDatesByMonth } from "../../app/common/util/Util";
+import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, groupDatesByMonth } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -265,7 +265,7 @@ class BookmarkDashboard extends Component {
     // }
     // flattenNode(bookmarks, flattenedBookmarks, this.bookmarkCreationDates);
     // debugger;
-    // this.dataBookmarkGrowthAnalytics[0].data = gruoupDatesByMonth(this.bookmarkCreationDates);
+    // this.dataBookmarkGrowthAnalytics[0].data = groupDatesByMonth(this.bookmarkCreationDates);
 
     // this.localBookmarks.push(...flattenedBookmarks);
     // this.addBookmarksInState(18);
@@ -315,7 +315,7 @@ class BookmarkDashboard extends Component {
 
     chrome.bookmarks.getTree(treeNode => {
       flattenNode(treeNode[0], flattenedBookmarks, this.bookmarkCreationDates);
-      this.dataBookmarkGrowthAnalytics[0].data = gruoupDatesByMonth(this.bookmarkCreationDates);
+      this.dataBookmarkGrowthAnalytics[0].data = groupDatesByMonth(this.bookmarkCreationDates);
       this.localBookmarks.push(...flattenedBookmarks);
       this.addBookmarksInState(18);
       window.onscroll = debounce(() => {

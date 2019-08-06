@@ -98,7 +98,7 @@ export const chromeTimeValueToDate = (timestamp) => {
   // return new Date(epoch + timestamp / 1000).toDateString();
 }
 
-export const gruoupDatesByMonth = (dates) => {
+export const groupDatesByMonth = (dates) => {
     // var dates = [ "1396-10-11 09:07:21" ];
     
     var resultingXYCoordinateData = [];
