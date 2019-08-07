@@ -98,34 +98,73 @@ export const chromeTimeValueToDate = (timestamp) => {
   // return new Date(epoch + timestamp / 1000).toDateString();
 }
 
-export const groupDatesByMonth = (dates) => {
-    // var dates = [ "1396-10-11 09:07:21" ];
+// export const groupDatesByMonth = (dates) => {
+//     // var dates = [ "1396-10-11 09:07:21" ];
     
-    var resultingXYCoordinateData = [];
-    var groupByYearMonth = dates.reduce( function (acc, date) {
+//     var resultingXYCoordinateData = [];
+//     var groupByYearMonth = dates.reduce( function (acc, date) {
     
-      var yearMonthCombination = moment(date).year()+'-'+moment(date).month();
+//       var yearMonthCombination = moment(date).year()+'-'+moment(date).month();
       
-      // check if the week number exists
-      if (typeof acc[yearMonthCombination] === 'undefined') {
-        acc[yearMonthCombination] = [];
-      }
+//       // check if the week number exists
+//       if (typeof acc[yearMonthCombination] === 'undefined') {
+//         acc[yearMonthCombination] = [];
+//       }
       
-      acc[yearMonthCombination].push(date);
+//       acc[yearMonthCombination].push(date);
       
-      return acc;
+//       return acc;
     
-    }, {});
+//     }, {});
 
-    let yearMonthKeys = Object.keys(groupByYearMonth).sort();
-    yearMonthKeys.forEach((yearMonthCombination, index) => {
-      resultingXYCoordinateData.push({x:yearMonthCombination, 
-        y:groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
-    })
+//     let yearMonthKeys = Object.keys(groupByYearMonth).sort();
+//     yearMonthKeys.forEach((yearMonthCombination, index) => {
+//       resultingXYCoordinateData.push({x:yearMonthCombination, 
+//         y:groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
+//     })
     
-    console.log(groupByYearMonth);
-    console.log(resultingXYCoordinateData);
-    return resultingXYCoordinateData;
+//     console.log(groupByYearMonth);
+//     console.log(resultingXYCoordinateData);
+//     return resultingXYCoordinateData;
+// }
+
+export const gruoupDatesByMonth = (dates) => {
+  // var dates = [ "1396-10-11 09:07:21" ];
+  return dates.reduce(function (acc, date) {
+    let yearMonthCombination = moment(date).year() + '-' + moment(date).month();
+    // check if the week number exists
+    if (typeof acc[yearMonthCombination] === 'undefined') {
+      acc[yearMonthCombination] = [];
+    }
+    acc[yearMonthCombination].push(date);
+    return acc;
+  }, {});
+}
+export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) => {
+  let groupByYearMonth = gruoupDatesByMonth(dates);
+  let firstBookmarkAddeddate = "";
+  let dataBookmarkGrowthAnalytics = [];
+  let cardDataBookmarkGrowth = {};
+  let resultingXYCoordinateData = [];
+  let yearMonthKeys = Object.keys(groupByYearMonth).sort();
+  yearMonthKeys.forEach((yearMonthCombination, index) => {
+    resultingXYCoordinateData.push({
+      x: yearMonthCombination,
+      y: groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index - 1] ? resultingXYCoordinateData[index - 1].y : 0)
+    })
+  });
+  firstBookmarkAddeddate = yearMonthKeys[0];//groupByYearMonth[yearMonthKeys[(yearMonthKeys.length-1) || 0]];
+  dataBookmarkGrowthAnalytics.push({
+    id: "Total Number of Bookmarks",
+    color: "hsl(275, 70%, 50%)",
+    data: resultingXYCoordinateData
+  });
+  cardDataBookmarkGrowth.data = dataBookmarkGrowthAnalytics;
+  cardDataBookmarkGrowth.totalBookmarkCount = totalBookmarkCount;
+  cardDataBookmarkGrowth.firstBookmarkAddeddate = firstBookmarkAddeddate;
+  console.log(groupByYearMonth);
+  console.log(resultingXYCoordinateData);
+  return cardDataBookmarkGrowth;
 }
 
 export const generateUrlImagePair = async(bookmarks) => {

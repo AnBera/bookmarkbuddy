@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, groupDatesByMonth } from "../../app/common/util/Util";
+import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, prepareBookmarkGrowthAnalyticsData } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -36,13 +36,16 @@ class BookmarkDashboard extends Component {
   }
   localBookmarks = [];
   bookmarkCreationDates = [];
-  dataBookmarkGrowthAnalytics = [
-    {
-      id: "Total Number of Bookmarks",
-      color: "hsl(275, 70%, 50%)",
-      data: []
-    }
-  ];
+  //Culprit for a bug. Need to initialize like this. TODO need to think of a better approach
+  cardDataBookmarkGrowth = {
+    data: [
+        {
+          id: "Total Number of Bookmarks",
+          color: "hsl(275, 70%, 50%)",
+          data: []
+        }
+      ]
+  };
 
   componentWillMount() {
     this.setUserID();
@@ -127,7 +130,7 @@ class BookmarkDashboard extends Component {
   }
 
   getBookmarks = () => {
-    console.log("getbookmark called");
+    console.log("getbookmark called after frst bmk");
     let flattenedBookmarks = [];
 
     //============
@@ -310,7 +313,7 @@ class BookmarkDashboard extends Component {
     // }
     // flattenNode(bookmarks, flattenedBookmarks, this.bookmarkCreationDates);
     // debugger;
-    // this.dataBookmarkGrowthAnalytics[0].data = groupDatesByMonth(this.bookmarkCreationDates);
+    // this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(this.bookmarkCreationDates, flattenedBookmarks.length);
 
     // this.localBookmarks.push(...flattenedBookmarks);
     // this.addBookmarksInState(18);
@@ -360,7 +363,7 @@ class BookmarkDashboard extends Component {
 
     chrome.bookmarks.getTree(treeNode => {
       flattenNode(treeNode[0], flattenedBookmarks, this.bookmarkCreationDates);
-      this.dataBookmarkGrowthAnalytics[0].data = groupDatesByMonth(this.bookmarkCreationDates);
+      this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(this.bookmarkCreationDates, flattenedBookmarks.length);
       this.localBookmarks.push(...flattenedBookmarks);
       this.addBookmarksInState(18);
       window.onscroll = debounce(() => {
@@ -437,11 +440,11 @@ class BookmarkDashboard extends Component {
 
   render() {
     let Bookamrks = [...this.state.bookmarks];
-    let cardDataBookmarkGrowthAnalytics = {
-      data:this.dataBookmarkGrowthAnalytics,
-      totalBookmarkCount: 333,
-      firstBookmarkAddeddate: "2010-07"
-    };
+    // let cardDataBookmarkGrowthAnalytics = {
+    //   data:this.dataBookmarkGrowthAnalytics,
+    //   totalBookmarkCount: 333,
+    //   firstBookmarkAddeddate: "2010-07"
+    // };
     
     const dataBookmarkGrowthAnalytics = [
       {
@@ -678,7 +681,7 @@ class BookmarkDashboard extends Component {
 
           <Grid container columns={3} stackable className="analytics-container">
             <Grid.Column className="analytics-card-container">
-              <BookmarkGrowthAnalytics {...cardDataBookmarkGrowthAnalytics}/>
+              <BookmarkGrowthAnalytics {...this.cardDataBookmarkGrowth}/>
             </Grid.Column>
             <Grid.Column className="analytics-card-container">
               <PopularBookmarkLinkAnalytics
