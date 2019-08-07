@@ -143,34 +143,22 @@ export const generateUrlImagePair = async(bookmarks) => {
   }
   return await urls;
 }
+
 export const generateImageName = (url) => {
+ try{
   let wordstoRemove = ["http://", "https://", "www.",".html"];
   let expStr = wordstoRemove.join("|");  
-  return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%]/g ,'').trim()+".png";
+  return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g ,'').trim()+".png";
+ } 
+ catch(err){console.error(err);}
 }
 
-
-export const createTotalBookmarksAnalyticsData = (bookmarks) => {
-  let today = new Date()
-  let priorDate = new Date().setDate(today.getDate()-30);
-
-  bookmarks.foreach((bookmark) => {
-
-  })
-
-
-  // let bookmarksCountByFolder = {};
-  // let last30DaysBookmark = bookmarks.filter((item) => {
-  //   return new Date(chromeTimeValueToDate(item.dateAdded)) > new Date(priorDate);
-  // });
-
-  // last30DaysBookmark.forEach((bookmark) => {
-  //   if (bookmarksCountByFolder[bookmark.category]) {
-  //     bookmarksCountByFolder[bookmark.category] = bookmarksCountByFolder[bookmark.category] ++;
-  //   } else {
-  //     bookmarksCountByFolder[bookmark.category] = 1
-  //   }
-  // });
-
-  // return bookmarksCountByFolder;
+export const debounce = (func, delay) => {
+  let debounceTimer;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func.apply(context, args), delay);
+  };
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Select from "./SelectFolder";
 import { Icon } from "semantic-ui-react";
 import "./search.css";
+import {debounce} from "../../app/common/util/Util";
 
 class SearchAndFilter extends Component {
   open_closeDropdown = () => {
@@ -24,16 +25,6 @@ class SearchAndFilter extends Component {
     }
   };
 
-  debounce = (func, delay) => {
-    let debounceTimer;
-    return function() {
-      const context = this;
-      const args = arguments;
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => func.apply(context, args), delay);
-    };
-  };
-
   render() {
     const select = (
       <Select
@@ -49,7 +40,7 @@ class SearchAndFilter extends Component {
       <input
         className="inputSearch"
         placeholder="Search here"
-        onChange={e => this.debounce(this.onSearch(e), 250)}
+        onChange={e => debounce(this.onSearch(e), 250)}
         value={this.props.SearchedText}
       />
     );
