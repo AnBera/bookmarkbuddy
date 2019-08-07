@@ -11,6 +11,7 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchAndFilter from "./SearchandFilter";
 import { populateRandomColor } from '../../app/common/util/Util';
+import FolderDistributionAnalytics from "../AnalyticsCard/FolderDistributionAnalytics";
 
 class SearchComponent extends Component {
   componentWillMount = () => {
@@ -113,8 +114,23 @@ class SearchComponent extends Component {
   };
 
   render() {
+    // const dataFolderDistribution = [
+    //   {
+    //     "id": "stylus",
+    //     "label": "stylus",
+    //     "value": 69,
+    //     "color": "hsl(263, 70%, 50%)"
+    //   },
+    //   {
+    //     "id": "python",
+    //     "label": "python",
+    //     "value": 182,
+    //     "color": "hsl(0, 0%, 80%)"
+    //   }
+    // ];
     return (
-      <Grid.Column width={16}>
+      <>
+      <Grid.Column width={11}>
         <SearchAndFilter
           optionList={this.props.bookmarkFolders}
           setSearchedText={this.searchBookmarkWithinFolder}
@@ -125,6 +141,22 @@ class SearchComponent extends Component {
           IsDropDownOpen={this.props.isDropDownOpen}
         />
       </Grid.Column>
+      <Grid.Column width={5} style={{ height:"70px", width:"50%"}}>
+        {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
+        <div className="folder-perc-container">
+            <div id="activeBorder" className="active-border" style={{display:"inline-block", float:"left"}}>
+                <div id="circle" className="circle">
+                    <span className="prec 270" id="prec">20%</span>
+                </div>
+            </div>
+            <div className="folder-info" style={{display:"inline-block", marginLeft:".75em", marginTop:".6em"}}>
+              <div className="info-header" style={{fontSize: "1.15em"}} >
+              Folder <strong>JS</strong>
+              </div>
+            <div className="info-body">Contains 20% of Bookmarks</div></div>
+        </div>
+      </Grid.Column>
+      </>
     );
   }
 }
