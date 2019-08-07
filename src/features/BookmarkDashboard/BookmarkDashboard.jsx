@@ -437,7 +437,12 @@ class BookmarkDashboard extends Component {
 
   render() {
     let Bookamrks = [...this.state.bookmarks];
-
+    let cardDataBookmarkGrowthAnalytics = {
+      data:this.dataBookmarkGrowthAnalytics,
+      totalBookmarkCount: 333,
+      firstBookmarkAddeddate: "2010-07"
+    };
+    
     const dataBookmarkGrowthAnalytics = [
       {
         id: "Total Number of Bookmarks",
@@ -673,7 +678,7 @@ class BookmarkDashboard extends Component {
 
           <Grid container columns={3} stackable className="analytics-container">
             <Grid.Column className="analytics-card-container">
-              <BookmarkGrowthAnalytics data={this.dataBookmarkGrowthAnalytics}/>
+              <BookmarkGrowthAnalytics {...cardDataBookmarkGrowthAnalytics}/>
             </Grid.Column>
             <Grid.Column className="analytics-card-container">
               <PopularBookmarkLinkAnalytics
