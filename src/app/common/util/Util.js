@@ -132,9 +132,10 @@ export const groupByItemInArray = (arr, callback) => {
   return arr.reduce((acc, item) => {
     let resultingKey = callback(item);
     if (typeof acc[resultingKey] === 'undefined') {
-      acc[resultingKey] = [];
+      acc[resultingKey] = 0;
     }
-    acc[resultingKey].push(item);
+    //increase the count of grouped item
+    acc[resultingKey]++;
     return acc;
   }, {});
 };
@@ -154,7 +155,7 @@ export const gruoupDatesByMonth = (dates) => {
 }
 export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) => {
   let groupByYearMonth = gruoupDatesByMonth(dates);
-  console.log("===new===");
+  console.log("======");
   console.log(groupByYearMonth);
   let firstBookmarkAddeddate = "";
   let dataBookmarkGrowthAnalytics = [];
@@ -164,7 +165,7 @@ export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) =>
   yearMonthKeys.forEach((yearMonthCombination, index) => {
     resultingXYCoordinateData.push({
       x: yearMonthCombination,
-      y: groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index - 1] ? resultingXYCoordinateData[index - 1].y : 0)
+      y: groupByYearMonth[yearMonthCombination] + (resultingXYCoordinateData[index - 1] ? resultingXYCoordinateData[index - 1].y : 0)
     })
   });
   firstBookmarkAddeddate = yearMonthKeys[0];//groupByYearMonth[yearMonthKeys[(yearMonthKeys.length-1) || 0]];
