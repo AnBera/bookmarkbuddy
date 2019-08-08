@@ -37,7 +37,7 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     <ResponsiveBar
         data={data}
         keys={[ 'Number of times added']}
-        indexBy="country"
+        indexBy="mostBookmarkedSite"
         margin={{ top: 0, right: 0, bottom: 0, left: 50 }}
         padding={0.3}
         groupMode="grouped"

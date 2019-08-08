@@ -613,27 +613,27 @@ class BookmarkDashboard extends Component {
     ];
     const dataPopularBookmarkLinkAnalytics = [
       {
-        country: "Youtube",
+        mostBookmarkedSite: "Youtube",
         "Number of times added": 2,
         "Number of times addedColor": "hsl(106, 70%, 50%)"
       },
       {
-        country: "Udemy",
+        mostBookmarkedSite: "Udemy",
         "Number of times added": 10,
         "Number of times addedColor": "hsl(294, 70%, 50%)"
       },
       {
-        country: "Medium",
+        mostBookmarkedSite: "Medium",
         "Number of times added": 14,
         "Number of times addedColor": "hsl(235, 70%, 50%)"
       },
       {
-        country: "Netflix",
+        mostBookmarkedSite: "Netflix",
         "Number of times added": 20,
         "Number of times addedColor": "hsl(235, 70%, 50%)"
       },
       {
-        country: "TOI",
+        mostBookmarkedSite: "TOI",
         "Number of times added": 27,
         "Number of times addedColor": "hsl(235, 70%, 50%)"
       }

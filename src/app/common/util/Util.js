@@ -128,20 +128,34 @@ export const chromeTimeValueToDate = (timestamp) => {
 //     return resultingXYCoordinateData;
 // }
 
-export const gruoupDatesByMonth = (dates) => {
-  // var dates = [ "1396-10-11 09:07:21" ];
-  return dates.reduce(function (acc, date) {
-    let yearMonthCombination = moment(date).year() + '-' + moment(date).month();
-    // check if the week number exists
-    if (typeof acc[yearMonthCombination] === 'undefined') {
-      acc[yearMonthCombination] = [];
+export const groupByItemInArray = (arr, callback) => {
+  return arr.reduce((acc, item) => {
+    let resultingKey = callback(item);
+    if (typeof acc[resultingKey] === 'undefined') {
+      acc[resultingKey] = [];
     }
-    acc[yearMonthCombination].push(date);
+    acc[resultingKey].push(item);
     return acc;
   }, {});
+};
+
+export const gruoupDatesByMonth = (dates) => {
+  // var dates = [ "1396-10-11 09:07:21" ];
+  return groupByItemInArray(dates, (date)=> (moment(date).year() + '-' + moment(date).month()))
+  // return dates.reduce(function (acc, date) {
+  //   let yearMonthCombination = moment(date).year() + '-' + moment(date).month();
+  //   // check if the week number exists
+  //   if (typeof acc[yearMonthCombination] === 'undefined') {
+  //     acc[yearMonthCombination] = [];
+  //   }
+  //   acc[yearMonthCombination].push(date);
+  //   return acc;
+  // }, {});
 }
 export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) => {
   let groupByYearMonth = gruoupDatesByMonth(dates);
+  console.log("===new===");
+  console.log(groupByYearMonth);
   let firstBookmarkAddeddate = "";
   let dataBookmarkGrowthAnalytics = [];
   let cardDataBookmarkGrowth = {};
@@ -162,7 +176,7 @@ export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) =>
   cardDataBookmarkGrowth.data = dataBookmarkGrowthAnalytics;
   cardDataBookmarkGrowth.totalBookmarkCount = totalBookmarkCount;
   cardDataBookmarkGrowth.firstBookmarkAddeddate = firstBookmarkAddeddate;
-  console.log(groupByYearMonth);
+  
   console.log(resultingXYCoordinateData);
   return cardDataBookmarkGrowth;
 }
