@@ -193,13 +193,14 @@ export const preparePopularBookmarkAnalyticsData = (urls) => {
   let topFiveSites = getKeysWithHighestValue(groupedSites, 5);
   let cardDataPopularBookmarks = [];
 
-  topFiveSites.forEach((siteName) => {
+  // topFiveSites.forEach((siteName) =>
+  for (let i = topFiveSites.length-1; i >= 0; i--) {
     cardDataPopularBookmarks.push({
-      mostBookmarkedSite: siteName,
-      count: groupedSites[siteName],
+      mostBookmarkedSite: topFiveSites[i],
+      count: groupedSites[topFiveSites[i]],
       countColor: "hsl(106, 70%, 50%)"
     });
-  });
+  };
   return cardDataPopularBookmarks;
 }
 
