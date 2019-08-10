@@ -55,14 +55,16 @@ class BookmarkDashboard extends Component {
   }
 
   setUserID = () => {
-    chrome.storage.sync.get("uniqueID", items => {
-      if (items) {
-        this.setState({ userId: items.uniqueID });
-      } else {
+    chrome.storage.sync.get(["uniqueID"], items => {
+      console.log("storage id is");
+      console.log(items);
+      if (Object.keys(items).length === 0 && items.constructor === Object) {
         let userid = this.getRandomToken();
         chrome.storage.sync.set({ uniqueID: userid }, () => {
           this.setState({ userId: items.uniqueID });
         });
+      } else {
+        this.setState({ userId: items.uniqueID });
       }
     });
   };
