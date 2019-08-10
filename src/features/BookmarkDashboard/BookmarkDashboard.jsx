@@ -47,7 +47,12 @@ class BookmarkDashboard extends Component {
         }
       ]
   };
-  cardDataPopularBookmarks = [];
+  //Culprit for the same mentioned nasty bug. Need to initialize like this. TODO need to think of a better approach
+  cardDataPopularBookmarks = {
+    data : [{}],
+    totalTopBookmarksCount:0,
+    topFiveSites:[]
+  };
 
   componentWillMount() {
     this.setUserID();
@@ -690,9 +695,7 @@ class BookmarkDashboard extends Component {
               <BookmarkGrowthAnalytics {...this.cardDataBookmarkGrowth}/>
             </Grid.Column>
             <Grid.Column className="analytics-card-container">
-              <PopularBookmarkLinkAnalytics
-                data={this.cardDataPopularBookmarks}
-              />
+              <PopularBookmarkLinkAnalytics {...this.cardDataPopularBookmarks} />
             </Grid.Column>
             <Grid.Column
               className="analytics-card-container"

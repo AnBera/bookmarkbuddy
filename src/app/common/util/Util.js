@@ -191,20 +191,26 @@ export const getKeysWithHighestValue = (o, n) => {
 export const preparePopularBookmarkAnalyticsData = (urls) => {
   let groupedSites = groupSitesByDomain(urls);
   let topFiveSites = getKeysWithHighestValue(groupedSites, 5);
-  let cardDataPopularBookmarks = [];
+  let resultingXYCoordinateData = [];
+  let cardDataPopularBookmarks = {};
+  let totalTopBookmarksCount = 0;
 
   // topFiveSites.forEach((siteName) =>
   for (let i = topFiveSites.length-1; i >= 0; i--) {
-    cardDataPopularBookmarks.push({
+    resultingXYCoordinateData.push({
       mostBookmarkedSite: topFiveSites[i],
       count: groupedSites[topFiveSites[i]],
       countColor: "hsl(106, 70%, 50%)"
     });
+    totalTopBookmarksCount += groupedSites[topFiveSites[i]];
   };
-  return cardDataPopularBookmarks;
-}
+  cardDataPopularBookmarks.data = resultingXYCoordinateData;
+  cardDataPopularBookmarks.totalTopBookmarksCount = totalTopBookmarksCount;
+  cardDataPopularBookmarks.topFiveSites = topFiveSites;
 
-console.log(preparePopularBookmarkAnalyticsData(["https://web.whatsapp.com/", "https://web.whatsapp.com/test", "https://toi.com/", "https://facebook.com/"]));
+  console.log(cardDataPopularBookmarks);
+  return cardDataPopularBookmarks;
+};
 
 export const generateUrlImagePair = async(bookmarks) => {
   let urls = [];
@@ -220,7 +226,7 @@ export const generateUrlImagePair = async(bookmarks) => {
     })
   }
   return await urls;
-}
+};
 
 export const generateImageName = (url) => {
  try{
@@ -229,7 +235,7 @@ export const generateImageName = (url) => {
   return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g ,'').trim()+".png";
  } 
  catch(err){console.error(err);}
-}
+};
 
 export const debounce = (func, delay) => {
   let debounceTimer;
@@ -239,4 +245,4 @@ export const debounce = (func, delay) => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => func.apply(context, args), delay);
   };
-}
+};

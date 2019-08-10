@@ -20,11 +20,11 @@ const theme = {
     }
 }
 
-const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
-    <Card fluid style={{borderRadius:"7px"}} >
-    <div className="meta" style={{position: "absolute", right:"0", bottom: "135px", textAlign: "right", padding: "1.5em 1.5em 0 0", color: "#fff"}}>
+const PopularBookmarkLinkAnalytics = ({ data, totalTopBookmarksCount, topFiveSites /* see data tab */ }) => (
+    <Card fluid className="popular-bookmark-analytics" style={{borderRadius:"7px"}} >
+    <div className="meta">
         <div style={{fontSize: "3em", marginRight: "0"}}>
-            40
+            {totalTopBookmarksCount}
         </div>
         <div style={{fontSize: "1.2em", paddingTop: ".5em", marginRight: "0"}}>
             Bookmarks
@@ -129,9 +129,9 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     
     <Card.Content>
       <Card.Header>Most Bookmarked sites</Card.Header>
-      <Card.Meta>Your top 5 Sites consists of total 40 bookmarks</Card.Meta>
+      <Card.Meta>Your top 5 Sites consists of total {totalTopBookmarksCount} bookmarks</Card.Meta>
       <Card.Description>
-        Facebook is your top bookmarked site. Followed by Wikipedia and TOI
+        {topFiveSites[0]} is your top bookmarked site. Followed by {topFiveSites[1]} and {topFiveSites[2]}
       </Card.Description>
     </Card.Content>
     </Card>

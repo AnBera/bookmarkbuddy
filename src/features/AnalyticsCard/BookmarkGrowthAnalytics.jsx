@@ -84,7 +84,7 @@ const BookmarkGrowthAnalytics = ({ data, totalBookmarkCount, firstBookmarkAddedd
       <Card.Header>How your Bookmarks increased</Card.Header>
       <Card.Meta>Total Bookmarks count each month since begining</Card.Meta>
       <Card.Description>
-        You have total 1080 Bookmarks. First ever bookmark was added on {firstBookmarkAddeddate}.
+        You have total {totalBookmarkCount} Bookmarks. First ever bookmark was added on {firstBookmarkAddeddate}.
       </Card.Description>
     </Card.Content>
     </Card>
