@@ -36,7 +36,7 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     <Card.Content style={{ height:"250px", width:"100%", padding:"1em", backgroundColor:"#333842", borderRadius:"7px" }}>
     <ResponsiveBar
         data={data}
-        keys={[ 'Number of times added']}
+        keys={[ 'count']}
         indexBy="mostBookmarkedSite"
         margin={{ top: 0, right: 0, bottom: 0, left: 50 }}
         padding={0.3}
