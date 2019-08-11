@@ -335,3 +335,18 @@ a.ui.fluid.card.recommendation-card:last-child {
   background-color: rgb(51, 56, 66, .6);
   z-index: 5;
 }
+
+.animation:hover{
+  -webkit-animation: moving 5s infinite;
+    animation: moving 5s infinite;
+}
+
+@-webkit-keyframes moving {
+  from {-webkit-transform: translateX(0px);}
+  to {-webkit-transform: translateX(-100px);}
+}
+
+@keyframes moving {
+  from {transform: translateX(0px);}
+  to {transform: translateX(-100px);}
+}

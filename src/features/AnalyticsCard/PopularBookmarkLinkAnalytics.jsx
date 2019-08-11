@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from "semantic-ui-react";
-import { ResponsiveBar } from '@nivo/bar'
+import { ResponsiveBar } from '@nivo/bar';
+import { useTheme } from '@nivo/core';
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
@@ -18,7 +19,27 @@ const theme = {
             }
         }
     }
-}
+};
+
+const CustomTick = tick => {
+    const theme = useTheme();
+        return (
+            <g transform={`translate(-50, ${tick.y})`} width={400}>
+                <text
+                className="animation"
+                textAnchor="left"
+                dominantBaseline="middle"
+                style={{
+                    ...theme.axis.ticks.text,
+                    fill: '#fff',
+                    fontSize: 12,
+                }}
+                >
+                {tick.value}
+                </text>
+            </g>
+        )
+  };
 
 const PopularBookmarkLinkAnalytics = ({ data, totalTopBookmarksCount, topFiveSites /* see data tab */ }) => (
     <Card fluid className="popular-bookmark-analytics" style={{borderRadius:"7px"}} >
@@ -83,14 +104,15 @@ const PopularBookmarkLinkAnalytics = ({ data, totalTopBookmarksCount, topFiveSit
         axisTop={null}
         axisRight={null}
         axisBottom={null}
-        axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendPosition: 'middle',
-            legendOffset: -40
-        }}
+        axisLeft={{renderTick: CustomTick}}
+                //     {
+                //     tickSize: 0,
+                //     tickPadding: -10,
+                //     tickRotation: 0,
+                //     legend: '',
+                //     legendPosition: 'middle',
+                //     legendOffset: -40
+                // }
         theme={theme}
         enableGridY={false}
         labelSkipWidth={12}
