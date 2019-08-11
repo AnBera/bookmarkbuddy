@@ -95,6 +95,7 @@ a.ui.card:hover, .ui.fluid.card:hover {
   font-family: "Montserrat";
   font-weight: bold;
   margin-top: 0.5em;
+  word-break: break-word;
 }
 
 /* div::first-letter {
