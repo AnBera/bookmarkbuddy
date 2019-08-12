@@ -6,11 +6,11 @@ import { ResponsiveLine } from '@nivo/line'
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
+const BookmarkGrowthAnalytics = ({ data, totalBookmarkCount, firstBookmarkAddeddate /* see data tab */ }) => (
     <Card fluid className="bookmark-growth-analytics" style={{borderRadius:"7px"}} >
     <div className="meta" style={{position: "absolute", padding: "1.5em 0 0 1.7em", color: "#fff"}}>
         <div style={{fontSize: "3em"}}>
-            1080
+            {totalBookmarkCount}
         </div>
         <div style={{fontSize: "1.2em", paddingTop: ".5em"}}>
             Bookmarks
@@ -84,7 +84,7 @@ const BookmarkGrowthAnalytics = ({ data /* see data tab */ }) => (
       <Card.Header>How your Bookmarks increased</Card.Header>
       <Card.Meta>Total Bookmarks count each month since begining</Card.Meta>
       <Card.Description>
-        You have total 1080 Bookmarks. 32 Bookmarks added in last Month.
+        You have total {totalBookmarkCount} Bookmarks. First ever bookmark was added on {firstBookmarkAddeddate}.
       </Card.Description>
     </Card.Content>
     </Card>

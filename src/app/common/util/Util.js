@@ -1,7 +1,7 @@
 import Bookmark from "../model/Bookmark";
 import moment from "moment";
 
-export const flattenNode = (node, result, bookmarkCreationDates) => {
+export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls) => {
   if (node.children) {
     node.children.forEach(child => {
       if (child.url && child.title) {
@@ -16,9 +16,11 @@ export const flattenNode = (node, result, bookmarkCreationDates) => {
             node.title
           )
         );
+        //data for bookmark analytics TODO need to think of optimization
         bookmarkCreationDates.push(child.dateAdded);
+        bookmarkUrls.push(child.url);
       }
-      flattenNode(child, result, bookmarkCreationDates);
+      flattenNode(child, result, bookmarkCreationDates, bookmarkUrls);
     });
   }
 };
@@ -98,35 +100,117 @@ export const chromeTimeValueToDate = (timestamp) => {
   // return new Date(epoch + timestamp / 1000).toDateString();
 }
 
-export const groupDatesByMonth = (dates) => {
-    // var dates = [ "1396-10-11 09:07:21" ];
+// export const groupDatesByMonth = (dates) => {
+//     // var dates = [ "1396-10-11 09:07:21" ];
     
-    var resultingXYCoordinateData = [];
-    var groupByYearMonth = dates.reduce( function (acc, date) {
+//     var resultingXYCoordinateData = [];
+//     var groupByYearMonth = dates.reduce( function (acc, date) {
     
-      var yearMonthCombination = moment(date).year()+'-'+moment(date).month();
+//       var yearMonthCombination = moment(date).year()+'-'+moment(date).month();
       
-      // check if the week number exists
-      if (typeof acc[yearMonthCombination] === 'undefined') {
-        acc[yearMonthCombination] = [];
-      }
+//       // check if the week number exists
+//       if (typeof acc[yearMonthCombination] === 'undefined') {
+//         acc[yearMonthCombination] = [];
+//       }
       
-      acc[yearMonthCombination].push(date);
+//       acc[yearMonthCombination].push(date);
       
-      return acc;
+//       return acc;
     
-    }, {});
+//     }, {});
 
-    let yearMonthKeys = Object.keys(groupByYearMonth).sort();
-    yearMonthKeys.forEach((yearMonthCombination, index) => {
-      resultingXYCoordinateData.push({x:yearMonthCombination, 
-        y:groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
-    })
+//     let yearMonthKeys = Object.keys(groupByYearMonth).sort();
+//     yearMonthKeys.forEach((yearMonthCombination, index) => {
+//       resultingXYCoordinateData.push({x:yearMonthCombination, 
+//         y:groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
+//     })
     
-    console.log(groupByYearMonth);
-    console.log(resultingXYCoordinateData);
-    return resultingXYCoordinateData;
+//     console.log(groupByYearMonth);
+//     console.log(resultingXYCoordinateData);
+//     return resultingXYCoordinateData;
+// }
+
+export const groupByItemInArray = (arr, callback) => {
+  return arr.reduce((acc, item) => {
+    let resultingKey = callback(item);
+    if (typeof acc[resultingKey] === 'undefined') {
+      acc[resultingKey] = 0;
+    }
+    //increase the count of grouped item
+    acc[resultingKey]++;
+    return acc;
+  }, {});
+};
+
+export const gruoupDatesByMonth = (dates) => {
+  // var dates = [ "1396-10-11 09:07:21" ];
+  return groupByItemInArray(dates, (date)=> (moment(date).year() + '-' + moment(date).month()))
 }
+
+export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) => {
+  let groupByYearMonth = gruoupDatesByMonth(dates);
+  console.log("======");
+  console.log(groupByYearMonth);
+  let firstBookmarkAddeddate = "";
+  let dataBookmarkGrowthAnalytics = [];
+  let cardDataBookmarkGrowth = {};
+  let resultingXYCoordinateData = [];
+  let yearMonthKeys = Object.keys(groupByYearMonth).sort();
+  yearMonthKeys.forEach((yearMonthCombination, index) => {
+    resultingXYCoordinateData.push({
+      x: yearMonthCombination,
+      y: groupByYearMonth[yearMonthCombination] + (resultingXYCoordinateData[index - 1] ? resultingXYCoordinateData[index - 1].y : 0)
+    })
+  });
+  firstBookmarkAddeddate = yearMonthKeys[0];//groupByYearMonth[yearMonthKeys[(yearMonthKeys.length-1) || 0]];
+  dataBookmarkGrowthAnalytics.push({
+    id: "Total Number of Bookmarks",
+    color: "hsl(275, 70%, 50%)",
+    data: resultingXYCoordinateData
+  });
+  cardDataBookmarkGrowth.data = dataBookmarkGrowthAnalytics;
+  cardDataBookmarkGrowth.totalBookmarkCount = totalBookmarkCount;
+  cardDataBookmarkGrowth.firstBookmarkAddeddate = firstBookmarkAddeddate;
+  
+  console.log(resultingXYCoordinateData);
+  return cardDataBookmarkGrowth;
+}
+
+export const groupSitesByDomain = (urls) => {
+  return groupByItemInArray(urls, extractHostname);
+}
+
+export const getKeysWithHighestValue = (o, n) => {
+  var keys = Object.keys(o);
+  keys.sort(function(a,b){
+    return o[b] - o[a];
+  })
+  return keys.slice(0,n);
+};
+
+export const preparePopularBookmarkAnalyticsData = (urls) => {
+  let groupedSites = groupSitesByDomain(urls);
+  let topFiveSites = getKeysWithHighestValue(groupedSites, 5);
+  let resultingXYCoordinateData = [];
+  let cardDataPopularBookmarks = {};
+  let totalTopBookmarksCount = 0;
+
+  // topFiveSites.forEach((siteName) =>
+  for (let i = topFiveSites.length-1; i >= 0; i--) {
+    resultingXYCoordinateData.push({
+      mostBookmarkedSite: topFiveSites[i],
+      count: groupedSites[topFiveSites[i]],
+      countColor: "hsl(106, 70%, 50%)"
+    });
+    totalTopBookmarksCount += groupedSites[topFiveSites[i]];
+  };
+  cardDataPopularBookmarks.data = resultingXYCoordinateData;
+  cardDataPopularBookmarks.totalTopBookmarksCount = totalTopBookmarksCount;
+  cardDataPopularBookmarks.topFiveSites = topFiveSites;
+
+  console.log(cardDataPopularBookmarks);
+  return cardDataPopularBookmarks;
+};
 
 export const generateUrlImagePair = async(bookmarks) => {
   let urls = [];
@@ -142,7 +226,7 @@ export const generateUrlImagePair = async(bookmarks) => {
     })
   }
   return await urls;
-}
+};
 
 export const generateImageName = (url) => {
  try{
@@ -151,7 +235,7 @@ export const generateImageName = (url) => {
   return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g ,'').trim()+".png";
  } 
  catch(err){console.error(err);}
-}
+};
 
 export const debounce = (func, delay) => {
   let debounceTimer;
@@ -161,4 +245,4 @@ export const debounce = (func, delay) => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => func.apply(context, args), delay);
   };
-}
+};
