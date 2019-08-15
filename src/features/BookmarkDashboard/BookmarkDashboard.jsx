@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
-import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, prepareBookmarkGrowthAnalyticsData } from "../../app/common/util/Util";
+import { flattenNode,generateUrlImagePair, extractHostname, chromeTimeValueToDate, prepareBookmarkGrowthAnalyticsData, preparePopularBookmarkAnalyticsData } from "../../app/common/util/Util";
 import { connect } from "react-redux";
 import {
   setMostVisitedSites,
@@ -36,6 +36,7 @@ class BookmarkDashboard extends Component {
   }
   localBookmarks = [];
   bookmarkCreationDates = [];
+  bookmarkUrls = [];
   //Culprit for a bug. Need to initialize like this. TODO need to think of a better approach
   cardDataBookmarkGrowth = {
     data: [
@@ -45,6 +46,12 @@ class BookmarkDashboard extends Component {
           data: []
         }
       ]
+  };
+  //Culprit for the same mentioned nasty bug. Need to initialize like this. TODO need to think of a better approach
+  cardDataPopularBookmarks = {
+    data : [{}],
+    totalTopBookmarksCount:0,
+    topFiveSites:[]
   };
 
   componentWillMount() {
@@ -445,198 +452,198 @@ class BookmarkDashboard extends Component {
     //   firstBookmarkAddeddate: "2010-07"
     // };
     
-    const dataBookmarkGrowthAnalytics = [
-      {
-        id: "Total Number of Bookmarks",
-        color: "hsl(275, 70%, 50%)",
-        data: [
-          {
-            x: "Jan",
-            y: 10
-          },
-          {
-            x: "Feb",
-            y: 25
-          },
-          {
-            x: "Mar",
-            y: 30
-          },
-          {
-            x: "Apr",
-            y: 60
-          },
-          {
-            x: "May",
-            y: 80
-          },
-          {
-            x: "Jun",
-            y: 75
-          },
-          {
-            x: "Jul",
-            y: 80
-          },
-          {
-            x: "Aug",
-            y: 81
-          },
-          {
-            x: "Sep",
-            y: 90
-          },
-          {
-            x: "Oct",
-            y: 95
-          },
-          {
-            x: "Nov",
-            y: 93
-          },
-          {
-            x: "Dec",
-            y: 100
-          }
-        ]
-      }
-      // ,
-      // {
-      //   "id": "JS",
-      //   "color": "hsl(231, 70%, 50%)",
-      //   "data": [
-      //     {
-      //       "x": "plane",
-      //       "y": 13
-      //     },
-      //     {
-      //       "x": "helicopter",
-      //       "y": 141
-      //     },
-      //     {
-      //       "x": "boat",
-      //       "y": 274
-      //     },
-      //     {
-      //       "x": "train",
-      //       "y": 153
-      //     },
-      //     {
-      //       "x": "subway",
-      //       "y": 150
-      //     },
-      //     {
-      //       "x": "bus",
-      //       "y": 45
-      //     },
-      //     {
-      //       "x": "car",
-      //       "y": 292
-      //     },
-      //     {
-      //       "x": "moto",
-      //       "y": 238
-      //     },
-      //     {
-      //       "x": "bicycle",
-      //       "y": 23
-      //     },
-      //     {
-      //       "x": "horse",
-      //       "y": 258
-      //     },
-      //     {
-      //       "x": "skateboard",
-      //       "y": 100
-      //     },
-      //     {
-      //       "x": "others",
-      //       "y": 165
-      //     }
-      //   ]
-      // },
-      // {
-      //   "id": "Finance",
-      //   "color": "hsl(41, 70%, 50%)",
-      //   "data": [
-      //     {
-      //       "x": "plane",
-      //       "y": 13
-      //     },
-      //     {
-      //       "x": "helicopter",
-      //       "y": 282
-      //     },
-      //     {
-      //       "x": "boat",
-      //       "y": 110
-      //     },
-      //     {
-      //       "x": "train",
-      //       "y": 154
-      //     },
-      //     {
-      //       "x": "subway",
-      //       "y": 110
-      //     },
-      //     {
-      //       "x": "bus",
-      //       "y": 296
-      //     },
-      //     {
-      //       "x": "car",
-      //       "y": 157
-      //     },
-      //     {
-      //       "x": "moto",
-      //       "y": 26
-      //     },
-      //     {
-      //       "x": "bicycle",
-      //       "y": 170
-      //     },
-      //     {
-      //       "x": "horse",
-      //       "y": 281
-      //     },
-      //     {
-      //       "x": "skateboard",
-      //       "y": 153
-      //     },
-      //     {
-      //       "x": "others",
-      //       "y": 110
-      //     }
-      //   ]
-      // }
-    ];
-    const dataPopularBookmarkLinkAnalytics = [
-      {
-        mostBookmarkedSite: "Youtube",
-        "Number of times added": 2,
-        "Number of times addedColor": "hsl(106, 70%, 50%)"
-      },
-      {
-        mostBookmarkedSite: "Udemy",
-        "Number of times added": 10,
-        "Number of times addedColor": "hsl(294, 70%, 50%)"
-      },
-      {
-        mostBookmarkedSite: "Medium",
-        "Number of times added": 14,
-        "Number of times addedColor": "hsl(235, 70%, 50%)"
-      },
-      {
-        mostBookmarkedSite: "Netflix",
-        "Number of times added": 20,
-        "Number of times addedColor": "hsl(235, 70%, 50%)"
-      },
-      {
-        mostBookmarkedSite: "TOI",
-        "Number of times added": 27,
-        "Number of times addedColor": "hsl(235, 70%, 50%)"
-      }
-    ];
+    // const dataBookmarkGrowthAnalytics = [
+    //   {
+    //     id: "Total Number of Bookmarks",
+    //     color: "hsl(275, 70%, 50%)",
+    //     data: [
+    //       {
+    //         x: "Jan",
+    //         y: 10
+    //       },
+    //       {
+    //         x: "Feb",
+    //         y: 25
+    //       },
+    //       {
+    //         x: "Mar",
+    //         y: 30
+    //       },
+    //       {
+    //         x: "Apr",
+    //         y: 60
+    //       },
+    //       {
+    //         x: "May",
+    //         y: 80
+    //       },
+    //       {
+    //         x: "Jun",
+    //         y: 75
+    //       },
+    //       {
+    //         x: "Jul",
+    //         y: 80
+    //       },
+    //       {
+    //         x: "Aug",
+    //         y: 81
+    //       },
+    //       {
+    //         x: "Sep",
+    //         y: 90
+    //       },
+    //       {
+    //         x: "Oct",
+    //         y: 95
+    //       },
+    //       {
+    //         x: "Nov",
+    //         y: 93
+    //       },
+    //       {
+    //         x: "Dec",
+    //         y: 100
+    //       }
+    //     ]
+    //   }
+    //   // ,
+    //   // {
+    //   //   "id": "JS",
+    //   //   "color": "hsl(231, 70%, 50%)",
+    //   //   "data": [
+    //   //     {
+    //   //       "x": "plane",
+    //   //       "y": 13
+    //   //     },
+    //   //     {
+    //   //       "x": "helicopter",
+    //   //       "y": 141
+    //   //     },
+    //   //     {
+    //   //       "x": "boat",
+    //   //       "y": 274
+    //   //     },
+    //   //     {
+    //   //       "x": "train",
+    //   //       "y": 153
+    //   //     },
+    //   //     {
+    //   //       "x": "subway",
+    //   //       "y": 150
+    //   //     },
+    //   //     {
+    //   //       "x": "bus",
+    //   //       "y": 45
+    //   //     },
+    //   //     {
+    //   //       "x": "car",
+    //   //       "y": 292
+    //   //     },
+    //   //     {
+    //   //       "x": "moto",
+    //   //       "y": 238
+    //   //     },
+    //   //     {
+    //   //       "x": "bicycle",
+    //   //       "y": 23
+    //   //     },
+    //   //     {
+    //   //       "x": "horse",
+    //   //       "y": 258
+    //   //     },
+    //   //     {
+    //   //       "x": "skateboard",
+    //   //       "y": 100
+    //   //     },
+    //   //     {
+    //   //       "x": "others",
+    //   //       "y": 165
+    //   //     }
+    //   //   ]
+    //   // },
+    //   // {
+    //   //   "id": "Finance",
+    //   //   "color": "hsl(41, 70%, 50%)",
+    //   //   "data": [
+    //   //     {
+    //   //       "x": "plane",
+    //   //       "y": 13
+    //   //     },
+    //   //     {
+    //   //       "x": "helicopter",
+    //   //       "y": 282
+    //   //     },
+    //   //     {
+    //   //       "x": "boat",
+    //   //       "y": 110
+    //   //     },
+    //   //     {
+    //   //       "x": "train",
+    //   //       "y": 154
+    //   //     },
+    //   //     {
+    //   //       "x": "subway",
+    //   //       "y": 110
+    //   //     },
+    //   //     {
+    //   //       "x": "bus",
+    //   //       "y": 296
+    //   //     },
+    //   //     {
+    //   //       "x": "car",
+    //   //       "y": 157
+    //   //     },
+    //   //     {
+    //   //       "x": "moto",
+    //   //       "y": 26
+    //   //     },
+    //   //     {
+    //   //       "x": "bicycle",
+    //   //       "y": 170
+    //   //     },
+    //   //     {
+    //   //       "x": "horse",
+    //   //       "y": 281
+    //   //     },
+    //   //     {
+    //   //       "x": "skateboard",
+    //   //       "y": 153
+    //   //     },
+    //   //     {
+    //   //       "x": "others",
+    //   //       "y": 110
+    //   //     }
+    //   //   ]
+    //   // }
+    // ];
+    // const dataPopularBookmarkLinkAnalytics = [
+    //   {
+    //     mostBookmarkedSite: "Youtube",
+    //     count: 2,
+    //     countColor: "hsl(106, 70%, 50%)"
+    //   },
+    //   {
+    //     mostBookmarkedSite: "Udemy",
+    //     count: 10,
+    //     countColor: "hsl(294, 70%, 50%)"
+    //   },
+    //   {
+    //     mostBookmarkedSite: "Medium",
+    //     count: 14,
+    //     countColor: "hsl(235, 70%, 50%)"
+    //   },
+    //   {
+    //     mostBookmarkedSite: "Netflix",
+    //     count: 20,
+    //     countColor: "hsl(235, 70%, 50%)"
+    //   },
+    //   {
+    //     mostBookmarkedSite: "TOI",
+    //     count: 27,
+    //     countColor: "hsl(235, 70%, 50%)"
+    //   }
+    // ];
 
     return (
       // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
@@ -683,9 +690,7 @@ class BookmarkDashboard extends Component {
               <BookmarkGrowthAnalytics {...this.cardDataBookmarkGrowth}/>
             </Grid.Column>
             <Grid.Column className="analytics-card-container">
-              <PopularBookmarkLinkAnalytics
-                data={dataPopularBookmarkLinkAnalytics}
-              />
+              <PopularBookmarkLinkAnalytics {...this.cardDataPopularBookmarks} />
             </Grid.Column>
             <Grid.Column
               className="analytics-card-container"

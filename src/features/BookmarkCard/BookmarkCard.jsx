@@ -46,6 +46,7 @@ class BookmarkCard extends Component {
     let style = {
       borderBottomColor: colorsMap[bookmark.category]
     };
+    let hostName = extractHostname(bookmark.url);
     // let hoverStyle = {
     //   backgroundColor: colorsMap[bookmark.category],
     // };
@@ -109,7 +110,8 @@ class BookmarkCard extends Component {
                   className="padding-right-medium"
                   src={`chrome://favicon/${bookmark.Url}`}
                 />
-                {extractHostname(bookmark.url)}
+                { (hostName.length > 23) ? 
+                ((hostName.substring(0,23-3)) + '...') : hostName}
               </div>
               <Card.Meta>{bookmark.title}</Card.Meta>
               <Hover

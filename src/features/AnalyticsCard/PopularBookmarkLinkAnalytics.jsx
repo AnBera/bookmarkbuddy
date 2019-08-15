@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from "semantic-ui-react";
-import { ResponsiveBar } from '@nivo/bar'
+import { ResponsiveBar } from '@nivo/bar';
+import { useTheme } from '@nivo/core';
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
@@ -18,13 +19,33 @@ const theme = {
             }
         }
     }
-}
+};
 
-const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
-    <Card fluid style={{borderRadius:"7px"}} >
-    <div className="meta" style={{position: "absolute", right:"0", bottom: "135px", textAlign: "right", padding: "1.5em 1.5em 0 0", color: "#fff"}}>
+const CustomTick = tick => {
+    const theme = useTheme();
+        return (
+            <g transform={`translate(-50, ${tick.y})`} width={400}>
+                <text
+                className="animation"
+                textAnchor="left"
+                dominantBaseline="middle"
+                style={{
+                    ...theme.axis.ticks.text,
+                    fill: '#fff',
+                    fontSize: 12,
+                }}
+                >
+                {tick.value}
+                </text>
+            </g>
+        )
+  };
+
+const PopularBookmarkLinkAnalytics = ({ data, totalTopBookmarksCount, topFiveSites /* see data tab */ }) => (
+    <Card fluid className="popular-bookmark-analytics" style={{borderRadius:"7px"}} >
+    <div className="meta">
         <div style={{fontSize: "3em", marginRight: "0"}}>
-            40
+            {totalTopBookmarksCount}
         </div>
         <div style={{fontSize: "1.2em", paddingTop: ".5em", marginRight: "0"}}>
             Bookmarks
@@ -36,7 +57,7 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     <Card.Content style={{ height:"250px", width:"100%", padding:"1em", backgroundColor:"#333842", borderRadius:"7px" }}>
     <ResponsiveBar
         data={data}
-        keys={[ 'Number of times added']}
+        keys={[ 'count']}
         indexBy="mostBookmarkedSite"
         margin={{ top: 0, right: 0, bottom: 0, left: 50 }}
         padding={0.3}
@@ -83,14 +104,15 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
         axisTop={null}
         axisRight={null}
         axisBottom={null}
-        axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '',
-            legendPosition: 'middle',
-            legendOffset: -40
-        }}
+        axisLeft={{renderTick: CustomTick}}
+                //     {
+                //     tickSize: 0,
+                //     tickPadding: -10,
+                //     tickRotation: 0,
+                //     legend: '',
+                //     legendPosition: 'middle',
+                //     legendOffset: -40
+                // }
         theme={theme}
         enableGridY={false}
         labelSkipWidth={12}
@@ -129,9 +151,9 @@ const PopularBookmarkLinkAnalytics = ({ data /* see data tab */ }) => (
     
     <Card.Content>
       <Card.Header>Most Bookmarked sites</Card.Header>
-      <Card.Meta>Your top 5 Sites consists of total 40 bookmarks</Card.Meta>
+      <Card.Meta>Your top 5 Sites consists of total {totalTopBookmarksCount} bookmarks</Card.Meta>
       <Card.Description>
-        Facebook is your top bookmarked site. Followed by Wikipedia and TOI
+        {topFiveSites[0]} is your top bookmarked site. Followed by {topFiveSites[1]} and {topFiveSites[2]}
       </Card.Description>
     </Card.Content>
     </Card>
