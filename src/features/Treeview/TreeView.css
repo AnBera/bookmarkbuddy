@@ -1,0 +1,10 @@
+.StyledFileExplorer{
+    width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex; 
+}
+
+.TreeWrapper{
+    width: 250px;
+}

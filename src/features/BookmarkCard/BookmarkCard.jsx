@@ -6,6 +6,8 @@ import Hover from "../../app/common/Component/Hover";
 import Configs from "../../app/common/constants";
 import { debounce } from "../../app/common/util/Util";
 import RemoveBookmark from "./DeleteBookmark"
+import FileExplorer from "../Treeview/FileExplorer";
+
 class BookmarkCard extends Component {
   constructor(props) {
     super(props);
@@ -133,8 +135,8 @@ class BookmarkCard extends Component {
         {this.state.isEdit && (
           <Card fluid>
             <Card.Content>
-              <form class="ui form">
-                <div class="field">
+              <form className="ui form">
+                <div className="field">
                   <label>Bookmark Title</label>
                   <input
                     type="text"
@@ -150,7 +152,7 @@ class BookmarkCard extends Component {
                     placeholder="Title"
                   />
                 </div>
-                <div class="field">
+                <div className="field">
                   <label>Bookmark Url</label>
                   <input
                     onChange={e => {
@@ -168,19 +170,14 @@ class BookmarkCard extends Component {
                     placeholder="Url"
                   />
                 </div>
-                <div class="two fields">
-                  <div class="field">
+                <div className="two fields">
+                  <div className="field">
                     <label>Select Folder</label>
-                    <select class="ui fluid dropdown">
-                      <option value="">Select Folder</option>
-                      <option value="bookMarkBar">Bookmark Bar</option>
-                      <option value="smart">Smart</option>
-                      <option value="ecr">ECR</option>
-                    </select>
+                    <FileExplorer/>
                   </div>
                 </div>
                 <button
-                  class="ui button"
+                  className="ui button"
                   type="submit"
                   onClick={e => {
                     e.preventDefault();
@@ -194,7 +191,7 @@ class BookmarkCard extends Component {
                     e.preventDefault();
                     this.setState({ isEdit: !this.state.isEdit });
                   }}
-                  class="ui button"
+                  className="ui button"
                   type="submit"
                 >
                   Cancel
