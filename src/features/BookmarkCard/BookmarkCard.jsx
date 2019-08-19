@@ -139,7 +139,7 @@ class BookmarkCard extends Component {
             <Card.Content>
               <form className="ui form">
                 <div className="field">
-                  <label>Bookmark Title</label>
+                  <label style={{color:'#FFFFFF'}}>Bookmark Title</label>
                   <input
                     type="text"
                     onChange={e => {
@@ -155,7 +155,7 @@ class BookmarkCard extends Component {
                   />
                 </div>
                 <div className="field">
-                  <label>Bookmark Url</label>
+                  <label style={{color:'#FFFFFF'}}>Bookmark Url</label>
                   <input
                     onChange={e => {
                       updateBookamark(
@@ -174,7 +174,7 @@ class BookmarkCard extends Component {
                 </div>
                 <div className="two fields">
                   <div className="field">
-                    <label>Select Folder</label>
+                    <label style={{color:'#FFFFFF'}}>Select Folder</label>
                     <FileExplorer/>
                   </div>
                 </div>

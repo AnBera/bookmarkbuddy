@@ -2,7 +2,6 @@ import React from 'react';
 import { FaFile, FaFolder, FaFolderOpen, FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styled from 'styled-components';
 import last from 'lodash/last';
-import PropTypes from 'prop-types';
 
 
 const TreeNode = (props) => {
@@ -20,13 +19,13 @@ const TreeNode = (props) => {
         padding: 5px 8px;
         padding-left: ${(level, type) => getPaddingLeft(level, type)}px;
         &:hover {
-          background: lightgray;
+          cursor: pointer;
         }
       `;
       
       const NodeIcon = styled.div`
         font-size: 12px;
-        margin-right:  ${props => props.marginRight ? props.marginRight : 5}px;
+        margin-right:  ${props => props.marginRight ? props.marginRight : "5"}px;
       `;
       
       const getNodeLabel = (node) => last(node.path.split('/'));

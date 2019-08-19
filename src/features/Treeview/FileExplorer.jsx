@@ -5,7 +5,9 @@ import "./TreeView.css";
 const FileExplorer = () => {
   const [selectedFile, setselectedFile] = useState(null);
 
-  const onSelect = file => setselectedFile(file);
+  const onSelect=(file)=>{
+    setselectedFile(file);
+  }
 
   return (
     <div className="StyledFileExplorer">

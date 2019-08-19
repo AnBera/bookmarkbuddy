@@ -1,9 +1,10 @@
 import Bookmark from "../model/Bookmark";
 import moment from "moment";
 
-export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls) => {
+export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls,bookmarkFolderTree) => {
   if (node.children) {
     node.children.forEach(child => {
+      //if it is a bookmark
       if (child.url && child.title) {
         result.push(
           new Bookmark(
@@ -20,7 +21,19 @@ export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls) =
         bookmarkCreationDates.push(child.dateAdded);
         bookmarkUrls.push(child.url);
       }
-      flattenNode(child, result, bookmarkCreationDates, bookmarkUrls);
+      //Otherwise it is a folder
+      let folderObj={};
+      if (child.children){        
+        folderObj.id=node.id;
+        folderObj.children=[];
+        folderObj.dateAdded= node.dateAdded;
+        folderObj.index= node.index;
+        folderObj.parentId=node.parentId;
+        folderObj.title=node.title;
+        bookmarkFolderTree.push(folderObj);
+       
+      }
+      flattenNode(child, result, bookmarkCreationDates, bookmarkUrls, folderObj.children);
     });
   }
 };
