@@ -357,7 +357,7 @@ class BookmarkDashboard extends Component {
       this.bookmarkUrls,
       this.bookmarkFolderTree
     );
-    console.log(this.bookmarkFolderTree);
+    this.setState({bookmarkFolderTree:this.bookmarkFolderTree});
     this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(
       this.bookmarkCreationDates,
       flattenedBookmarks.length
@@ -830,6 +830,7 @@ class BookmarkDashboard extends Component {
                         }
                         updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
+                        bookmarkFolderTree={this.state.bookmarkFolderTree}
                       />
                     );
                 })}
@@ -848,6 +849,7 @@ class BookmarkDashboard extends Component {
                         }
                         updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
+                        bookmarkFolderTree={this.state.bookmarkFolderTree}
                       />
                     );
                 })}
@@ -864,6 +866,7 @@ class BookmarkDashboard extends Component {
                         }
                         updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
+                        bookmarkFolderTree={this.state.bookmarkFolderTree}
                       />
                     );
                 })}

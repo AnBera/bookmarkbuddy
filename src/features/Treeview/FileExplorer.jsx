@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Tree from "./Tree";
 import "./TreeView.css";
 
-const FileExplorer = () => {
+const FileExplorer = (props) => {
   const [selectedFile, setselectedFile] = useState(null);
 
   const onSelect=(file)=>{
@@ -12,7 +12,7 @@ const FileExplorer = () => {
   return (
     <div className="StyledFileExplorer">
       <div className="TreeWrapper">
-        <Tree onSelect={onSelect} />
+        <Tree bookmarkFolderTree={props.bookmarkFolderTree} onSelect={onSelect} />
       </div>
       <div>
         {selectedFile && selectedFile.type === "file" && selectedFile.content}

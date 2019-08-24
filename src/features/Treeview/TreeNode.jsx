@@ -1,11 +1,9 @@
 import React from 'react';
 import { FaFile, FaFolder, FaFolderOpen, FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import last from 'lodash/last';
-
 
 const TreeNode = (props) => {
-    const { node, getChildNodes, level, onToggle, onNodeSelect } = props;
+    const { node, level, onToggle, onNodeSelect } = props;
     const getPaddingLeft = (level, type) => {
         let paddingLeft = level * 20;
         if (type === 'file') paddingLeft += 20;
@@ -28,20 +26,20 @@ const TreeNode = (props) => {
         margin-right:  ${props => props.marginRight ? props.marginRight : "5"}px;
       `;
       
-      const getNodeLabel = (node) => last(node.path.split('/'));
+      const getNodeLabel = (node) => node.title;
   
 
   return (
     <>
-      <StyledTreeNode level={level} type={node.type}>
+      <StyledTreeNode level={level}>
         <NodeIcon onClick={() => onToggle(node)}>
-          { node.type === 'folder' && (node.isOpen ? <FaChevronDown /> : <FaChevronRight />) }
+          { node.isOpen ? <FaChevronDown /> : <FaChevronRight />}
         </NodeIcon>
         
         <NodeIcon marginRight={10}>
-          { node.type === 'file' && <FaFile /> }
-          { node.type === 'folder' && node.isOpen === true && <FaFolderOpen /> }
-          { node.type === 'folder' && !node.isOpen && <FaFolder /> }
+          {/* { node.type === 'file' && <FaFile /> } */}
+          { node.isOpen === true && <FaFolderOpen /> }
+          { !node.isOpen && <FaFolder /> }
         </NodeIcon>
         
 
@@ -50,7 +48,7 @@ const TreeNode = (props) => {
         </span>
       </StyledTreeNode>
 
-      { node.isOpen && getChildNodes(node).map(childNode => (
+      { node.isOpen && node.children.map(childNode => (
         <TreeNode 
           {...props}
           node={childNode}          

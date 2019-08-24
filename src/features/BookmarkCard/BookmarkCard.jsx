@@ -175,7 +175,7 @@ class BookmarkCard extends Component {
                 <div className="two fields">
                   <div className="field">
                     <label style={{color:'#FFFFFF'}}>Select Folder</label>
-                    <FileExplorer/>
+                    <FileExplorer bookmarkFolderTree={this.props.bookmarkFolderTree}/>
                   </div>
                 </div>
                 <button
