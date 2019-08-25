@@ -33,7 +33,7 @@ const TreeNode = (props) => {
     <>
       <StyledTreeNode level={level}>
         <NodeIcon onClick={() => onToggle(node)}>
-          { node.isOpen ? <FaChevronDown /> : <FaChevronRight />}
+          { node.children.length>0 ? (node.isOpen ? <FaChevronDown /> : <FaChevronRight />):<></>}
         </NodeIcon>
         
         <NodeIcon marginRight={10}>
