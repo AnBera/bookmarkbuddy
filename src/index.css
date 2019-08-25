@@ -336,10 +336,6 @@ a.ui.fluid.card.recommendation-card:last-child {
   z-index: 5;
 }
 
-.ui.card .ui.form .two.fields>.field {
-  width: 100%;
-}
-
 .animation:hover{
   -webkit-animation: moving 5s infinite;
     animation: moving 5s infinite;

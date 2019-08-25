@@ -1,14 +1,17 @@
-.StyledFileExplorer{
-    width: 800px;
-  max-width: 100%;
+.tree-view-container{
+  width: 100%;
   margin: 0 auto;
   display: flex; 
 }
 
-.TreeWrapper{
-    width: 250px;
+.tree-wrapper{
+   width: 100%
+}
+
+.ui.card .ui.form .two.fields>.field {
+  width: 100%;
 }
 
 .folder-selected{
-background-color: aqua;
+background-color: orange;
 }
