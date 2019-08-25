@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 const TreeNode = (props) => {
     const { node, level, onToggle, onNodeSelect } = props;
-    const getPaddingLeft = (level, type) => {
+    const getPaddingLeft = ({level}) => {
         let paddingLeft = level * 20;
-        if (type === 'file') paddingLeft += 20;
         return paddingLeft;
       }
       
@@ -23,6 +22,7 @@ const TreeNode = (props) => {
       
       const NodeIcon = styled.div`
         font-size: 12px;
+        min-width: 12px;
         margin-right:  ${props => props.marginRight ? props.marginRight : "5"}px;
       `;
       
@@ -59,5 +59,9 @@ const TreeNode = (props) => {
     </>
   );
 }
+
+TreeNode.defaultProps = {
+  level: 0,
+};
 
 export default TreeNode;
