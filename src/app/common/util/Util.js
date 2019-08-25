@@ -11,6 +11,7 @@ export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls,bo
     folderObj.index= node.index;
     folderObj.parentId=node.parentId;
     folderObj.title=node.title;
+    folderObj.isSelected=false;
     folderObj.isOpen=false;
     bookmarkFolderTree.push(folderObj);
 

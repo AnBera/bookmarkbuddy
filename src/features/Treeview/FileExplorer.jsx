@@ -11,7 +11,7 @@ const FileExplorer = (props) => {
   return (
     <div className="StyledFileExplorer">
       <div className="TreeWrapper">
-        <Tree bookmarkFolderTree={props.bookmarkFolderTree} onSelect={onSelect} key={props.bookmarkFolderTree.id} />
+        <Tree backgroundColor= {props.backgroundColor} bookmarkFolderTree={props.bookmarkFolderTree} onSelect={onSelect} key={props.bookmarkFolderTree.id} />
       </div>
     </div>
   );

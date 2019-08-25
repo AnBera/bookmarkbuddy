@@ -1,9 +1,10 @@
 import React from 'react';
-import { FaFile, FaFolder, FaFolderOpen, FaChevronDown, FaChevronRight } from 'react-icons/fa';
+import {FaFolder, FaFolderOpen, FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styled from 'styled-components';
+import "./TreeView.css";
 
 const TreeNode = (props) => {
-    const { node, level, onToggle, onNodeSelect } = props;
+    const { backgroundColor, node, level, onToggle, onNodeSelect } = props;
     const getPaddingLeft = ({level}) => {
         let paddingLeft = level * 20;
         return paddingLeft;
@@ -43,7 +44,7 @@ const TreeNode = (props) => {
         </NodeIcon>
         
 
-        <span role="button" onClick={() => onNodeSelect(node)}>
+        <span className={node.isSelected?"folder-selected":""} role="button" onClick={() => onNodeSelect(node)}>
           { getNodeLabel(node) }
         </span>
       </StyledTreeNode>

@@ -8,3 +8,7 @@
 .TreeWrapper{
     width: 250px;
 }
+
+.folder-selected{
+background-color: aqua;
+}
