@@ -155,6 +155,8 @@ class BookmarkDashboard extends Component {
 
   getUpdateBookmarkTree=()=>{
     this.getBookmarks();
+    this.setState({ bookmarks: [] });
+    this.addBookmarksInState(15);
   }
 
 
@@ -420,6 +422,7 @@ class BookmarkDashboard extends Component {
       this.setState({bookmarkFolderTree:this.bookmarkFolderTree});
       this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(this.bookmarkCreationDates, flattenedBookmarks.length);
       this.cardDataPopularBookmarks = preparePopularBookmarkAnalyticsData(this.bookmarkUrls);
+      this.localBookmarks = [];
       this.localBookmarks.push(...flattenedBookmarks);
       this.addBookmarksInState(18);
       window.onscroll = debounce(() => {
@@ -435,7 +438,7 @@ class BookmarkDashboard extends Component {
           // Load more content!
           this.addBookmarksInState(21);
         }
-      }, 100);
+      }, 100);      
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
     });
   };
