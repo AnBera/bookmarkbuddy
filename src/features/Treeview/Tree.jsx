@@ -4,8 +4,9 @@ import TreeNode from "./TreeNode";
 import { setIsSearchFolderDropDownOpen } from "../../redux/Actions/ActionTypes/DashBoardActions";
 
 const Tree = props => {
-
-  const [bookmarksFolderTree,setbookmarksTree] = useState(props.bookmarkFolderTree[0].children);
+  debugger;
+  let [bookmarksFolderTree,setbookmarksTree] = useState(props.bookmarkFolderTree[0].children);
+  bookmarksFolderTree.forEach((bookmark) => bookmark.isOpen = true);
   console.log(JSON.stringify(bookmarksFolderTree));
 
   // const getRootNodes = () => {
@@ -15,17 +16,19 @@ const Tree = props => {
   // };
 
 
-  const setIsOpen =(node,updatedTree)=>{     
+  const setIsOpen =(node,updatedTree)=> {
     debugger;
-    updatedTree.map((folder)=>{
+    for(let i=0; i<updatedTree.length; i++) {
+      let folder = updatedTree[i];
       if(folder.id===node.id){
         folder.isOpen = !node.isOpen;
-        return updatedTree;
+        break;
       }
       else{
         setIsOpen(node,folder.children);
-      }
-    })
+      } 
+    }
+    return updatedTree;
   }
 
   // const findNodetoOpen=(node,updatedTree)=>{
@@ -58,6 +61,7 @@ const Tree = props => {
           node={item}
           onToggle={onToggle}
           onNodeSelect={onNodeSelect}
+          key={item.id}
         />)
       }
       )}

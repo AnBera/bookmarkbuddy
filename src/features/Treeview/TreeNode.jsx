@@ -53,6 +53,7 @@ const TreeNode = (props) => {
           {...props}
           node={childNode}          
           level={level + 1}
+          key={childNode.id}
         />
       ))}
     </>
