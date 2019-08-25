@@ -11,7 +11,9 @@ import FileExplorer from "../Treeview/FileExplorer";
 class BookmarkCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { isEdit: false };
+    this.state = { 
+      isEdit: false,
+      selectedFolder:null };
   }
   onCategoryClick = e => {
     e.preventDefault();
@@ -39,7 +41,17 @@ class BookmarkCard extends Component {
         this.setState({ isEdit: false });
       }
     );
+    if(this.state.selectedFolder){
+      chrome.bookmarks.move(bookmark.id, {parentId:this.state.selectedFolder.id,index:this.state.selectedFolder.index},(result)=>{
+        this.setState({selectedFolder:null});
+        this.props.getUpdateBookmarkTree();
+      })
+    }
   };
+
+  setselectedFolder=(selectedFolder)=>{
+    this.setState({selectedFolder:selectedFolder});
+  }
 
   render() {
     const { bookmark, colorsMap, updateBookamark } = this.props;
@@ -175,7 +187,7 @@ class BookmarkCard extends Component {
                 <div className="two fields">
                   <div className="field">
                     <label style={{color:'#FFFFFF'}}>Select Folder</label>
-                    <FileExplorer bookmarkFolderTree={this.props.bookmarkFolderTree}/>
+                    <FileExplorer setselectedFolder={(node)=>this.setselectedFolder(node)} bookmarkFolderTree={this.props.bookmarkFolderTree}/>
                   </div>
                 </div>
                 <button

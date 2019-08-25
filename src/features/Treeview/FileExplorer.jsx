@@ -3,19 +3,15 @@ import Tree from "./Tree";
 import "./TreeView.css";
 
 const FileExplorer = (props) => {
-  const [selectedFile, setselectedFile] = useState(null);
 
-  const onSelect=(file)=>{
-    setselectedFile(file);
+  const onSelect=(selectedolder)=>{
+    props.setselectedFolder(selectedolder);
   }
 
   return (
     <div className="StyledFileExplorer">
       <div className="TreeWrapper">
         <Tree bookmarkFolderTree={props.bookmarkFolderTree} onSelect={onSelect} key={props.bookmarkFolderTree.id} />
-      </div>
-      <div>
-        {selectedFile && selectedFile.type === "file" && selectedFile.content}
       </div>
     </div>
   );
