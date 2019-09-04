@@ -32,7 +32,7 @@ const TreeNode = (props) => {
 
   return (
     <>
-      <StyledTreeNode level={level} className={node.isSelected?"folder-selected":""} role="button" onClick={() => onNodeSelect(node)}>
+      <StyledTreeNode level={level} className={node.isSelected?"folder-selected":""} role="button" >
         <NodeIcon onClick={() => onToggle(node)}>
           { node.children.length>0 ? (node.isOpen ? <FaChevronDown /> : <FaChevronRight />):<></>}
         </NodeIcon>
@@ -44,7 +44,7 @@ const TreeNode = (props) => {
         </NodeIcon>
         
 
-        <span>
+        <span onClick={() => onNodeSelect(node)}>
           { getNodeLabel(node) }
         </span>
       </StyledTreeNode>

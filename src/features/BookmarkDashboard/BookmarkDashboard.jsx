@@ -781,7 +781,8 @@ class BookmarkDashboard extends Component {
                       <Grid.Column width={16}>
                         <span className="display-count">
                           {" "}
-                          Displaying 110 items{" "}
+                          Displaying {this.props.searchTerm?this.props.FilteredBookmarks.length:
+                            this.props.bookmarks.length} items{" "}
                         </span>
                         <List
                           floated="right"
