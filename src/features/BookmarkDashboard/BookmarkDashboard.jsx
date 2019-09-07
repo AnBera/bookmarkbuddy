@@ -419,7 +419,8 @@ class BookmarkDashboard extends Component {
 
     chrome.bookmarks.getTree(treeNode => {      
       flattenNode(treeNode[0], flattenedBookmarks, this.bookmarkCreationDates, this.bookmarkUrls,this.bookmarkFolderTree);
-      console.log(JSON.stringify(this.bookmarkFolderTree));
+      console.log("======= with parent context =====");
+      console.log(this.bookmarkFolderTree);
       this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(this.bookmarkCreationDates, flattenedBookmarks.length);
       this.cardDataPopularBookmarks = preparePopularBookmarkAnalyticsData(this.bookmarkUrls);
       this.localBookmarks = [];
