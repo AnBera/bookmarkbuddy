@@ -89,6 +89,7 @@ const[selectedFolder,updateselectedFolder]=useState(null);
                 <div className="field">
                   <label style={{ color: "#FFFFFF" }}>Select Folder</label>
                   <FileExplorer
+                  changedBookamrkFolder={props.changedBookamrkFolder}
                     selectedBookmark={props.selectedBookmark}
                     backgroundColor={
                       props.colorsMap[props.selectedBookmark.category]

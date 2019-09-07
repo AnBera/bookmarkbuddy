@@ -55,11 +55,13 @@ const Tree = props => {
 
   const onToggle = node => {
     let updatedTree = [...bookmarksFolderTree];
+    props.changedBookamrkFolder.push(node);
     setbookmarksTree(setIsOpen(node, updatedTree, "Collaps"));
   };
 
   const onNodeSelect = node => {
     let updatedTree = [...bookmarksFolderTree];
+    props.changedBookamrkFolder.push(node);
     setbookmarksTree(setIsOpen(node, updatedTree, "Select"));
     props.onSelect(node);
   };

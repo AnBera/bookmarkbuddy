@@ -11,7 +11,7 @@ const FileExplorer = (props) => {
   return (
     <div className="tree-view-container">
       <div className="tree-wrapper">
-        <Tree selectedBookmark={props.selectedBookmark} backgroundColor= {props.backgroundColor} bookmarkFolderTree={props.bookmarkFolderTree} onSelect={onSelect} key={props.bookmarkFolderTree.id} />
+        <Tree changedBookamrkFolder={props.changedBookamrkFolder} selectedBookmark={props.selectedBookmark} backgroundColor= {props.backgroundColor} bookmarkFolderTree={props.bookmarkFolderTree} onSelect={onSelect} key={props.bookmarkFolderTree.id} />
       </div>
     </div>
   );

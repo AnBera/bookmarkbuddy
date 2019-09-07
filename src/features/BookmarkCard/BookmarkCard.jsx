@@ -16,6 +16,9 @@ class BookmarkCard extends Component {
       selectedFolder:null };
   }
 
+  //Changed Bookmark Node Array
+  changedBookamrkFolder=[];
+
   //selectedFolder={};
   onCategoryClick = e => {
     e.preventDefault();
@@ -36,6 +39,7 @@ class BookmarkCard extends Component {
   };
 
   closeEditModal=()=>{
+    this.changedBookamrkFolder.map((item)=>{item.isOpen=false;item.isSelected=false});
     this.props.getUpdateBookmarkTree();
     this.setState({ isEdit: false },()=>{
 
@@ -133,7 +137,7 @@ class BookmarkCard extends Component {
             </Card.Content>
           </Card>
         )}
-        <EditBookmark bookmarkFolderTree={this.props.bookmarkFolderTree} updateBookamark={this.props.updateBookamark} 
+        <EditBookmark changedBookamrkFolder={this.changedBookamrkFolder} bookmarkFolderTree={this.props.bookmarkFolderTree} updateBookamark={this.props.updateBookamark} 
         colorsMap={colorsMap} selectedBookmark={bookmark} isOpen={this.state.isEdit} closeModal={this.closeEditModal} />
       </>
     );
