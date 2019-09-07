@@ -33,7 +33,7 @@ const[selectedFolder,updateselectedFolder]=useState(null);
     updateselectedFolder( selectedFolder);
   };
   return (
-    <Modal dimmer={true} open={props.isOpen} onClose={props.closeModal}>
+    <Modal dimmer={true} open={props.isOpen} closeOnDimmerClick={false} Close={props.closeModal}>
       <Modal.Header>
         <Image
           className="padding-right-medium"
