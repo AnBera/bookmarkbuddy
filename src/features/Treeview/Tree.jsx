@@ -45,13 +45,11 @@ const Tree = props => {
           break;
         case "Select":
           if (updatedTree[i].id === node.id) {
-            updatedTree[i].isSelected = !node.isSelected;
-            if(updatedTree[i].children.length>0){
-              setIsOpen(updatedTree[i], updatedTree[i].children, type);}
+            updatedTree[i].isSelected = true;
           } else {
             updatedTree[i].isSelected = false;
-            setIsOpen(node, updatedTree[i].children, type);
           }
+          setIsOpen(node, updatedTree[i].children, type);
           break;
         default:
           break;
