@@ -19,8 +19,7 @@ const[selectedFolder,updateselectedFolder]=useState(null);
       chrome.bookmarks.move(
         bookmark.id,
         {
-          parentId: selectedFolder.id,
-          index: selectedFolder.index
+          parentId: selectedFolder.id
         },
         result => {
           updateselectedFolder(null);          
