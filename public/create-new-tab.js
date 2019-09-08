@@ -1,6 +1,6 @@
 /*global chrome*/
 const creteNewTabEvent = (tab) => {
-    chrome.tabs.create({'url': chrome.extension.getURL('index.html')}, function(tab) {
+    chrome.tabs.create({'url': chrome.extension.getURL('index.html?fullscreen=true')}, function(tab) {
       // Tab opened.
     });
   }
