@@ -38,11 +38,10 @@ class BookmarkCard extends Component {
     // e.target.src = 'some default image url'
   };
 
-  closeEditModal=()=>{
-    this.changedBookamrkFolder.map((item)=>{item.isOpen=false;item.isSelected=false});
+  closeEditModal=()=>{    
     this.props.getUpdateBookmarkTree();
     this.setState({ isEdit: false },()=>{
-
+      this.changedBookamrkFolder.map((item)=>{item.isOpen=false;item.isSelected=false});
     });
   }
   

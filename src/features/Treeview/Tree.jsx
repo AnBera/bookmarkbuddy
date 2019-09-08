@@ -15,6 +15,7 @@ const Tree = props => {
     // let openedFolderTree=[...bookmarksFolderTree];
     for (let i = 0; i < updatedTree.length; i++) {
       if (updatedTree[i].id === props.selectedBookmark.parentId) {
+        props.changedBookamrkFolder.push(updatedTree[i]);
         updatedTree[i].isSelected = true;
         openParentNode(updatedTree[i]);
         // console.log(JSON.stringify(openedFolderTree));
@@ -27,6 +28,7 @@ const Tree = props => {
   };
   const openParentNode = (node) => {
     if(node.parent) {
+      props.changedBookamrkFolder.push(node.parent);
       node.parent.isOpen = true;
       openParentNode(node.parent);
     }
