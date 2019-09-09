@@ -39,10 +39,9 @@ class BookmarkCard extends Component {
   };
 
   closeEditModal=()=>{    
+    this.changedBookamrkFolder.forEach((item)=>{item.isOpen=false;item.isSelected=false});
     this.props.getUpdateBookmarkTree();
-    this.setState({ isEdit: false },()=>{
-      this.changedBookamrkFolder.map((item)=>{item.isOpen=false;item.isSelected=false});
-    });
+    this.setState({ isEdit: false },()=>{});
   }
   
 
