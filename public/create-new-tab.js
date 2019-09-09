@@ -6,7 +6,9 @@ const creteNewTabEvent = (tab) => {
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('#openFull').addEventListener('click', creteNewTabEvent);
+    let openFullScreenButton = document.querySelector('#openFull');
+    if(openFullScreenButton)
+      openFullScreenButton.addEventListener('click', creteNewTabEvent);
   });
   
   // chrome.browserAction.onClicked.removeListener(creteNewTabEvent);
