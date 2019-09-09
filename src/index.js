@@ -5,8 +5,6 @@ import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 import App from "./app/layout/App";
 import { Provider } from "react-redux";
-import { Route, Router, Switch } from "react-router-dom";
-import history from "./Routing/history"
 
 import configureStore from "./store/configureStore";
 import * as serviceWorker from "./serviceWorker";
@@ -17,9 +15,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-    <Route component={App} />
-    </Router>
+    <App/>
   </Provider>,
   document.getElementById("root")
 );
