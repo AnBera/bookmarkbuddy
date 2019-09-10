@@ -1,4 +1,5 @@
-import React from 'react'
+/*global chrome*/
+import React, { useEffect } from 'react';
 import BookmarkbuddyLogoGrey3 from "./../app/assets/images/BookmarkbuddyLogoGrey3.png";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 import SearchComponent from "./Search/SearchBookmark";
@@ -7,7 +8,7 @@ import BookmarkCard from "./BookmarkCard/BookmarkCard";
 import { flattenNode, extractHostname } from '../app/common/util/Util';
 import { populateRandomColor } from "../app/common/util/Util";
 
-const popupContainer=()=>{
+const PopupContainer=()=>{
     let bookmarksTree = {
         children: [
           {
@@ -204,6 +205,17 @@ const popupContainer=()=>{
   //Only Bookmark Folder Tree Structure
   let bookmarkFolderTree = [];
 
+  useEffect(() => {
+    var port = chrome.extension.connect({
+          name: "Sample Communication"
+    });
+    console.log(port);
+    port.postMessage("Hi BackGround");
+    port.onMessage.addListener(function(msg) {
+          console.log("message recieved" + msg);
+    });
+  }, []);
+
     flattenNode(
       bookmarksTree,
       flattenedBookmarks,
@@ -253,4 +265,4 @@ const popupContainer=()=>{
     )
 }
 
-export default popupContainer;
+export default PopupContainer;
