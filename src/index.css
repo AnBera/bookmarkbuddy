@@ -341,6 +341,10 @@ a.ui.fluid.card.recommendation-card:last-child {
     animation: moving 5s infinite;
 }
 
+.SocialMediaShareButton {
+  display: inline-block;
+}
+
 @-webkit-keyframes moving {
   from {-webkit-transform: translateX(0px);}
   to {-webkit-transform: translateX(-100px);}
