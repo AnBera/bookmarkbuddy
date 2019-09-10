@@ -1,10 +1,10 @@
 import React from 'react'
 import BookmarkbuddyLogoGrey3 from "./../app/assets/images/BookmarkbuddyLogoGrey3.png";
-import { Grid, Sticky, Segment, List, Rail } from "semantic-ui-react";
+import { Card, Image, Button, Icon } from "semantic-ui-react";
 import SearchComponent from "./Search/SearchBookmark";
 import SearchAndFilter from "./Search/SearchandFilter";
 import BookmarkCard from "./BookmarkCard/BookmarkCard";
-import { flattenNode } from '../app/common/util/Util';
+import { flattenNode, extractHostname } from '../app/common/util/Util';
 import { populateRandomColor } from "../app/common/util/Util";
 
 const popupContainer=()=>{
@@ -214,92 +214,40 @@ const popupContainer=()=>{
   let Bookamrks = flattenedBookmarks;
     return(
       <>
-      <div 
-      // ref={this.handleContextRef} 
-      style={{ marginTop: "2em" }}>
-          <Rail
-            internal
-            position="left"
-            attached
-            style={{ top: "auto", height: "80px", width: "100%" }}
-          >
-            <Sticky 
-            // context={this.state.context}
-            >
-              <div
-                style={{
-                  backgroundColor: "#161626",
-                  textAlign: "center",
-                  height: "60px"
-                }}
-              >
-                <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy" />
-              </div>
-            </Sticky>
-          </Rail>
-      </div>
-
-      <div 
-      // ref={this.handleContextRef2} 
-      style={{ padding: "1em" }}>
-          <Rail
-            internal
-            position="left"
-            attached
-            style={{ top: "auto", height: "auto", width: "100%" }}
-          >
-            <Sticky 
-            // context={this.state.context2}
-            >
-              <Segment inverted style={{ backgroundColor: "#161626" }}>
-                <Grid container columns="equal" stackable>
-                  {flattenedBookmarks.length > 0 && (
-                    <Grid.Row>
-                      <SearchComponent
+      <div>
+      <SearchComponent
                         // context={this.state.context2}
                         bookmarks={Bookamrks}
                         // addBookmarksInState={this.addBookmarksInState}
                         // setLocalBookmarks={this.setLocalBookmarks}
                       />
-                      <Grid.Column width={16}>
-                        {/* <span className="display-count">
-                          {" "}
-                          Displaying {this.props.searchTerm?this.props.FilteredBookmarks.length:
-                            Bookamrks.length} items{" "}
-                        </span> */}
-                        
-                      </Grid.Column>
-                    </Grid.Row>
-                  )}
-                </Grid>
-              </Segment>
-            </Sticky>
-          </Rail>
-          <Grid
-            container
-            columns="equal"
-            stackable
-            style={{ marginTop: "7em" }}
-          >
-            <Grid.Row>
-              <Grid.Column>
-                {Bookamrks.map((bookmark, i) => {
-                    return (
-                      <BookmarkCard
-                        key={bookmark.id}
-                        isconvertedSuccessfully={true}
-                        bookmark={bookmark}
-                        setSelectedFolderAndFilter={()=>{}}
-                        getUpdateBookmarkTree={()=>{}}
-                        updateBookamark={()=>{}}
-                        colorsMap={['#000', '#fff', '#ccc']}
-                        bookmarkFolderTree={()=>{}}
-                      />
-                    );
-                })}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+      </div>
+        <div className="recommendation-card-container">
+          {Bookamrks.slice(0, 4).map((bookmark, i) => (
+            <Card
+              fluid
+              className="recommendation-card"
+              href={bookmark.url}
+              key={bookmark.id}
+              target="_blank"
+            >
+              <Card.Content>
+                <div className="url-heading">
+                  <Image
+                    className="padding-right-medium"
+                    src={`chrome://favicon/${bookmark.Url}`}
+                  />
+                  {extractHostname(bookmark.url)}
+                </div>
+                <Card.Meta>{bookmark.title}</Card.Meta>
+              </Card.Content>
+            </Card>
+          ))}
+        </div>
+        <div>
+        <Button Id="openFull" basic color="green" inverted>
+              <Icon name="external alternate" /> Open Full view
+            </Button>
         </div>
       </>
     )

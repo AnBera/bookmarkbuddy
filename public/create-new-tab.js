@@ -3,6 +3,7 @@ const creteNewTabEvent = (tab) => {
     chrome.tabs.create({'url': chrome.extension.getURL('index.html?fullscreen=true')}, function(tab) {
       // Tab opened.
     });
+    // window.open('http://localhost:3000?fullScreen=true')
   }
 
   document.addEventListener('DOMContentLoaded', function () {
