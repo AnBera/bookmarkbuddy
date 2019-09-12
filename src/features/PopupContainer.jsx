@@ -1,5 +1,5 @@
 /*global chrome*/
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import BookmarkbuddyLogoGrey3 from "./../app/assets/images/BookmarkbuddyLogoGrey3.png";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 import SearchComponent from "./Search/SearchBookmark";
@@ -199,11 +199,30 @@ const PopupContainer=()=>{
         id: "0",
         title: ""
       };
-    let flattenedBookmarks = [];
+    // let flattenedBookmarks = [];
     let bookmarkCreationDates = [];
     let bookmarkUrls = [];
   //Only Bookmark Folder Tree Structure
   let bookmarkFolderTree = [];
+
+  // var port = chrome.extension.connect({
+  //   name: "Sample Communication"
+  // });
+  // console.log(port);
+  // port.postMessage("Hi BackGround");
+  // port.onMessage.addListener(function(msg) {
+  // // setFlattenedBookmarks(msg);
+  // flattenedBookmarks = msg;
+  // console.log("message recieved \n" + JSON.stringify(flattenedBookmarks));
+  // });
+
+  let [flattenedBookmarks, setFlattenedBookmarks] = useState([]);
+
+    // useEffect(() => {
+    //       setUsers({ user: 'bob' });
+    // }, [
+    //    //here you could pass dependencies, or leave it empty to call this effect only on first render
+    // ]);
 
   useEffect(() => {
     var port = chrome.extension.connect({
@@ -212,17 +231,18 @@ const PopupContainer=()=>{
     console.log(port);
     port.postMessage("Hi BackGround");
     port.onMessage.addListener(function(msg) {
-          console.log("message recieved" + msg);
+      setFlattenedBookmarks(msg);
+      console.log("message recieved \n" + JSON.stringify(flattenedBookmarks));
     });
   }, []);
 
-    flattenNode(
-      bookmarksTree,
-      flattenedBookmarks,
-      bookmarkCreationDates,
-      bookmarkUrls,
-      bookmarkFolderTree
-  );
+  //   flattenNode(
+  //     bookmarksTree,
+  //     flattenedBookmarks,
+  //     bookmarkCreationDates,
+  //     bookmarkUrls,
+  //     bookmarkFolderTree
+  // );
   let Bookamrks = flattenedBookmarks;
     return(
       <>
@@ -234,8 +254,10 @@ const PopupContainer=()=>{
                         // setLocalBookmarks={this.setLocalBookmarks}
                       />
       </div>
+      {Bookamrks.length > 0 && (
         <div className="recommendation-card-container">
-          {Bookamrks.slice(0, 4).map((bookmark, i) => (
+        {console.log("inside render")}{console.log(Bookamrks)}
+          {Bookamrks.map((bookmark, i) => (
             <Card
               fluid
               className="recommendation-card"
@@ -256,6 +278,7 @@ const PopupContainer=()=>{
             </Card>
           ))}
         </div>
+      )}
         <div>
         <Button Id="openFull" basic color="green" inverted>
               <Icon name="external alternate" /> Open Full view
