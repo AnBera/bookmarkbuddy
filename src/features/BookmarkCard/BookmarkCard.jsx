@@ -69,7 +69,7 @@ class BookmarkCard extends Component {
         {!this.state.isEdit && (
           <Card fluid>
             <Card.Content href={bookmark.url}>
-              <span className="ui transparent floating label context-icons">              
+              <span className="ui transparent floating label context-icons">
                 <Icon name="pin" size="large" />
                 <Icon
                   onClick={e => {
@@ -135,36 +135,52 @@ class BookmarkCard extends Component {
                     style={{ backgroundColor: colorsMap[bookmark.category] }}
                     onClick={this.onCategoryClick}
                   >
+                    <Icon name="folder"/>
                     {bookmark.category}
                     <span className="category" />
                   </Label>
                 }
               >
                 <Label attached="bottom left" onClick={this.onCategoryClick}>
+                  <Icon name="folder"/>
                   {bookmark.category}
                   <span className="category" style={style} />
                 </Label>
               </Hover>
-              <FacebookShareButton                
-                url={bookmark.Url}
-                quote={`Shared via Bookmarkbuddy:${bookmark.title}`}
-              ><FacebookIcon round={true} size={"1.5rem"}></FacebookIcon></FacebookShareButton>
 
-              <TwitterShareButton
-                round={true}
-                url={bookmark.Url}
-                title={`Shared via Bookmarkbuddy:${bookmark.title}`}
-              ><TwitterIcon round={true} size={"1.5rem"}></TwitterIcon></TwitterShareButton>
-              <LinkedinShareButton
-                round={true}
-                url={bookmark.Url}
-                title={`Shared via Bookmarkbuddy:${bookmark.title}`}
-              ><LinkedinIcon round={true} size={"1.5rem"}></LinkedinIcon></LinkedinShareButton>
-              <WhatsappShareButton
-                round={true}
-                url={bookmark.Url}
-                title={`Shared via Bookmarkbuddy:${bookmark.title}`}
-              ><WhatsappIcon round={true} size={"1.5rem"}></WhatsappIcon></WhatsappShareButton>
+              <Label attached="bottom right share-icons-container">
+                <div className="share-icons">
+                  <FacebookShareButton
+                    url={bookmark.Url}
+                    quote={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <FacebookIcon round={true} size={"1.5rem"}></FacebookIcon>
+                  </FacebookShareButton>
+
+                  <TwitterShareButton
+                    round={true}
+                    url={bookmark.Url}
+                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <TwitterIcon round={true} size={"1.5rem"}></TwitterIcon>
+                  </TwitterShareButton>
+                  <LinkedinShareButton
+                    round={true}
+                    url={bookmark.Url}
+                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <LinkedinIcon round={true} size={"1.5rem"}></LinkedinIcon>
+                  </LinkedinShareButton>
+                  <WhatsappShareButton
+                    round={true}
+                    url={bookmark.Url}
+                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <WhatsappIcon round={true} size={"1.5rem"}></WhatsappIcon>
+                  </WhatsappShareButton>
+                </div>
+              </Label>
+
             </Card.Content>
           </Card>
         )}

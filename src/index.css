@@ -51,8 +51,8 @@ a.ui.card:hover, .ui.fluid.card:hover {
 .ui.card .context-icons {
   background: none;
   top: -1.8em;
-  left: auto;
-  right: 0;
+  left: 25px;
+  right: auto;
 }
 
 /* .ui.card .ribbon {
@@ -340,9 +340,26 @@ a.ui.fluid.card.recommendation-card:last-child {
   -webkit-animation: moving 5s infinite;
     animation: moving 5s infinite;
 }
+.ui.attached.label.share-icons-container {
+  background: none;
+  width: 9%;
+  left: auto;
+  right: 0;
+  padding: .5em;
+  display: none;
+}
+
+.ui.fluid.card:hover .ui.attached.label.share-icons-container {
+  display: block;
+}
 
 .SocialMediaShareButton {
-  display: inline-block;
+  padding-top: 6px;
+  opacity: .75;
+}
+
+.SocialMediaShareButton:hover {
+  opacity: 1;
 }
 
 @-webkit-keyframes moving {

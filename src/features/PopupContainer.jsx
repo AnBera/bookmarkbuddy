@@ -215,11 +215,11 @@ const PopupContainer = () => {
   let Bookamrks = flattenedBookmarks;
   return (
     <>
-    <style>
+    {/* <style>
     .search-container .text-wrapper{
           width: 100%;
     }
-    </style>
+    </style> */}
       <div
         style={{
           backgroundColor: "#161626",
