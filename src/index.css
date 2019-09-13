@@ -349,6 +349,10 @@ a.ui.fluid.card.recommendation-card:last-child {
   display: none;
 }
 
+.ui.attached.label.share-icons-container:hover {
+  box-shadow: none;
+}
+
 .ui.fluid.card:hover .ui.attached.label.share-icons-container {
   display: block;
 }
