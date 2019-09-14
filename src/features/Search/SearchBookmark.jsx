@@ -10,7 +10,7 @@ import {
   setColorsMap
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchAndFilter from "./SearchandFilter";
-import { populateRandomColor } from "../../app/common/util/Util";
+import { populateRandomColor,filterList } from "../../app/common/util/Util";
 import FolderDistributionAnalytics from "../AnalyticsCard/FolderDistributionAnalytics";
 
 class SearchComponent extends Component {
@@ -36,49 +36,7 @@ class SearchComponent extends Component {
     }
   };
 
-  //https://codesandbox.io/s/62x4mmxr0n
-  filterList = (q, list) => {
-    function escapeRegExp(s) {
-      return s.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-    }
-    const words = q
-      .split(/\s+/g)
-      .map(s => s.trim())
-      .filter(s => !!s);
-    const hasTrailingSpace = q.endsWith(" ");
-    let result = [];
-    const searchRegex = new RegExp(
-      words
-        .map((word, i) => {
-          if (i + 1 === words.length && !hasTrailingSpace) {
-            // The last word - ok with the word being "startswith"-like
-            return `(?=.*\\b${escapeRegExp(word)})`;
-          } else {
-            // Not the last word - expect the whole word exactly
-            return `(?=.*\\b${escapeRegExp(word)}\\b)`;
-          }
-        })
-        .join("") + ".+",
-      "gi"
-    );
-    result = list.filter(item => {
-      return searchRegex.test(item.title);
-    });
-    result.push(
-      ...list.filter(item => {
-        return searchRegex.test(item.url);
-      })
-    );
-
-    return result.reduce((acc, current) => {
-      const x = acc.find(item => item.id === current.id);
-      if (!x) {
-        return acc.concat([current]);
-      } else {
-        return acc;
-      }
-    }, []);
-  };
+  
 
   searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
     this.props.setSearchedTerm(searchedText);
@@ -91,7 +49,7 @@ class SearchComponent extends Component {
       if (searchedText === "") filteredBookmarks = [...this.props.bookmarks];
       //no folder selected some searchtext selected
       else
-        filteredBookmarks = this.filterList(searchedText, this.props.bookmarks);
+        filteredBookmarks = filterList(searchedText, this.props.bookmarks);
       //some folder selected
     } else {
       //some folder selected no searchtext selected
@@ -127,20 +85,6 @@ class SearchComponent extends Component {
   };
 
   render() {
-    // const dataFolderDistribution = [
-    //   {
-    //     "id": "stylus",
-    //     "label": "stylus",
-    //     "value": 69,
-    //     "color": "hsl(263, 70%, 50%)"
-    //   },
-    //   {
-    //     "id": "python",
-    //     "label": "python",
-    //     "value": 182,
-    //     "color": "hsl(0, 0%, 80%)"
-    //   }
-    // ];
     return (
       <>
         <Grid.Column width={11}>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Select from "./SelectFolder";
+import SelectFolder from "./SelectFolder";
 import { Icon } from "semantic-ui-react";
 import "./search.css";
 import {debounce} from "../../app/common/util/Util";
@@ -27,7 +27,7 @@ class SearchAndFilter extends Component {
 
   render() {
     const select = (
-      <Select
+      <SelectFolder
         options={this.props.optionList}
         IsDropDownOpen={this.props.IsDropDownOpen}
         setSelectedFolder={this.setSelectedFolder}
