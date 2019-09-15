@@ -11,7 +11,6 @@ import {
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchAndFilter from "./SearchandFilter";
 import { populateRandomColor,filterList } from "../../app/common/util/Util";
-import FolderDistributionAnalytics from "../AnalyticsCard/FolderDistributionAnalytics";
 
 class SearchComponent extends Component {
   constructor(props) {
@@ -25,8 +24,12 @@ class SearchComponent extends Component {
     if (this.props.bookmarks.length > 0) {
       let folders = [];
       this.props.bookmarks.map(name => {
-        if (!folders.includes(name.category)) {
-          folders.push(name.category);
+        if (!folders.find(item => item.key === name.category)) {
+          folders.push({
+            key: name.category,
+            text: name.category,
+            value: name.category,
+          });
         }
       });
       folders.sort();
@@ -61,7 +64,7 @@ class SearchComponent extends Component {
       }
       //some folder selected some searchtext selected
       else
-        filteredBookmarks = this.filterList(
+        filteredBookmarks = filterList(
           searchedText,
           this.props.bookmarks.filter(
             element => element.category === selectedFolder
@@ -99,7 +102,6 @@ class SearchComponent extends Component {
           />
         </Grid.Column>
         <Grid.Column width={5} style={{ height: "70px", width: "50%" }}>
-          {/* <FolderDistributionAnalytics data={dataFolderDistribution} /> */}
           {this.props.selectedFolder && (
             <div className="folder-perc-container">
               <div

@@ -47,8 +47,12 @@ const PopupContainer = () => {
     if (flattenedBookmarks.length > 0) {
       let folders = [];
       flattenedBookmarks.map(name => {
-        if (!folders.includes(name.category)) {
-          folders.push(name.category);
+        if (!folders.find(item => item.key === name.category)) {
+          folders.push({
+            key: name.category,
+            text: name.category,
+            value: name.category,
+          });
         }
       });
       folders.sort();
@@ -144,8 +148,6 @@ const PopupContainer = () => {
       </div>
       {Bookamrks.length > 0 && (
         <div className="recommendation-card-container">
-          {console.log("inside render")}
-          {console.log(Bookamrks)}
           {Bookamrks.map((bookmark, i) => (
             <Card
               fluid
