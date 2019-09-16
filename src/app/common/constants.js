@@ -1,6 +1,6 @@
 const Configs = {
-    imageurl: "http://bookmarkbuddy.centralus.cloudapp.azure.com/images/",
-    baseUrl: "http://bookmarkbuddy.centralus.cloudapp.azure.com/"
+    imageurl: "https://byblobstorage.blob.core.windows.net/bmby/",
+    baseUrl: "https://byapi.azurewebsites.net/"
     // imageurl: "http://localhost:8888/images/",
     // baseUrl: "http://localhost:8888/"
 }
