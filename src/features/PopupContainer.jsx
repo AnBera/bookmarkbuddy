@@ -1,35 +1,44 @@
 /*global chrome*/
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import BookmarkbuddyLogoGrey3 from "./../app/assets/images/BookmarkbuddyLogoGrey3.png";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
-import SearchComponent from "./Search/SearchBookmark";
 import SearchAndFilter from "./Search/SearchandFilter";
 import { extractHostname,filterList,debounce } from "../app/common/util/Util";
 
 
-const PopupContainer = () => {
-  let [flattenedBookmarks, setFlattenedBookmarks] = useState([]);
-  let [filteredBookmarks,setFilteredBookmarks] = useState([]);
-  let [bookmarkFolders,setBookmarkFolders] = useState([]);
-  let [selectedFolder,setFolder]=useState('');
-  let [searchedText,setSearchedText]=useState('');
-  let [isDropDownOpen,setisDropDownOpen] =useState(false);
-  let [localBookmarks,setBookmarks]=useState([]);
+class PopupContainer extends Component {
+  constructor(props) {
+    super(props);
+  this.state={
+    flattenedBookmarks:[],
+    filteredBookmarks:[],
+    bookmarkFolders:[],
+    selectedFolder:'',
+    searchedText:'',
+    isDropDownOpen:false,
+    BookmarksInState:[]
+  }
+}
+ localBookmarks=[];
 
-  useEffect(() => {
+componentDidMount(){
+  var that=this;
     var port = chrome.extension.connect({
       name: "Sample Communication"
     });
-    console.log(port);
     port.postMessage("Hi BackGround");
     port.onMessage.addListener(function(msg) {
-      setFlattenedBookmarks(msg);
-      console.log("message recieved \n" + JSON.stringify(flattenedBookmarks));
-    });
-  }, []);
+      that.setState({flattenedBookmarks: msg},()=>
+      {console.log("Bookmarks recieved \n" + JSON.stringify(that.state.flattenedBookmarks))});
+    });  
+    // this.setState({flattenedBookmarks: books},()=>
+    // {console.log("Bookmarks recieved \n" + JSON.stringify(this.state.flattenedBookmarks))});  
+  }
 
-  useEffect(()=>{
-      addBookmarksInState(18);
+  componentWillUpdate(newProps,newState){
+    if(this.state.flattenedBookmarks.length===0 && newState.flattenedBookmarks.length>0)
+    {this.localBookmarks.push(...newState.flattenedBookmarks);
+      this.addBookmarksInState(18);
       window.onscroll = debounce(() => {
         let scrollTop = document.documentElement.scrollTop;
         let windowHeight = window.innerHeight;
@@ -41,12 +50,12 @@ const PopupContainer = () => {
         // if the scroll is more than 70% from the top, load more content.
         if (scrollPercentage > 0.7) {
           // Load more content!
-          addBookmarksInState(21);
+          this.addBookmarksInState(21);
         }
       }, 100);  
-    if (flattenedBookmarks.length > 0) {
+    if (newState.flattenedBookmarks.length > 0) {
       let folders = [];
-      flattenedBookmarks.map(name => {
+      newState.flattenedBookmarks.map(name => {
         if (!folders.find(item => item.key === name.category)) {
           folders.push({
             key: name.category,
@@ -57,67 +66,71 @@ const PopupContainer = () => {
       });
       folders.sort();
       folders.unshift("-- Select all --");
-      setBookmarkFolders(folders);
+      this.setState({bookmarkFolders:folders});
   };
-  },[flattenedBookmarks])
+}
+  }
 
-  const addBookmarksInState = numberOfBookmarks => {
+  addBookmarksInState = numberOfBookmarks => {
     setTimeout(() => {
+      debugger;
       if (
-        localBookmarks.length + numberOfBookmarks <
-        flattenedBookmarks.length
-      ) {
-        setBookmarks(flattenedBookmarks.slice(0,localBookmarks.length + numberOfBookmarks));
+       this.state.BookmarksInState.length + numberOfBookmarks <
+        this.localBookmarks.length
+      ) {        
+        this.setState({BookmarksInState:this.localBookmarks.slice(0,this.state.BookmarksInState.length + numberOfBookmarks)});
       } else if (
-        flattenedBookmarks.length - localBookmarks.length > 0 &&
-        flattenedBookmarks.length - localBookmarks.length <=
+        this.localBookmarks.length - this.state.BookmarksInState.length > 0 &&
+        this.localBookmarks.length - this.state.BookmarksInState.length <=
           numberOfBookmarks
       ) {
-        setBookmarks(flattenedBookmarks.slice(0));
+        this.setState({BookmarksInState:this.localBookmarks.slice(0)});
       }
     }, 0);
   };
 
-  const open_CloseDropdown=()=>{
-    setisDropDownOpen(!isDropDownOpen);
+  open_CloseDropdown=()=>{
+    this.setState({isDropDownOpen:!this.state.isDropDownOpen});
   }
 
-  const searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
-    setSearchedText(searchedText);
-    setFolder(selectedFolder);
+  searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
+    this.setState({searchedText:searchedText});
+    this.setState({selectedFolder:selectedFolder});
     let filteredBookmarks = [];
     //no folder selected
     if (selectedFolder === "-- Select all --" || selectedFolder === "") {
       //no folder selected no searchtext selected
-      if (searchedText === "") filteredBookmarks = [...flattenedBookmarks];
+      if (searchedText === "") filteredBookmarks = [...this.state.flattenedBookmarks];
       //no folder selected some searchtext selected
       else
-        filteredBookmarks = filterList(searchedText, flattenedBookmarks);
+        filteredBookmarks = filterList(searchedText, this.state.flattenedBookmarks);
       //some folder selected
     } else {
       //some folder selected no searchtext selected
       if (searchedText === "") {
-        filteredBookmarks = flattenedBookmarks.filter(
+        filteredBookmarks = this.state.flattenedBookmarks.filter(
           element => element.category === selectedFolder
         );
       }
       //some folder selected some searchtext selected
       else
-        filteredBookmarks = filterList(
+       filteredBookmarks = filterList(
           searchedText,
-          flattenedBookmarks.filter(
+          this.state.flattenedBookmarks.filter(
             element => element.category === selectedFolder
           )
         );
     }
     // this.props.setLocalBookmarks(filteredBookmarks);
     // this.props.addBookmarksInState(15);
-    setFilteredBookmarks(filteredBookmarks);
+    this.setState({filteredBookmarks:filteredBookmarks});
   };
   
   // const setSearchedTerm=(text)=>{ console.log('setSearchedTerm',text);};
   // const setselectedFolder=(folder)=>{console.log('setselectedFolder',folder); };
-  let Bookamrks = (searchedText ||selectedFolder)?filteredBookmarks:localBookmarks;
+  //let Bookamrks = (searchedText ||selectedFolder)?filteredBookmarks:BookmarksInState;
+  render(){
+    let Bookamrks = (this.state.searchedText ||this.state.selectedFolder)?this.state.filteredBookmarks:this.state.BookmarksInState;
   return (
     <>
     {/* <style>
@@ -137,13 +150,13 @@ const PopupContainer = () => {
       </div>
       <div style={{padding: "0 1em"}}>
         <SearchAndFilter
-          optionList={bookmarkFolders}
-          setSearchedText={searchBookmarkWithinFolder}
-          setSelectedFolder={searchBookmarkWithinFolder}
-          open_CloseDropdown={open_CloseDropdown}
-          SearchedText={searchedText}
-          SelectedFolder={selectedFolder}
-          IsDropDownOpen={isDropDownOpen}
+          optionList={this.state.bookmarkFolders}
+          setSearchedText={this.searchBookmarkWithinFolder}
+          setSelectedFolder={this.searchBookmarkWithinFolder}
+          open_CloseDropdown={this.open_CloseDropdown}
+          SearchedText={this.state.searchedText}
+          SelectedFolder={this.state.selectedFolder}
+          IsDropDownOpen={this.state.isDropDownOpen}
         />
       </div>
       {Bookamrks.length > 0 && (
@@ -183,6 +196,7 @@ const PopupContainer = () => {
       </div>
     </>
   );
-};
+}
+}
 
 export default PopupContainer;
