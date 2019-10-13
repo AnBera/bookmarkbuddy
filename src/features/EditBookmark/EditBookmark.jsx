@@ -70,7 +70,7 @@ const[selectedFolder,updateselectedFolder]=useState(null);
                     props.updateBookamark(
                       debounce(
                         props.updateBookamark({
-                          ...props.bookmark,
+                          ...props.selectedBookmark,
                           url: e.target.value
                         })
                       ),
