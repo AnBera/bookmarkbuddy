@@ -33,7 +33,11 @@ class SearchComponent extends Component {
         }
       });
       folders.sort();
-      folders.unshift("-- Select all --");
+      folders.unshift({
+        key: "-- Select all --",
+        text:"-- Select all --",
+        value:"-- Select all --",
+      });
       this.props.setBookmarkFolders(folders);
       this.props.setColorsMap(populateRandomColor(folders));
     }

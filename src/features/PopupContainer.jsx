@@ -65,7 +65,11 @@ componentDidMount(){
         }
       });
       folders.sort();
-      folders.unshift("-- Select all --");
+      folders.unshift({
+        key: "-- Select all --",
+        text:"-- Select all --",
+        value:"-- Select all --",
+      });
       this.setState({bookmarkFolders:folders});
   };
 }

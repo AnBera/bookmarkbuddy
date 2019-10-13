@@ -73,7 +73,7 @@ export const populateRandomColor = (folderNames) => {
     for (let j = 0; j < 6; j++) {
       color += letters[Math.round(Math.random() * 15)];
     }
-    colorsMap[folderNames[i]] = color;
+    colorsMap[folderNames[i].key] = color;
     color = '#';
   }
   return colorsMap;
