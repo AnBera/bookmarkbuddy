@@ -77,7 +77,6 @@ componentDidMount(){
 
   addBookmarksInState = numberOfBookmarks => {
     setTimeout(() => {
-      debugger;
       if (
        this.state.BookmarksInState.length + numberOfBookmarks <
         this.localBookmarks.length
@@ -125,23 +124,18 @@ componentDidMount(){
           )
         );
     }
-    // this.props.setLocalBookmarks(filteredBookmarks);
-    // this.props.addBookmarksInState(15);
-    this.setState({filteredBookmarks:filteredBookmarks});
+    this.localBookmarks = [];
+    if(selectedFolder === "-- Select all --" && searchedText === "")
+    this.localBookmarks.push(...this.state.flattenedBookmarks);
+    else
+    this.localBookmarks.push(...filteredBookmarks);
+    this.setState({ BookmarksInState: [] });
+    this.addBookmarksInState(15);
   };
-  
-  // const setSearchedTerm=(text)=>{ console.log('setSearchedTerm',text);};
-  // const setselectedFolder=(folder)=>{console.log('setselectedFolder',folder); };
-  //let Bookamrks = (searchedText ||selectedFolder)?filteredBookmarks:BookmarksInState;
+
   render(){
-    let Bookamrks = (this.state.searchedText ||this.state.selectedFolder)?this.state.filteredBookmarks:this.state.BookmarksInState;
   return (
     <>
-    {/* <style>
-    .search-container .text-wrapper{
-          width: 100%;
-    }
-    </style> */}
       <div
         style={{
           backgroundColor: "#161626",
@@ -163,9 +157,9 @@ componentDidMount(){
           IsDropDownOpen={this.state.isDropDownOpen}
         />
       </div>
-      {Bookamrks.length > 0 && (
+      {this.state.BookmarksInState.length > 0 && (
         <div className="recommendation-card-container">
-          {Bookamrks.map((bookmark, i) => (
+          {this.state.BookmarksInState.map((bookmark, i) => (
             <Card
               fluid
               className="recommendation-card"

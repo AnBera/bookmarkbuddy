@@ -68,7 +68,7 @@ class BookmarkCard extends Component {
       <>
         {!this.state.isEdit && (
           <Card fluid>
-            <Card.Content href={bookmark.url}>
+            <Card.Content target="_blank" href={bookmark.url}>
               <span className="ui transparent floating label context-icons">
                 <Icon name="pin" size="large" />
                 <Icon
