@@ -290,6 +290,15 @@ a.ui.fluid.card.recommendation-card:last-child {
   border-right: none;
 }
 
+.popup-card-container {
+  height: 28em;
+  overflow-y: scroll;
+}
+
+/* body {
+  height: 600px;
+  overflow-y: scroll;
+} */
 .container .recommendation-card-header {
   text-align: center; 
   padding-top: 1em;

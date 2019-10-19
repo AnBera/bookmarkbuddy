@@ -17,7 +17,8 @@ class PopupContainer extends Component {
     searchedText:'',
     isDropDownOpen:false,
     BookmarksInState:[]
-  }
+  };
+  // this.popupcardcontainerref = React.createRef();
 }
  localBookmarks=[];
 
@@ -35,14 +36,16 @@ componentDidMount(){
     // {console.log("Bookmarks recieved \n" + JSON.stringify(this.state.flattenedBookmarks))});  
   }
 
-  componentWillUpdate(newProps,newState){
-    if(this.state.flattenedBookmarks.length===0 && newState.flattenedBookmarks.length>0)
-    {this.localBookmarks.push(...newState.flattenedBookmarks);
-      this.addBookmarksInState(18);
-      window.onscroll = debounce(() => {
-        let scrollTop = document.documentElement.scrollTop;
-        let windowHeight = window.innerHeight;
-        let bodyHeight = document.documentElement.scrollHeight - windowHeight;
+  handleContextRef = ref => {
+    console.log(ref);
+    if(ref) {
+      console.log(ref.current);
+
+      ref.onscroll = debounce(() => {
+        console.log('scrolling happening!')
+        let scrollTop = ref.scrollTop;
+        let windowHeight = ref.clientHeight; //ref.innerHeight;
+        let bodyHeight = ref.scrollHeight - windowHeight;
         let scrollPercentage = scrollTop / bodyHeight;
 
         console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
@@ -52,7 +55,30 @@ componentDidMount(){
           // Load more content!
           this.addBookmarksInState(21);
         }
-      }, 100);  
+      }, 100);
+    }
+  };
+
+  componentWillUpdate(newProps,newState){
+    if(this.state.flattenedBookmarks.length===0 && newState.flattenedBookmarks.length>0)
+    {this.localBookmarks.push(...newState.flattenedBookmarks);
+      this.addBookmarksInState(18);
+      // // this.popupcardcontainerref.addEventListener('scroll', () => console.log('scroll!'));
+      
+      // window.onscroll = debounce(() => {
+      //   let scrollTop = document.documentElement.scrollTop;
+      //   let windowHeight = window.innerHeight;
+      //   let bodyHeight = document.documentElement.scrollHeight - windowHeight;
+      //   let scrollPercentage = scrollTop / bodyHeight;
+
+      //   console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
+
+      //   // if the scroll is more than 70% from the top, load more content.
+      //   if (scrollPercentage > 0.7) {
+      //     // Load more content!
+      //     this.addBookmarksInState(21);
+      //   }
+      // }, 100);  
     if (newState.flattenedBookmarks.length > 0) {
       let folders = [];
       newState.flattenedBookmarks.map(name => {
@@ -158,7 +184,7 @@ componentDidMount(){
         />
       </div>
       {this.state.BookmarksInState.length > 0 && (
-        <div className="recommendation-card-container">
+        <div className="popup-card-container" ref={this.handleContextRef} >
           {this.state.BookmarksInState.map((bookmark, i) => (
             <Card
               fluid
@@ -171,7 +197,7 @@ componentDidMount(){
                 <div className="url-heading">
                   <Image
                     className="padding-right-medium"
-                    src={`chrome://favicon/${bookmark.Url}`}
+                    src={`chrome://favicon/${bookmark.url}`}
                   />
                   {extractHostname(bookmark.url)}
                 </div>
