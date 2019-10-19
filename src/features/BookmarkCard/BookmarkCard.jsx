@@ -4,13 +4,32 @@ import { Card, Image, Label, Icon } from "semantic-ui-react";
 import { extractHostname, generateImageName } from "../../app/common/util/Util";
 import Hover from "../../app/common/Component/Hover";
 import Configs from "../../app/common/constants";
-import { debounce } from "../../app/common/util/Util";
-import RemoveBookmark from "./DeleteBookmark"
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  LinkedinIcon
+} from "react-share";
+import RemoveBookmark from "./DeleteBookmark";
+import EditBookmark from "../EditBookmark/EditBookmark";
+
 class BookmarkCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { isEdit: false };
+    this.state = {
+      isEdit: false,
+      selectedFolder: null
+    };
   }
+
+  //Changed Bookmark Node Array
+  changedBookamrkFolder = [];
+
+  //selectedFolder={};
   onCategoryClick = e => {
     e.preventDefault();
     this.props.setSelectedFolderAndFilter(e.target.innerText);
@@ -29,42 +48,38 @@ class BookmarkCard extends Component {
     // e.target.src = 'some default image url'
   };
 
-  updateChromeBookmark = bookmark => {
-    chrome.bookmarks.update(
-      bookmark.id,
-      { title: bookmark.title, url: bookmark.url },
-      err => {
-        this.setState({ isEdit: false });
-      }
-    );
+  closeEditModal = () => {
+    this.changedBookamrkFolder.forEach(item => {
+      item.isOpen = false;
+      item.isSelected = false;
+    });
+    this.props.getUpdateBookmarkTree();
+    this.setState({ isEdit: false }, () => {});
   };
 
   render() {
-    const { bookmark, colorsMap, updateBookamark } = this.props;
+    const { bookmark, colorsMap } = this.props;
     let style = {
       borderBottomColor: colorsMap[bookmark.category]
     };
     let hostName = extractHostname(bookmark.url);
-    // let hoverStyle = {
-    //   backgroundColor: colorsMap[bookmark.category],
-    // };
 
     return (
       <>
         {!this.state.isEdit && (
           <Card fluid>
-            <Card.Content href={bookmark.url}>
+            <Card.Content target="_blank" href={bookmark.url}>
               <span className="ui transparent floating label context-icons">
-                <Icon name="pin" size='large' />
+                <Icon name="pin" size="large" />
                 <Icon
                   onClick={e => {
                     e.preventDefault();
                     this.setState({ isEdit: !this.state.isEdit });
                   }}
                   name="edit"
-                  size='large'
+                  size="large"
                 />
-                <RemoveBookmark Objbookmark={bookmark}/>
+                <RemoveBookmark Objbookmark={bookmark} />
               </span>
 
               {/* <Label as='a' color='grey' ribbon='right'>
@@ -108,8 +123,9 @@ class BookmarkCard extends Component {
                   className="padding-right-medium"
                   src={`chrome://favicon/${bookmark.Url}`}
                 />
-                { (hostName.length > 23) ? 
-                ((hostName.substring(0,23-3)) + '...') : hostName}
+                {hostName.length > 23
+                  ? hostName.substring(0, 23 - 3) + "..."
+                  : hostName}
               </div>
               <Card.Meta>{bookmark.title}</Card.Meta>
               <Hover
@@ -119,92 +135,64 @@ class BookmarkCard extends Component {
                     style={{ backgroundColor: colorsMap[bookmark.category] }}
                     onClick={this.onCategoryClick}
                   >
+                    <Icon name="folder"/>
                     {bookmark.category}
                     <span className="category" />
                   </Label>
                 }
               >
                 <Label attached="bottom left" onClick={this.onCategoryClick}>
+                  <Icon name="folder"/>
                   {bookmark.category}
                   <span className="category" style={style} />
                 </Label>
               </Hover>
+
+              <Label attached="bottom right share-icons-container">
+                <div className="share-icons">
+                  <FacebookShareButton
+                    url={bookmark.Url}
+                    quote={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <FacebookIcon round={true} size={"1.5rem"}></FacebookIcon>
+                  </FacebookShareButton>
+
+                  <TwitterShareButton
+                    round={true}
+                    url={bookmark.Url}
+                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <TwitterIcon round={true} size={"1.5rem"}></TwitterIcon>
+                  </TwitterShareButton>
+                  <LinkedinShareButton
+                    round={true}
+                    url={bookmark.Url}
+                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <LinkedinIcon round={true} size={"1.5rem"}></LinkedinIcon>
+                  </LinkedinShareButton>
+                  <WhatsappShareButton
+                    round={true}
+                    url={bookmark.Url}
+                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                  >
+                    <WhatsappIcon round={true} size={"1.5rem"}></WhatsappIcon>
+                  </WhatsappShareButton>
+                </div>
+              </Label>
+
             </Card.Content>
           </Card>
         )}
-        {this.state.isEdit && (
-          <Card fluid>
-            <Card.Content>
-              <form class="ui form">
-                <div class="field">
-                  <label>Bookmark Title</label>
-                  <input
-                    type="text"
-                    onChange={e => {
-                      debounce(
-                        updateBookamark({ ...bookmark, title: e.target.value }),
-                        250
-                      );
-                    }}
-                    required
-                    name="title"
-                    value={bookmark.title}
-                    placeholder="Title"
-                  />
-                </div>
-                <div class="field">
-                  <label>Bookmark Url</label>
-                  <input
-                    onChange={e => {
-                      updateBookamark(
-                        debounce(
-                          updateBookamark({ ...bookmark, url: e.target.value })
-                        ),
-                        250
-                      );
-                    }}
-                    type="text"
-                    required
-                    name="url"
-                    value={bookmark.url}
-                    placeholder="Url"
-                  />
-                </div>
-                <div class="two fields">
-                  <div class="field">
-                    <label>Select Folder</label>
-                    <select class="ui fluid dropdown">
-                      <option value="">Select Folder</option>
-                      <option value="bookMarkBar">Bookmark Bar</option>
-                      <option value="smart">Smart</option>
-                      <option value="ecr">ECR</option>
-                    </select>
-                  </div>
-                </div>
-                <button
-                  class="ui button"
-                  type="submit"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.updateChromeBookmark(bookmark);
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  onClick={e => {
-                    e.preventDefault();
-                    this.setState({ isEdit: !this.state.isEdit });
-                  }}
-                  class="ui button"
-                  type="submit"
-                >
-                  Cancel
-                </button>
-              </form>
-            </Card.Content>
-          </Card>
-        )}
+        <EditBookmark
+          changedBookamrkFolder={this.changedBookamrkFolder}
+          bookmarkFolderTree={this.props.bookmarkFolderTree}
+          updateBookamark={this.props.updateBookamark}
+          colorsMap={colorsMap}
+          selectedBookmark={bookmark}
+          isOpen={this.state.isEdit}
+          closeModal={this.closeEditModal}
+        />
       </>
     );
   }

@@ -1,0 +1,17 @@
+.tree-view-container{
+  width: 100%;
+  margin: 0 auto;
+  display: flex; 
+}
+
+.tree-wrapper{
+   width: 100%
+}
+
+.ui.card .ui.form .two.fields>.field {
+  width: 100%;
+}
+
+.folder-selected{
+background-color: orange;
+}

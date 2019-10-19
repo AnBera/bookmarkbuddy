@@ -2,6 +2,16 @@
   margin-top: 1em;
   border: 1px solid #282c34;
   border-radius: 7px;
+  background-color: #333842;
+}
+
+@media screen and (max-width: 500px) {
+  .search-container div.text-wrapper {
+    width: 100%;
+  }
+  .search-container div.filter-wrapper {
+    width: 100%;
+  }
 }
 
 .search-container .text-wrapper {
@@ -18,6 +28,7 @@
   padding: 0 1em;
   /* box-shadow: inset 0 0 15px #b5b7bb; */
   font-family: "Montserrat";
+  border-radius: 7px;
 }
 
 .search-container .filter-wrapper {
@@ -26,6 +37,15 @@
   margin-top: -20px;
   display: inline-block;
   cursor: pointer;
+}
+
+.search-container .filter-wrapper .ui.dropdown {
+  min-width: 100%;
+  background-color: #333842;
+}
+
+.search-container .filter-wrapper .ui.dropdown>input.search {
+  background-color: #333842 !important;
 }
 
 .search-container .select-folder {

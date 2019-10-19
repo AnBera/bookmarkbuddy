@@ -1,9 +1,23 @@
 import Bookmark from "../model/Bookmark";
 import moment from "moment";
 
-export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls) => {
+export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree, parentFolder) => {
   if (node.children) {
+    //if it is a folder
+    let folderObj={};  
+    folderObj.id=node.id;
+    folderObj.children=[];
+    folderObj.dateAdded= node.dateAdded;
+    folderObj.index= node.index;
+    folderObj.parentId=node.parentId;
+    folderObj.title=node.title;
+    folderObj.isSelected=false;
+    folderObj.isOpen=false;
+    folderObj.parent = parentFolder;
+    bookmarkFolderTree.push(folderObj);
+
     node.children.forEach(child => {
+      //if it is a bookmark
       if (child.url && child.title) {
         result.push(
           new Bookmark(
@@ -20,8 +34,9 @@ export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls) =
         bookmarkCreationDates.push(child.dateAdded);
         bookmarkUrls.push(child.url);
       }
-      flattenNode(child, result, bookmarkCreationDates, bookmarkUrls);
+      flattenNode(child, result, bookmarkCreationDates, bookmarkUrls, folderObj.children, folderObj);
     });
+    
   }
 };
 
@@ -58,7 +73,7 @@ export const populateRandomColor = (folderNames) => {
     for (let j = 0; j < 6; j++) {
       color += letters[Math.round(Math.random() * 15)];
     }
-    colorsMap[folderNames[i]] = color;
+    colorsMap[folderNames[i].key] = color;
     color = '#';
   }
   return colorsMap;
@@ -245,4 +260,48 @@ export const debounce = (func, delay) => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => func.apply(context, args), delay);
   };
+};
+
+ //https://codesandbox.io/s/62x4mmxr0n
+ export const filterList = (q, list) => {
+  function escapeRegExp(s) {
+    return s.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+  }
+  const words = q
+    .split(/\s+/g)
+    .map(s => s.trim())
+    .filter(s => !!s);
+  const hasTrailingSpace = q.endsWith(" ");
+  let result = [];
+  const searchRegex = new RegExp(
+    words
+      .map((word, i) => {
+        if (i + 1 === words.length && !hasTrailingSpace) {
+          // The last word - ok with the word being "startswith"-like
+          return `(?=.*\\b${escapeRegExp(word)})`;
+        } else {
+          // Not the last word - expect the whole word exactly
+          return `(?=.*\\b${escapeRegExp(word)}\\b)`;
+        }
+      })
+      .join("") + ".+",
+    "gi"
+  );
+  result = list.filter(item => {
+    return searchRegex.test(item.title);
+  });
+  result.push(
+    ...list.filter(item => {
+      return searchRegex.test(item.url);
+    })
+  );
+
+  return result.reduce((acc, current) => {
+    const x = acc.find(item => item.id === current.id);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
 };

@@ -51,8 +51,8 @@ a.ui.card:hover, .ui.fluid.card:hover {
 .ui.card .context-icons {
   background: none;
   top: -1.8em;
-  left: auto;
-  right: 0;
+  left: 25px;
+  right: auto;
 }
 
 /* .ui.card .ribbon {
@@ -290,6 +290,15 @@ a.ui.fluid.card.recommendation-card:last-child {
   border-right: none;
 }
 
+.popup-card-container {
+  height: 28em;
+  overflow-y: scroll;
+}
+
+/* body {
+  height: 600px;
+  overflow-y: scroll;
+} */
 .container .recommendation-card-header {
   text-align: center; 
   padding-top: 1em;
@@ -339,6 +348,31 @@ a.ui.fluid.card.recommendation-card:last-child {
 .animation:hover{
   -webkit-animation: moving 5s infinite;
     animation: moving 5s infinite;
+}
+.ui.attached.label.share-icons-container {
+  background: none;
+  width: 9%;
+  left: auto;
+  right: 0;
+  padding: .5em;
+  display: none;
+}
+
+.ui.attached.label.share-icons-container:hover {
+  box-shadow: none;
+}
+
+.ui.fluid.card:hover .ui.attached.label.share-icons-container {
+  display: block;
+}
+
+.SocialMediaShareButton {
+  padding-top: 6px;
+  opacity: .75;
+}
+
+.SocialMediaShareButton:hover {
+  opacity: 1;
 }
 
 @-webkit-keyframes moving {
