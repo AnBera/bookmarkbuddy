@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Icon } from "semantic-ui-react";
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown } from "semantic-ui-react";
 
 class Select extends Component {
   onSelectClick = () => {
@@ -29,11 +29,20 @@ class Select extends Component {
     // ) : null;
 
     return (
-      <Dropdown placeholder='Select folder'
-      onChange={(e) =>{
-        console.log(e.target.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.value);
-        this.onOptionClick(e.target.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.value,
-        e.target.innerText)}} search selection options={this.props.options} />
+      <Dropdown
+        placeholder="Select folder"
+        value={this.props.SelectedFolder}
+        onChange={e => {
+          this.onOptionClick(
+            e.target.parentElement.parentElement.parentElement.parentElement
+              .firstElementChild.firstElementChild.value,
+            e.target.innerText
+          );
+        }}
+        search
+        selection
+        options={this.props.options}
+      />
       // <div className="select-folder" onClick={() => this.onSelectClick()}>
       //   {this.props.SelectedFolder || "Select option"}
       //   <Icon name="caret down" />

@@ -16,6 +16,7 @@ import {
 } from "react-share";
 import RemoveBookmark from "./DeleteBookmark";
 import EditBookmark from "../EditBookmark/EditBookmark";
+import { increaseHitCount } from "../../services/PreviewBookmarkService";
 
 class BookmarkCard extends Component {
   constructor(props) {
@@ -57,6 +58,10 @@ class BookmarkCard extends Component {
     this.setState({ isEdit: false }, () => {});
   };
 
+  updateHitCount = url => {
+    increaseHitCount({ userid: this.props.userId, url: url });
+  };
+
   render() {
     const { bookmark, colorsMap } = this.props;
     let style = {
@@ -67,7 +72,7 @@ class BookmarkCard extends Component {
     return (
       <>
         {!this.state.isEdit && (
-          <Card fluid>
+          <Card onClick={e => this.updateHitCount(bookmark.url)} fluid>
             <Card.Content target="_blank" href={bookmark.url}>
               <span className="ui transparent floating label context-icons">
                 <Icon name="pin" size="large" />
@@ -82,9 +87,6 @@ class BookmarkCard extends Component {
                 <RemoveBookmark Objbookmark={bookmark} />
               </span>
 
-              {/* <Label as='a' color='grey' ribbon='right'>
-          <Icon name='pin' />
-        </Label> */}
               {this.isImageLoaded && (
                 <div
                   className="imageContainer"
@@ -135,14 +137,14 @@ class BookmarkCard extends Component {
                     style={{ backgroundColor: colorsMap[bookmark.category] }}
                     onClick={this.onCategoryClick}
                   >
-                    <Icon name="folder"/>
+                    <Icon name="folder" />
                     {bookmark.category}
                     <span className="category" />
                   </Label>
                 }
               >
                 <Label attached="bottom left" onClick={this.onCategoryClick}>
-                  <Icon name="folder"/>
+                  <Icon name="folder" />
                   {bookmark.category}
                   <span className="category" style={style} />
                 </Label>
@@ -180,7 +182,6 @@ class BookmarkCard extends Component {
                   </WhatsappShareButton>
                 </div>
               </Label>
-
             </Card.Content>
           </Card>
         )}

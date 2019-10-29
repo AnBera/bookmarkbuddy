@@ -41,8 +41,40 @@ export const convertPreviewImagesService = (requestBody) => {
 };
 
 export const saveUrls = (requestBody) => {
-  const convertImages_ENDPOINT = Configs.baseUrl + "SaveUrlBatchImage";
+  const convertImages_ENDPOINT = Configs.baseUrl + "urlbatch";
   return fetch(convertImages_ENDPOINT, {
+      method: "POST",
+      // mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {
+      return json;
+    });
+};
+
+export const getPopularBookmarks = async (userID) => {
+  const popularImages_ENDPOINT = Configs.baseUrl + "getUSeranalyticsData/?userID=" + userID;
+  return await fetch(popularImages_ENDPOINT, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    }
+  }).then(json => {
+    return json;
+  })
+}
+
+export const increaseHitCount = (requestBody) => {
+  const increaseHitCount_ENDPOINT = Configs.baseUrl + "increment";
+  return fetch(increaseHitCount_ENDPOINT, {
       method: "POST",
       // mode: "cors",
       headers: {
