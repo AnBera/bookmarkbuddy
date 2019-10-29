@@ -58,8 +58,12 @@ class BookmarkCard extends Component {
     this.setState({ isEdit: false }, () => {});
   };
 
-  updateHitCount = url => {
-    increaseHitCount({ userid: this.props.userId, url: url });
+  updateHitCount = (url, shardKey) => {
+    increaseHitCount({
+      userid: this.props.userId,
+      url: url,
+      shardKey: shardKey
+    });
   };
 
   render() {
@@ -72,7 +76,10 @@ class BookmarkCard extends Component {
     return (
       <>
         {!this.state.isEdit && (
-          <Card onClick={e => this.updateHitCount(bookmark.url)} fluid>
+          <Card
+            onClick={e => this.updateHitCount(bookmark.url, hostName.charAt(0))}
+            fluid
+          >
             <Card.Content target="_blank" href={bookmark.url}>
               <span className="ui transparent floating label context-icons">
                 <Icon name="pin" size="large" />
@@ -92,9 +99,7 @@ class BookmarkCard extends Component {
                   className="imageContainer"
                   style={{ backgroundColor: colorsMap[bookmark.category] }}
                 >
-                  <span className="initialAltText">
-                    {extractHostname(bookmark.url).charAt(0)}
-                  </span>
+                  <span className="initialAltText">{hostName.charAt(0)}</span>
                   <div className="overlay" style={{ visibility: "hidden" }}>
                     <Image
                       className="imageThubmbnail"
@@ -113,9 +118,7 @@ class BookmarkCard extends Component {
                   className="imageContainer"
                   style={{ backgroundColor: colorsMap[bookmark.category] }}
                 >
-                  <span className="initialAltText">
-                    {extractHostname(bookmark.url).charAt(0)}
-                  </span>
+                  <span className="initialAltText">{hostName.charAt(0)}</span>
                   <Image floated="right" size="tiny" src="" />
                 </div>
               )}
