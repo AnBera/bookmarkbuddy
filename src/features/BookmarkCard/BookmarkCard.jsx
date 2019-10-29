@@ -60,7 +60,7 @@ class BookmarkCard extends Component {
 
   updateHitCount = (url, shardKey) => {
     increaseHitCount({
-      userid: this.props.userId,
+      uniqueID: this.props.userId,
       url: url,
       shardKey: shardKey
     });
