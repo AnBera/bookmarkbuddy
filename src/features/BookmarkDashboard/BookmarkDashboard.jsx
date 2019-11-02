@@ -766,7 +766,12 @@ class BookmarkDashboard extends Component {
                 paddingBottom: "0"
               }}
             >
-              {this.state.userId && <BookmarkRecommendationCard userId={this.state.userId} />}
+              {this.state.userId && (
+                <BookmarkRecommendationCard
+                  bookmarks={Bookamrks}
+                  userId={this.state.userId}
+                />
+              )}
             </Grid.Column>
           </Grid>
         </div>

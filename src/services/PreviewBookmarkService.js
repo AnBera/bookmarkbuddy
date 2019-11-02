@@ -60,16 +60,19 @@ export const saveUrls = (requestBody) => {
 };
 
 export const getPopularBookmarks = async (userID) => {
-  const popularImages_ENDPOINT = Configs.baseUrl + "getUSeranalyticsData/?userID=" + userID;
+  const popularImages_ENDPOINT = Configs.baseUrl + "popularbookmarks/?uniqueID=" + userID;
   return await fetch(popularImages_ENDPOINT, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
-    }
-  }).then(json => {
-    return json;
-  })
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    }).then(response => {
+      return response.json();
+    })
+    .then(json => {
+      return json;
+    });
 }
 
 export const increaseHitCount = (requestBody) => {
