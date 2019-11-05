@@ -1,8 +1,6 @@
 const Configs = {
     imageurl: "https://byblobstorage.blob.core.windows.net/bmby/",
-    baseUrl: "https://byapi.azurewebsites.net/"
-    // imageurl: "http://localhost:8888/images/",
-    // baseUrl: "http://localhost:8888/"
+    baseUrl: "https://by-api-prod.azurewebsites.net/"
 }
 
 export const SortTypes = {
