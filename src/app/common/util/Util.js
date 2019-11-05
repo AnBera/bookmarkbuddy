@@ -4,15 +4,15 @@ import moment from "moment";
 export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree, parentFolder) => {
   if (node.children) {
     //if it is a folder
-    let folderObj={};  
-    folderObj.id=node.id;
-    folderObj.children=[];
-    folderObj.dateAdded= node.dateAdded;
-    folderObj.index= node.index;
-    folderObj.parentId=node.parentId;
-    folderObj.title=node.title;
-    folderObj.isSelected=false;
-    folderObj.isOpen=false;
+    let folderObj = {};
+    folderObj.id = node.id;
+    folderObj.children = [];
+    folderObj.dateAdded = node.dateAdded;
+    folderObj.index = node.index;
+    folderObj.parentId = node.parentId;
+    folderObj.title = node.title;
+    folderObj.isSelected = false;
+    folderObj.isOpen = false;
     folderObj.parent = parentFolder;
     bookmarkFolderTree.push(folderObj);
 
@@ -36,7 +36,7 @@ export const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, b
       }
       flattenNode(child, result, bookmarkCreationDates, bookmarkUrls, folderObj.children, folderObj);
     });
-    
+
   }
 };
 
@@ -99,13 +99,13 @@ export const extractUrlsFromBookmarks = (bookmarks) => {
 }
 
 export const chromeTimeValueToDate = (timestamp) => {
-   var microseconds = parseInt(timestamp, 10);
-   var millis = microseconds / 1000;
-   
-   let momentTime = moment.unix(millis).format('dddd, MMMM Do, YYYY h:mm:ss A');
-   var weeknumber = moment(moment.unix(millis).format('MM-DD-YYYY'), "MMDDYYYY").isoWeek();
-   
-   var past = new Date(1970, 0, 1).getTime();
+  var microseconds = parseInt(timestamp, 10);
+  var millis = microseconds / 1000;
+
+  let momentTime = moment.unix(millis).format('dddd, MMMM Do, YYYY h:mm:ss A');
+  var weeknumber = moment(moment.unix(millis).format('MM-DD-YYYY'), "MMDDYYYY").isoWeek();
+
+  var past = new Date(1970, 0, 1).getTime();
   return new Date(past + timestamp).toDateString();
 
   // var myDate = new Date(); // Your timezone!
@@ -117,21 +117,21 @@ export const chromeTimeValueToDate = (timestamp) => {
 
 // export const groupDatesByMonth = (dates) => {
 //     // var dates = [ "1396-10-11 09:07:21" ];
-    
+
 //     var resultingXYCoordinateData = [];
 //     var groupByYearMonth = dates.reduce( function (acc, date) {
-    
+
 //       var yearMonthCombination = moment(date).year()+'-'+moment(date).month();
-      
+
 //       // check if the week number exists
 //       if (typeof acc[yearMonthCombination] === 'undefined') {
 //         acc[yearMonthCombination] = [];
 //       }
-      
+
 //       acc[yearMonthCombination].push(date);
-      
+
 //       return acc;
-    
+
 //     }, {});
 
 //     let yearMonthKeys = Object.keys(groupByYearMonth).sort();
@@ -139,7 +139,7 @@ export const chromeTimeValueToDate = (timestamp) => {
 //       resultingXYCoordinateData.push({x:yearMonthCombination, 
 //         y:groupByYearMonth[yearMonthCombination].length + (resultingXYCoordinateData[index-1] ? resultingXYCoordinateData[index-1].y : 0)  })
 //     })
-    
+
 //     console.log(groupByYearMonth);
 //     console.log(resultingXYCoordinateData);
 //     return resultingXYCoordinateData;
@@ -159,7 +159,7 @@ export const groupByItemInArray = (arr, callback) => {
 
 export const gruoupDatesByMonth = (dates) => {
   // var dates = [ "1396-10-11 09:07:21" ];
-  return groupByItemInArray(dates, (date)=> (moment(date).year() + '-' + moment(date).month()))
+  return groupByItemInArray(dates, (date) => (moment(date).year() + '-' + moment(date).month()))
 }
 
 export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) => {
@@ -177,7 +177,7 @@ export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) =>
       y: groupByYearMonth[yearMonthCombination] + (resultingXYCoordinateData[index - 1] ? resultingXYCoordinateData[index - 1].y : 0)
     })
   });
-  firstBookmarkAddeddate = yearMonthKeys[0];//groupByYearMonth[yearMonthKeys[(yearMonthKeys.length-1) || 0]];
+  firstBookmarkAddeddate = yearMonthKeys[0]; //groupByYearMonth[yearMonthKeys[(yearMonthKeys.length-1) || 0]];
   dataBookmarkGrowthAnalytics.push({
     id: "Total Number of Bookmarks",
     color: "hsl(275, 70%, 50%)",
@@ -186,7 +186,7 @@ export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) =>
   cardDataBookmarkGrowth.data = dataBookmarkGrowthAnalytics;
   cardDataBookmarkGrowth.totalBookmarkCount = totalBookmarkCount;
   cardDataBookmarkGrowth.firstBookmarkAddeddate = firstBookmarkAddeddate;
-  
+
   console.log(resultingXYCoordinateData);
   return cardDataBookmarkGrowth;
 }
@@ -197,10 +197,10 @@ export const groupSitesByDomain = (urls) => {
 
 export const getKeysWithHighestValue = (o, n) => {
   var keys = Object.keys(o);
-  keys.sort(function(a,b){
+  keys.sort(function (a, b) {
     return o[b] - o[a];
   })
-  return keys.slice(0,n);
+  return keys.slice(0, n);
 };
 
 export const preparePopularBookmarkAnalyticsData = (urls) => {
@@ -211,7 +211,7 @@ export const preparePopularBookmarkAnalyticsData = (urls) => {
   let totalTopBookmarksCount = 0;
 
   // topFiveSites.forEach((siteName) =>
-  for (let i = topFiveSites.length-1; i >= 0; i--) {
+  for (let i = topFiveSites.length - 1; i >= 0; i--) {
     resultingXYCoordinateData.push({
       mostBookmarkedSite: topFiveSites[i],
       count: groupedSites[topFiveSites[i]],
@@ -227,16 +227,17 @@ export const preparePopularBookmarkAnalyticsData = (urls) => {
   return cardDataPopularBookmarks;
 };
 
-export const generateUrlImagePair = async(bookmarks) => {
+export const generateUrlImagePair = async (bookmarks) => {
   let urls = [];
 
   if (bookmarks.length) {
-      
+
     bookmarks.forEach((bookmark) => {
-      let imageName=generateImageName(bookmark.url);
+      let imageName = generateImageName(bookmark.url);
       urls.push({
         url: bookmark.url,
-        imageName:imageName
+        imageName: imageName,
+        title: bookmark.title
       });
     })
   }
@@ -244,17 +245,18 @@ export const generateUrlImagePair = async(bookmarks) => {
 };
 
 export const generateImageName = (url) => {
- try{
-  let wordstoRemove = ["http://", "https://", "www.",".html"];
-  let expStr = wordstoRemove.join("|");  
-  return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g ,'').trim()+".png";
- } 
- catch(err){console.error(err);}
+  try {
+    let wordstoRemove = ["http://", "https://", "www.", ".html"];
+    let expStr = wordstoRemove.join("|");
+    return url.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ').replace(/[/.%:*^<>|=(@#-_&"';~`)]/g, '').trim() + ".png";
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export const debounce = (func, delay) => {
   let debounceTimer;
-  return function() {
+  return function () {
     const context = this;
     const args = arguments;
     clearTimeout(debounceTimer);
@@ -262,8 +264,8 @@ export const debounce = (func, delay) => {
   };
 };
 
- //https://codesandbox.io/s/62x4mmxr0n
- export const filterList = (q, list) => {
+//https://codesandbox.io/s/62x4mmxr0n
+export const filterList = (q, list) => {
   function escapeRegExp(s) {
     return s.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
   }
@@ -275,16 +277,16 @@ export const debounce = (func, delay) => {
   let result = [];
   const searchRegex = new RegExp(
     words
-      .map((word, i) => {
-        if (i + 1 === words.length && !hasTrailingSpace) {
-          // The last word - ok with the word being "startswith"-like
-          return `(?=.*\\b${escapeRegExp(word)})`;
-        } else {
-          // Not the last word - expect the whole word exactly
-          return `(?=.*\\b${escapeRegExp(word)}\\b)`;
-        }
-      })
-      .join("") + ".+",
+    .map((word, i) => {
+      if (i + 1 === words.length && !hasTrailingSpace) {
+        // The last word - ok with the word being "startswith"-like
+        return `(?=.*\\b${escapeRegExp(word)})`;
+      } else {
+        // Not the last word - expect the whole word exactly
+        return `(?=.*\\b${escapeRegExp(word)}\\b)`;
+      }
+    })
+    .join("") + ".+",
     "gi"
   );
   result = list.filter(item => {

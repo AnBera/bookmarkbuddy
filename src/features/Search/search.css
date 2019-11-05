@@ -17,6 +17,7 @@
 .search-container .text-wrapper {
   width: 75%;
   display: inline-block;
+  border-right: 1px solid #4c4c4c;
 }
 
 .search-container .inputSearch {
@@ -39,13 +40,37 @@
   cursor: pointer;
 }
 
+.search-container .filter-wrapper .visible.menu.transition {
+  border: none;
+}
+
 .search-container .filter-wrapper .ui.dropdown {
   min-width: 100%;
   background-color: #333842;
 }
 
+.search-container .filter-wrapper .ui.selection.dropdown {
+  border: none;
+}
+
 .search-container .filter-wrapper .ui.dropdown>input.search {
   background-color: #333842 !important;
+}
+
+.search-container .filter-wrapper div.visible.menu.transition {
+  background-color: #393939;
+}
+
+.search-container .filter-wrapper .ui.selection.dropdown .menu>.item {
+  border-top: none;
+}
+
+.search-container .filter-wrapper span.text, div.text {
+  color: #fff;
+}
+
+.search-container .filter-wrapper input.search {
+  caret-color: #fff;
 }
 
 .search-container .select-folder {

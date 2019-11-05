@@ -153,12 +153,11 @@ class BookmarkDashboard extends Component {
     }
   }
 
-  getUpdateBookmarkTree=()=>{
+  getUpdateBookmarkTree = () => {
     this.getBookmarks();
     this.setState({ bookmarks: [] });
     this.addBookmarksInState(15);
-  }
-
+  };
 
   getBookmarks = () => {
     console.log("getbookmark called after frst bmk");
@@ -417,12 +416,23 @@ class BookmarkDashboard extends Component {
     // //   console.log(sites);
     // // })
 
-    chrome.bookmarks.getTree(treeNode => {      
-      flattenNode(treeNode[0], flattenedBookmarks, this.bookmarkCreationDates, this.bookmarkUrls,this.bookmarkFolderTree);
+    chrome.bookmarks.getTree(treeNode => {
+      flattenNode(
+        treeNode[0],
+        flattenedBookmarks,
+        this.bookmarkCreationDates,
+        this.bookmarkUrls,
+        this.bookmarkFolderTree
+      );
       console.log("======= with parent context =====");
       console.log(this.bookmarkFolderTree);
-      this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(this.bookmarkCreationDates, flattenedBookmarks.length);
-      this.cardDataPopularBookmarks = preparePopularBookmarkAnalyticsData(this.bookmarkUrls);
+      this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(
+        this.bookmarkCreationDates,
+        flattenedBookmarks.length
+      );
+      this.cardDataPopularBookmarks = preparePopularBookmarkAnalyticsData(
+        this.bookmarkUrls
+      );
       this.localBookmarks = [];
       this.localBookmarks.push(...flattenedBookmarks);
       this.addBookmarksInState(18);
@@ -439,7 +449,7 @@ class BookmarkDashboard extends Component {
           // Load more content!
           this.addBookmarksInState(21);
         }
-      }, 100);      
+      }, 100);
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
     });
   };
@@ -756,7 +766,12 @@ class BookmarkDashboard extends Component {
                 paddingBottom: "0"
               }}
             >
-              <BookmarkRecommendationCard bookmarks={Bookamrks} />
+              {this.state.userId && (
+                <BookmarkRecommendationCard
+                  bookmarks={Bookamrks}
+                  userId={this.state.userId}
+                />
+              )}
             </Grid.Column>
           </Grid>
         </div>
@@ -782,8 +797,11 @@ class BookmarkDashboard extends Component {
                       <Grid.Column width={16}>
                         <span className="display-count">
                           {" "}
-                          Displaying {this.props.searchTerm?this.props.FilteredBookmarks.length:
-                            this.props.bookmarks.length} items{" "}
+                          Displaying{" "}
+                          {this.props.searchTerm
+                            ? this.props.FilteredBookmarks.length
+                            : this.props.bookmarks.length}{" "}
+                          items{" "}
                         </span>
                         <List
                           floated="right"
@@ -831,13 +849,16 @@ class BookmarkDashboard extends Component {
                   if (i % 3 === 0)
                     return (
                       <BookmarkCard
+                        userId={this.state.userId}
                         key={bookmark.id}
                         isconvertedSuccessfully={this.props.isImagesConverted}
                         bookmark={bookmark}
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
-                        getUpdateBookmarkTree={this.getUpdateBookmarkTree.bind(this)}
+                        getUpdateBookmarkTree={this.getUpdateBookmarkTree.bind(
+                          this
+                        )}
                         updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
                         bookmarkFolderTree={this.bookmarkFolderTree}
@@ -851,13 +872,16 @@ class BookmarkDashboard extends Component {
                   if (i % 3 === 1)
                     return (
                       <BookmarkCard
+                        userId={this.state.userId}
                         key={bookmark.id}
                         isconvertedSuccessfully={this.props.isImagesConverted}
                         bookmark={bookmark}
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
-                        getUpdateBookmarkTree={this.getUpdateBookmarkTree.bind(this)}
+                        getUpdateBookmarkTree={this.getUpdateBookmarkTree.bind(
+                          this
+                        )}
                         updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
                         bookmarkFolderTree={this.bookmarkFolderTree}
@@ -870,12 +894,15 @@ class BookmarkDashboard extends Component {
                   if (i % 3 === 2)
                     return (
                       <BookmarkCard
+                        userId={this.state.userId}
                         key={bookmark.id}
                         bookmark={bookmark}
                         setSelectedFolderAndFilter={
                           this.setSelectedFolderAndFilter
                         }
-                        getUpdateBookmarkTree={this.getUpdateBookmarkTree.bind(this)}
+                        getUpdateBookmarkTree={this.getUpdateBookmarkTree.bind(
+                          this
+                        )}
                         updateBookamark={this.updateBookmark.bind(this, i)}
                         colorsMap={this.props.colorsMap}
                         bookmarkFolderTree={this.bookmarkFolderTree}
