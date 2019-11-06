@@ -18,8 +18,9 @@ const RemoveBookmark = props => {
     <>
    <Icon onClick={e => {e.preventDefault(); setisDeleteModalOpen(true);}} size='large' name="trash"/>
     <Modal
-    open={isDeleteModalOpen}
-    closeOnEscape={false}
+      dimmer='blurring'
+      open={isDeleteModalOpen}
+      closeOnEscape={false}
       basic
       size="small"
     >
