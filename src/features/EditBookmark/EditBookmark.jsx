@@ -1,6 +1,6 @@
 /*global chrome*/
 import React,{useState} from "react";
-import { Button, Header, Image, Modal, Card } from "semantic-ui-react";
+import { Button, Header, Image, Modal, Card, Icon } from "semantic-ui-react";
 import FileExplorer from "../Treeview/FileExplorer";
 import { debounce } from "../../app/common/util/Util";
 
@@ -32,21 +32,23 @@ const[selectedFolder,updateselectedFolder]=useState(null);
     updateselectedFolder( selectedFolder);
   };
   return (
-    <Modal dimmer={true} open={props.isOpen} closeOnDimmerClick={false} Close={props.closeModal}>
-      <Modal.Header>
+    <Modal size='tiny' dimmer='blurring' open={props.isOpen} closeOnDimmerClick={false} Close={props.closeModal} style={{boxShadow:"inset 0 0 25px #33373f"}}>
+      <Modal.Header style={{backgroundColor:"#282c34"}}>
         <Image
           className="padding-right-medium"
           src={`chrome://favicon/${props.selectedBookmark.Url}`}
+          style={{display:"inline", verticalAlign: "baseline"}}
         />
-        <Header>Edit Bookmark</Header>
+        <span style={{color:"#FFF", display:"inline", fontSize:"1.2rem"}}>Edit Bookmark</span>
       </Modal.Header>
-      <Modal.Content>
-        <Card fluid>
+      <Modal.Content scrolling style={{backgroundColor:"#282c34", paddingTop:0}}>
+        <Card fluid style={{boxShadow:"none"}}>
           <Card.Content>
             <form className="ui form">
               <div className="field">
-                <label style={{ color: "#FFFFFF" }}>Bookmark Title</label>
+                <label style={{color:"#7e7e7e"}}>Bookmark Title</label>
                 <input
+                  style={{backgroundColor: "#333842", color:"#FFF"}}
                   type="text"
                   onChange={e => {
                     debounce(
@@ -64,8 +66,9 @@ const[selectedFolder,updateselectedFolder]=useState(null);
                 />
               </div>
               <div className="field">
-                <label style={{ color: "#FFFFFF" }}>Bookmark Url</label>
+                <label style={{color:"#7e7e7e"}}>Bookmark Url</label>
                 <input
+                  style={{backgroundColor: "#333842", color:"#FFF"}}
                   onChange={e => {
                     props.updateBookamark(
                       debounce(
@@ -86,7 +89,7 @@ const[selectedFolder,updateselectedFolder]=useState(null);
               </div>
               <div className="two fields">
                 <div className="field">
-                  <label style={{ color: "#FFFFFF" }}>Select Folder</label>
+                  <label style={{color:"#7e7e7e"}}>Select Folder</label>
                   <FileExplorer
                   changedBookamrkFolder={props.changedBookamrkFolder}
                     selectedBookmark={props.selectedBookmark}
@@ -102,20 +105,19 @@ const[selectedFolder,updateselectedFolder]=useState(null);
           </Card.Content>
         </Card>
       </Modal.Content>
-      <Modal.Actions>
-        <Button color="black"  onClick={e => {e.preventDefault();props.closeModal();}}>
-          Cancel
+      <Modal.Actions style={{backgroundColor:"#282c34"}}>
+        <Button onClick={e => {e.preventDefault();props.closeModal();}} basic inverted>
+          <Icon name="remove" /> Cancel
         </Button>
         <Button
-          positive
-          icon="checkmark"
-          labelPosition="right"
-          content="Save"
+          color="green"
+          inverted
           onClick={e => {
             e.preventDefault();
             updateChromeBookmark(props.selectedBookmark);
-          }}
-        />
+          }}>
+          <Icon name="save" /> Save
+          </Button>
       </Modal.Actions>
     </Modal>
   );

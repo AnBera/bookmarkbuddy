@@ -28,11 +28,11 @@ const RemoveBookmark = props => {
         <p>{`Do you want to remove ${props.Objbookmark.title}?`}</p>
       </Modal.Content>
       <Modal.Actions>
+        <Button onClick={()=>close()} basic inverted>
+          <Icon name="remove" /> Cancel
+        </Button>
         <Button onClick={() => removeBookmark()} color="red" inverted>
           <Icon name="trash alternate" /> Remove
-        </Button>
-        <Button onClick={()=>close()} basic color="green" inverted>
-          <Icon name="remove" /> Cancel
         </Button>
       </Modal.Actions>
     </Modal>
