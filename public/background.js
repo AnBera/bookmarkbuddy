@@ -41,11 +41,13 @@ const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmark
     }
   };
 
-chrome.bookmarks.getTree(treeNode => { 
-    // bookmarkTree = treeNode;
-    flattenNode(treeNode[0], flattenedBookmarks, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree);
-    console.log(flattenedBookmarks);
-});
+  const getChromeBookmarkTree = () => {
+    chrome.bookmarks.getTree(treeNode => { 
+        // bookmarkTree = treeNode;
+        flattenNode(treeNode[0], flattenedBookmarks, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree);
+        console.log(flattenedBookmarks);
+    });
+  }
 
 chrome.extension.onConnect.addListener(function(port) {
     console.log("Connected .....");
@@ -56,3 +58,9 @@ chrome.extension.onConnect.addListener(function(port) {
     });
 });
 
+chrome.bookmarks.onCreated.addListener(getChromeBookmarkTree);
+chrome.bookmarks.onRemoved.addListener(getChromeBookmarkTree);
+chrome.bookmarks.onChanged.addListener(getChromeBookmarkTree);
+
+
+getChromeBookmarkTree();
