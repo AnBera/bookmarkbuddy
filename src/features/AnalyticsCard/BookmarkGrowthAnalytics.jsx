@@ -1,12 +1,19 @@
 import React from 'react';
 import { Card } from "semantic-ui-react";
-import { ResponsiveLine } from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line';
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const BookmarkGrowthAnalytics = ({ data, totalBookmarkCount, firstBookmarkAddeddate /* see data tab */ }) => (
+const BookmarkGrowthAnalytics = ({ data, totalBookmarkCount, firstBookmarkAddeddate /* see data tab */ }) => {
+    const formatDate = (dateString) => {
+        let dateArr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        let splitted = dateString.split('-');
+        return dateArr[splitted[1]] + ' ' + splitted[0];
+    };
+
+    return (
     <Card fluid className="bookmark-growth-analytics" style={{borderRadius:"7px"}} >
     <div className="meta" style={{position: "absolute", padding: "1.5em 0 0 1.7em", color: "#fff"}}>
         <div style={{fontSize: "3em"}}>
@@ -86,11 +93,11 @@ const BookmarkGrowthAnalytics = ({ data, totalBookmarkCount, firstBookmarkAddedd
     <Card.Content>
       <Card.Header>How your Bookmarks increased</Card.Header>
       <Card.Meta>Total Bookmarks count each month since begining</Card.Meta>
-      <Card.Description>
-        You have total {totalBookmarkCount} Bookmarks. First ever bookmark was added on {firstBookmarkAddeddate}.
-      </Card.Description>
+      {totalBookmarkCount && firstBookmarkAddeddate && <Card.Description>
+       You have total {totalBookmarkCount} Bookmarks. First ever bookmark was added on {formatDate(firstBookmarkAddeddate)}.
+      </Card.Description>}
     </Card.Content>
     </Card>
-)
+)}
 
 export default BookmarkGrowthAnalytics;
