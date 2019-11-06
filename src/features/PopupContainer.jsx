@@ -71,6 +71,17 @@ class PopupContainer extends Component {
       shardKey: shardKey
     });
   };
+  onBookmarkLinkClick = (bookmark) => (event) => {
+    event.preventDefault();
+    this.updateHitCount(
+      bookmark.url,
+      extractHostname(bookmark.url).charAt(0)
+    );
+    chrome.tabs.create({
+      url: bookmark.url,
+      active: false
+    });
+  };
   handleContextRef = ref => {
     console.log(ref);
     if (ref) {
@@ -222,16 +233,11 @@ class PopupContainer extends Component {
             {this.state.BookmarksInState.map((bookmark, i) => (
               <Card
                 fluid
-                onClick={e =>
-                  this.updateHitCount(
-                    bookmark.url,
-                    extractHostname(bookmark.url).charAt(0)
-                  )
-                }
+                onClick={this.onBookmarkLinkClick(bookmark)}
                 className="recommendation-card"
                 href={bookmark.url}
                 key={bookmark.id}
-                target="_blank"
+                // target="_blank"
               >
                 <Card.Content target="_blank" href={bookmark.url}>
                   <div className="url-heading">
