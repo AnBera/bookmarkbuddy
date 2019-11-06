@@ -108,7 +108,7 @@ class SearchComponent extends Component {
         <Grid.Column width={5} style={{ height: "70px", width: "50%" }}>
           {this.props.selectedFolder && (
             <div className="folder-perc-container">
-              <div
+              {/* <div
                 id="activeBorder"
                 className="active-border"
                 style={{ display: "inline-block", float: "left" }}
@@ -123,7 +123,7 @@ class SearchComponent extends Component {
                     %
                   </span>
                 </div>
-              </div>
+              </div> */}
               <div
                 className="folder-info"
                 style={{
@@ -133,16 +133,16 @@ class SearchComponent extends Component {
                 }}
               >
                 <div className="info-header" style={{ fontSize: "1.15em" }}>
-                  <strong>{this.props.selectedFolder}</strong>
+                Folder <strong>{this.props.selectedFolder}</strong>
                 </div>
                 <div className="info-body">
-                  Contains{" "}
+                  Contains {this.state.bookmarksInsideFolder} Bookmarks. Appx {" "}
                   {Math.ceil(
                     (this.state.bookmarksInsideFolder /
                       this.props.bookmarks.length) *
                       100
                   )}
-                  % of Bookmarks
+                  % of all.
                 </div>
               </div>
             </div>
