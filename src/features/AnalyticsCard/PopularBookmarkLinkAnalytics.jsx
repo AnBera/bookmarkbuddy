@@ -50,7 +50,7 @@ const PopularBookmarkLinkAnalytics = ({ data, totalTopBookmarksCount, topFiveSit
         <div style={{fontSize: "1.2em", paddingTop: ".5em", marginRight: "0"}}>
             Bookmarks
         </div>
-        <div style={{fontSize: "1.2em", paddingTop: ".5em", marginRight: "0"}}>
+        <div style={{fontSize: "1.2em", marginRight: "0"}}>
             for top 5 sites
         </div>
     </div>

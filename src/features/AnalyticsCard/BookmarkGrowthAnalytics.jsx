@@ -15,6 +15,9 @@ const BookmarkGrowthAnalytics = ({ data, totalBookmarkCount, firstBookmarkAddedd
         <div style={{fontSize: "1.2em", paddingTop: ".5em"}}>
             Bookmarks
         </div>
+        <div style={{fontSize: "1.2em"}}>
+            in total
+        </div>
     </div>
     <Card.Content style={{ height:"250px", width:"100%", padding:"1.5em 0 0 0", backgroundColor:"#333842", borderRadius:"7px" }}>
     <ResponsiveLine

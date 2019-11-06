@@ -82,7 +82,6 @@ class BookmarkCard extends Component {
           >
             <Card.Content target="_blank" href={bookmark.url}>
               <span className="ui transparent floating label context-icons">
-                <Icon name="pin" size="large" />
                 <Icon
                   onClick={e => {
                     e.preventDefault();
