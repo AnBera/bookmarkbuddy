@@ -59,21 +59,45 @@ export const saveUrls = (requestBody) => {
     });
 };
 
+// export const getPopularBookmarks = async (userID) => {
+//   const popularImages_ENDPOINT = Configs.baseUrl + "popularbookmarks/?uniqueID=" + userID;
+//   return await fetch(popularImages_ENDPOINT, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "Access-Control-Allow-Origin": "*"
+//       }
+//     })
+//     .then(response => response.json())
+//     .then(json => json)
+//     .catch(error => console.log(error.message))
+// }
+
 export const getPopularBookmarks = async (userID) => {
   const popularImages_ENDPOINT = Configs.baseUrl + "popularbookmarks/?uniqueID=" + userID;
-  return await fetch(popularImages_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      }
-    }).then(response => {
-      return response.json();
-    })
-    .then(json => {
-      return json;
-    });
-}
+  const controller = new AbortController();
+  const signal = controller.signal;
+  const fetchPromise = fetch(popularImages_ENDPOINT, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+    signal:signal
+  });
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+  
+  return await fetchPromise.then(response => {
+    // completed request before timeout fired
+    // If you only wanted to timeout the request, not the response, add:
+    clearTimeout(timeoutId);
+    return response.json();
+  })
+  .then(json => {
+    return json;
+  })
+  .catch(error => console.log(error.message))
+  };
 
 export const increaseHitCount = (requestBody) => {
   const increaseHitCount_ENDPOINT = Configs.baseUrl + "increment";
