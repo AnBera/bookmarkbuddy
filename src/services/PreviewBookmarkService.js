@@ -96,7 +96,21 @@ export const getPopularBookmarks = async (userID) => {
   .then(json => {
     return json;
   })
-  .catch(error => console.log(error.message))
+  .catch(error => {
+      console.log(error.message);
+      const popularImages_ENDPOINT = Configs.baseUrlBackup + "popularbookmarks/?uniqueID=" + userID;
+      return fetch(popularImages_ENDPOINT, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          }
+        })
+        .then(response => response.json())
+        .then(json => json)
+        .catch(error => console.log(error.message))
+    }
+  )
   };
 
 export const increaseHitCount = (requestBody) => {
