@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Image, Header, Icon } from "semantic-ui-react";
+import { Card, Image, Header, Icon, Loader } from "semantic-ui-react";
 import { extractHostname } from "../../app/common/util/Util";
 import { getPopularBookmarks } from "../../services/PreviewBookmarkService";
 import { increaseHitCount } from "../../services/PreviewBookmarkService";
@@ -64,10 +64,15 @@ const BookmarkRecommendationCard = props => {
         ))}
 
       {topBookmarks && topBookmarks.length === 0 && (
-        <div style={{ color: "#a9a9a9", padding: "1em" }}>
-          Your popular bookmark data is being generated. Meanwhile here are some
-          bookmarks you might be interested in.
-        </div>
+        <>
+          <div>
+            <Loader size="tiny" active inline="centered"/>
+          </div>
+          <div style={{ color: "#a9a9a9", padding: "1em" }}>
+            Your popular bookmark data is being generated. Meanwhile here are some
+            bookmarks you might be interested in.
+          </div>
+        </>
       )}
 
       {topBookmarks &&
