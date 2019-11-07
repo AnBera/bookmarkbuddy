@@ -417,6 +417,7 @@ class BookmarkDashboard extends Component {
     // // })
 
     chrome.bookmarks.getTree(treeNode => {
+      this.resetBookmarkData();
       flattenNode(
         treeNode[0],
         flattenedBookmarks,
@@ -452,6 +453,12 @@ class BookmarkDashboard extends Component {
       }, 100);
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
     });
+  };
+
+  resetBookmarkData = () => {
+    this.bookmarkCreationDates = [];
+    this.bookmarkUrls = [];
+    this.bookmarkFolderTree = [];
   };
 
   setSelectedFolderAndFilter = selectedFolder => {
