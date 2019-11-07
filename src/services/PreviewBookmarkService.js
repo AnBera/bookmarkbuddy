@@ -97,7 +97,8 @@ export const getPopularBookmarks = async (userID) => {
     return json;
   })
   .catch(error => {
-      console.log(error.message);
+      console.log(error.message + timeoutId);
+      clearTimeout(timeoutId);
       const popularImages_ENDPOINT = Configs.baseUrlBackup + "popularbookmarks/?uniqueID=" + userID;
       return fetch(popularImages_ENDPOINT, {
           method: "GET",
