@@ -23,7 +23,8 @@ class BookmarkCard extends Component {
     super(props);
     this.state = {
       isEdit: false,
-      selectedFolder: null
+      selectedFolder: null,
+      isDelete: false
     };
   }
 
@@ -34,6 +35,8 @@ class BookmarkCard extends Component {
   onCategoryClick = e => {
     e.preventDefault();
     this.props.setSelectedFolderAndFilter(e.target.innerText);
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
   };
 
   isImageLoaded = true;
@@ -57,8 +60,11 @@ class BookmarkCard extends Component {
     this.props.getUpdateBookmarkTree();
     this.setState({ isEdit: false }, () => {});
   };
+  closeDeleteModal = () => {
+    this.setState({ isDelete: false }, () => {});
+  };
 
-  updateHitCount = (url, shardKey) => {
+  updateHitCount = (event, url, shardKey) => {
     increaseHitCount({
       uniqueID: this.props.userId,
       url: url,
@@ -76,21 +82,35 @@ class BookmarkCard extends Component {
     return (
       <>
         {!this.state.isEdit && (
-          <Card
-            onClick={e => this.updateHitCount(bookmark.url, hostName.charAt(0))}
-            fluid
-          >
-            <Card.Content target="_blank" href={bookmark.url}>
+          <Card fluid>
+            <Card.Content
+              onClick={e =>
+                this.updateHitCount(e, bookmark.url, hostName.charAt(0))
+              }
+              target="_blank"
+              href={bookmark.url}
+            >
               <span className="ui transparent floating label context-icons">
                 <Icon
                   onClick={e => {
                     e.preventDefault();
                     this.setState({ isEdit: !this.state.isEdit });
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
                   }}
                   name="edit"
                   size="large"
                 />
-                <RemoveBookmark Objbookmark={bookmark} />
+                <Icon
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isDelete: !this.state.isDelete });
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                  }}
+                  size="large"
+                  name="trash"
+                />
               </span>
 
               {this.isImageLoaded && (
@@ -187,6 +207,11 @@ class BookmarkCard extends Component {
             </Card.Content>
           </Card>
         )}
+        <RemoveBookmark
+          Objbookmark={bookmark}
+          isOpen={this.state.isDelete}
+          closeModal={this.closeDeleteModal}
+        />
         <EditBookmark
           changedBookamrkFolder={this.changedBookamrkFolder}
           bookmarkFolderTree={this.props.bookmarkFolderTree}
