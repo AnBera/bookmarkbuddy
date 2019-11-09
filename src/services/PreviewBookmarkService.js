@@ -83,20 +83,20 @@ export const getPopularBookmarks = async (userID) => {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*"
     },
-    signal:signal
+    signal: signal
   });
   const timeoutId = setTimeout(() => controller.abort(), 5000);
-  
+
   return await fetchPromise.then(response => {
-    // completed request before timeout fired
-    // If you only wanted to timeout the request, not the response, add:
-    clearTimeout(timeoutId);
-    return response.json();
-  })
-  .then(json => {
-    return json;
-  })
-  .catch(error => {
+      // completed request before timeout fired
+      // If you only wanted to timeout the request, not the response, add:
+      clearTimeout(timeoutId);
+      return response.json();
+    })
+    .then(json => {
+      return json;
+    })
+    .catch(error => {
       console.log(error.message + timeoutId);
       clearTimeout(timeoutId);
       const popularImages_ENDPOINT = Configs.baseUrlBackup + "popularbookmarks/?uniqueID=" + userID;
@@ -110,12 +110,30 @@ export const getPopularBookmarks = async (userID) => {
         .then(response => response.json())
         .then(json => json)
         .catch(error => console.log(error.message))
-    }
-  )
-  };
+    })
+};
 
 export const increaseHitCount = (requestBody) => {
   const increaseHitCount_ENDPOINT = Configs.baseUrl + "increment";
+  return fetch(increaseHitCount_ENDPOINT, {
+      method: "POST",
+      // mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {
+      return json;
+    });
+};
+
+export const increaseShareCount = (requestBody) => {
+  const increaseHitCount_ENDPOINT = Configs.baseUrl + "incrementShare";
   return fetch(increaseHitCount_ENDPOINT, {
       method: "POST",
       // mode: "cors",

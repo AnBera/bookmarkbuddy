@@ -29,6 +29,17 @@ code {
     monospace;
 }
 
+.about-icon-wrapper {
+  right: 0;
+  position: absolute;
+  margin: 1em;
+}
+
+.about-icon-wrapper > i.about-icon {
+  font-size: 2em;
+}
+
+
 a.ui.card:hover, .ui.fluid.card:hover {
   background-color: #282c34;
   box-shadow: 0 0px 5px 0 #ccc, 0 0 0 1px #282c34;
@@ -306,7 +317,7 @@ a.ui.fluid.card.recommendation-card:last-child {
 }
 
 .ui.container.analytics-container {
-  padding-top: 6em;
+  padding-top: 4.5em;
   color: black;
 }
 

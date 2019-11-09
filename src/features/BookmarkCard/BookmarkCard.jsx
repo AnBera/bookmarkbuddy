@@ -16,7 +16,10 @@ import {
 } from "react-share";
 import RemoveBookmark from "./DeleteBookmark";
 import EditBookmark from "../EditBookmark/EditBookmark";
-import { increaseHitCount } from "../../services/PreviewBookmarkService";
+import {
+  increaseHitCount,
+  increaseShareCount
+} from "../../services/PreviewBookmarkService";
 
 class BookmarkCard extends Component {
   constructor(props) {
@@ -65,7 +68,20 @@ class BookmarkCard extends Component {
   };
 
   updateHitCount = (event, url, shardKey) => {
-    increaseHitCount({
+    if (
+      event &&
+      event.target &&
+      !["circle", "path"].includes(event.target.tagName)
+    ) {
+      increaseHitCount({
+        uniqueID: this.props.userId,
+        url: url,
+        shardKey: shardKey
+      });
+    }
+  };
+  updateShareCount = (event, url, shardKey) => {
+    increaseShareCount({
       uniqueID: this.props.userId,
       url: url,
       shardKey: shardKey
@@ -165,7 +181,14 @@ class BookmarkCard extends Component {
                   </Label>
                 }
               >
-                <Label attached="bottom left" onClick={this.onCategoryClick}>
+                <Label
+                  attached="bottom left"
+                  onClick={e => {
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                    this.onCategoryClick();
+                  }}
+                >
                   <Icon name="folder" />
                   {bookmark.category}
                   <span className="category" style={style} />
@@ -173,7 +196,12 @@ class BookmarkCard extends Component {
               </Hover>
 
               <Label attached="bottom right share-icons-container">
-                <div className="share-icons">
+                <div
+                  className="share-icons"
+                  onClick={e =>
+                    this.updateShareCount(e, bookmark.url, hostName.charAt(0))
+                  }
+                >
                   <FacebookShareButton
                     url={bookmark.Url}
                     quote={`Shared via Bookmarkbuddy:${bookmark.title}`}
