@@ -445,6 +445,13 @@ class BookmarkDashboard extends Component {
 
         console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
 
+        if(scrollTop > 400) {
+          document.querySelector(".analytics-container").style.display = 'none';
+        }
+        if(scrollTop <= 10) {
+          document.querySelector(".analytics-container").style.display = 'block';
+        }
+
         // if the scroll is more than 70% from the top, load more content.
         if (scrollPercentage > 0.7) {
           // Load more content!

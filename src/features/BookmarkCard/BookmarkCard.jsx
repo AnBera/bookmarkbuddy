@@ -16,14 +16,18 @@ import {
 } from "react-share";
 import RemoveBookmark from "./DeleteBookmark";
 import EditBookmark from "../EditBookmark/EditBookmark";
-import { increaseHitCount } from "../../services/PreviewBookmarkService";
+import {
+  increaseHitCount,
+  increaseShareCount
+} from "../../services/PreviewBookmarkService";
 
 class BookmarkCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isEdit: false,
-      selectedFolder: null
+      selectedFolder: null,
+      isDelete: false
     };
   }
 
@@ -34,6 +38,8 @@ class BookmarkCard extends Component {
   onCategoryClick = e => {
     e.preventDefault();
     this.props.setSelectedFolderAndFilter(e.target.innerText);
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
   };
 
   isImageLoaded = true;
@@ -57,9 +63,25 @@ class BookmarkCard extends Component {
     this.props.getUpdateBookmarkTree();
     this.setState({ isEdit: false }, () => {});
   };
+  closeDeleteModal = () => {
+    this.setState({ isDelete: false }, () => {});
+  };
 
-  updateHitCount = (url, shardKey) => {
-    increaseHitCount({
+  updateHitCount = (event, url, shardKey) => {
+    if (
+      event &&
+      event.target &&
+      !["circle", "path"].includes(event.target.tagName)
+    ) {
+      increaseHitCount({
+        uniqueID: this.props.userId,
+        url: url,
+        shardKey: shardKey
+      });
+    }
+  };
+  updateShareCount = (event, url, shardKey) => {
+    increaseShareCount({
       uniqueID: this.props.userId,
       url: url,
       shardKey: shardKey
@@ -76,21 +98,35 @@ class BookmarkCard extends Component {
     return (
       <>
         {!this.state.isEdit && (
-          <Card
-            onClick={e => this.updateHitCount(bookmark.url, hostName.charAt(0))}
-            fluid
-          >
-            <Card.Content target="_blank" href={bookmark.url}>
+          <Card fluid>
+            <Card.Content
+              onClick={e =>
+                this.updateHitCount(e, bookmark.url, hostName.charAt(0))
+              }
+              target="_blank"
+              href={bookmark.url}
+            >
               <span className="ui transparent floating label context-icons">
                 <Icon
                   onClick={e => {
                     e.preventDefault();
                     this.setState({ isEdit: !this.state.isEdit });
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
                   }}
                   name="edit"
                   size="large"
                 />
-                <RemoveBookmark Objbookmark={bookmark} />
+                <Icon
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isDelete: !this.state.isDelete });
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                  }}
+                  size="large"
+                  name="trash"
+                />
               </span>
 
               {this.isImageLoaded && (
@@ -145,7 +181,14 @@ class BookmarkCard extends Component {
                   </Label>
                 }
               >
-                <Label attached="bottom left" onClick={this.onCategoryClick}>
+                <Label
+                  attached="bottom left"
+                  onClick={e => {
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                    this.onCategoryClick();
+                  }}
+                >
                   <Icon name="folder" />
                   {bookmark.category}
                   <span className="category" style={style} />
@@ -153,7 +196,12 @@ class BookmarkCard extends Component {
               </Hover>
 
               <Label attached="bottom right share-icons-container">
-                <div className="share-icons">
+                <div
+                  className="share-icons"
+                  onClick={e =>
+                    this.updateShareCount(e, bookmark.url, hostName.charAt(0))
+                  }
+                >
                   <FacebookShareButton
                     url={bookmark.Url}
                     quote={`Shared via Bookmarkbuddy:${bookmark.title}`}
@@ -187,6 +235,11 @@ class BookmarkCard extends Component {
             </Card.Content>
           </Card>
         )}
+        <RemoveBookmark
+          Objbookmark={bookmark}
+          isOpen={this.state.isDelete}
+          closeModal={this.closeDeleteModal}
+        />
         <EditBookmark
           changedBookamrkFolder={this.changedBookamrkFolder}
           bookmarkFolderTree={this.props.bookmarkFolderTree}
