@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { Component } from "react";
-import { Grid, Sticky, Rail, Segment, List } from "semantic-ui-react";
+import { Grid, Sticky, Rail, Segment, List, Icon } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import {
   flattenNode,
@@ -27,8 +27,9 @@ import BookmarkRecommendationCard from "../BookmarkCard/BookmarkRecommendationCa
 import BookmarkGrowthAnalytics from "../AnalyticsCard/BookmarkGrowthAnalytics";
 import PopularBookmarkLinkAnalytics from "../AnalyticsCard/PopularBookmarkLinkAnalytics";
 import debounce from "lodash.debounce";
-import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
+import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey.png";
 import { SortTypes } from "../../app/common/constants";
+import AboutUs from '../AboutUs/AboutUs';
 
 class BookmarkDashboard extends Component {
   constructor(props) {
@@ -38,7 +39,8 @@ class BookmarkDashboard extends Component {
       context: null,
       context2: null,
       activeItem: "home",
-      userId: ""
+      userId: "",
+      isAboutUs: false
     };
   }
   localBookmarks = [];
@@ -522,6 +524,10 @@ class BookmarkDashboard extends Component {
     }
   };
 
+  closeModal = () => {
+    this.setState({ isAboutUs: false }, () => {});
+  };
+
   render() {
     let Bookamrks = [...this.state.bookmarks];
     // let cardDataBookmarkGrowthAnalytics = {
@@ -747,6 +753,19 @@ class BookmarkDashboard extends Component {
                 }}
               >
                 <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy" />
+                <span className="about-icon-wrapper">
+                  <Icon link name="info circle" color="grey" className="about-icon"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isAboutUs: !this.state.isAboutUs });
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                  }} />
+                </span>
+                <AboutUs
+                  isOpen={this.state.isAboutUs}
+                  closeModal={this.closeModal}
+                />
               </div>
             </Sticky>
           </Rail>
