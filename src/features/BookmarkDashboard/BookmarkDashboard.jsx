@@ -27,7 +27,7 @@ import BookmarkRecommendationCard from "../BookmarkCard/BookmarkRecommendationCa
 import BookmarkGrowthAnalytics from "../AnalyticsCard/BookmarkGrowthAnalytics";
 import PopularBookmarkLinkAnalytics from "../AnalyticsCard/PopularBookmarkLinkAnalytics";
 import debounce from "lodash.debounce";
-import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey3.png";
+import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey.png";
 import { SortTypes } from "../../app/common/constants";
 
 class BookmarkDashboard extends Component {
