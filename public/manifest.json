@@ -1,9 +1,14 @@
 {
   "manifest_version": 2,
   "name": "BookmarkBuddy",
-  "author": "Anirban Bera",
-  "version": "1.0.1",
+  "author": "Anirban, Animesh, Ayan, Soham",
+  "version": "1.0.0",
   "description": "This extension helps you manage your bookmarks.",
+  "icons": { 
+    "16": "bookmarkby_icon16.png",
+    "48": "bookmarkby_icon48.png",
+    "128": "bookmarkby_icon128.png"
+  },
   "permissions": ["bookmarks",
       "chrome://favicon/",
       "storage"
