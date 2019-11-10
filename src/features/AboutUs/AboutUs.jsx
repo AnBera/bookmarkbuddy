@@ -40,7 +40,11 @@ const AboutUs = props => {
              Instagram </a></strong>
             
           </p>
-          <p className="dashed-separator">If you come across any bug please raise it here. It will redirect you to github. You need to Click New issue button and then login to github.</p>
+          <p className="dashed-separator">If you come across any bug 
+          <strong><a href="https://github.com/AnBera/bookmarkbuddy/issues" target="_blank" rel="noopener noreferrer"> 
+             <i aria-hidden="true" class="bug icon"></i>
+              please raise it here</a></strong>
+          . It will redirect you to github. You need to Click New issue button and then login to github.</p>
           <p>Do you have a brilliant idea about a new feature or you want to share any feedback? 
           <br/><br/>
           <strong><a href="#" target="_blank" rel="noopener noreferrer"> 
