@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "BookmarkBuddy",
+  "name": "BookmarkBy",
   "author": "Anirban, Animesh, Ayan, Soham",
   "version": "1.0.0",
   "description": "This extension helps you manage your bookmarks.",
@@ -18,7 +18,7 @@
     "persistent": false
   },
   "browser_action": {
-      "default_title": "BookmarkBuddy",
+      "default_title": "BookmarkBy",
       "default_popup": "index.html"
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
