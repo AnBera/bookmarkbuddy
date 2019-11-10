@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { Component } from "react";
-import BookmarkbuddyLogoGrey3 from "./../app/assets/images/BookmarkbuddyLogoGrey3.png";
+import BookmarkbuddyLogoGrey3 from "./../app/assets/images/BookmarkbuddyLogoGrey.png";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 import SearchAndFilter from "./Search/SearchandFilter";
 import { extractHostname, filterList, debounce } from "../app/common/util/Util";
