@@ -51,7 +51,7 @@ const AboutUs = props => {
              <i aria-hidden="true" class="mail icon"></i>
              Please reach out to us</a></strong>
               </p>
-          <p className="dashed-separator">Created by a bunch passionate engineers burning a lot of midnight oil.</p>
+          <p className="dashed-separator">Created by a bunch of passionate engineers, burning a lot of midnight oil.</p>
         </Modal.Content>
         <Modal.Actions className="modal-background">
           <Button onClick={() => props.closeModal()} basic inverted>
