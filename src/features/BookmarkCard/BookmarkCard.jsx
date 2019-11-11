@@ -60,7 +60,6 @@ class BookmarkCard extends Component {
       item.isOpen = false;
       item.isSelected = false;
     });
-    this.props.getUpdateBookmarkTree();
     this.setState({ isEdit: false }, () => {});
   };
   closeDeleteModal = () => {
