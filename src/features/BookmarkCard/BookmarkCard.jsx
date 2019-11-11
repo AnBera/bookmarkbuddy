@@ -26,7 +26,6 @@ class BookmarkCard extends Component {
     super(props);
     this.state = {
       isEdit: false,
-      selectedFolder: null,
       isDelete: false
     };
   }
@@ -55,11 +54,17 @@ class BookmarkCard extends Component {
     // e.target.src = 'some default image url'
   };
 
-  closeEditModal = () => {
+  closeEditModal = type => {
+    let selectedFolder = this.changedBookamrkFolder.find(
+      item => item.isSelected
+    ).title;
     this.changedBookamrkFolder.forEach(item => {
       item.isOpen = false;
       item.isSelected = false;
     });
+    if (type === "save") {
+      this.props.getUpdateBookmarkTree(selectedFolder);
+    }
     this.setState({ isEdit: false }, () => {});
   };
   closeDeleteModal = () => {

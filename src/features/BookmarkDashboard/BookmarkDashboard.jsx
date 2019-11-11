@@ -29,7 +29,7 @@ import PopularBookmarkLinkAnalytics from "../AnalyticsCard/PopularBookmarkLinkAn
 import debounce from "lodash.debounce";
 import BookmarkbuddyLogoGrey3 from "../../app/assets/images/BookmarkbuddyLogoGrey.png";
 import { SortTypes } from "../../app/common/constants";
-import AboutUs from '../AboutUs/AboutUs';
+import AboutUs from "../AboutUs/AboutUs";
 
 class BookmarkDashboard extends Component {
   constructor(props) {
@@ -91,7 +91,6 @@ class BookmarkDashboard extends Component {
     for (var i = 0; i < randomPool.length; ++i) {
       hex += randomPool[i].toString(16);
     }
-    console.log(hex);
     return hex;
   };
 
@@ -155,14 +154,13 @@ class BookmarkDashboard extends Component {
     }
   }
 
-  getUpdateBookmarkTree = () => {
-    this.getBookmarks();
+  getUpdateBookmarkTree = selectedFolder => {
+    this.getBookmarks(selectedFolder);
     this.setState({ bookmarks: [] });
     this.addBookmarksInState(15);
   };
 
-  getBookmarks = () => {
-    console.log("getbookmark called after frst bmk");
+  getBookmarks = selectedFolder => {
     let flattenedBookmarks = [];
 
     //============
@@ -427,8 +425,6 @@ class BookmarkDashboard extends Component {
         this.bookmarkUrls,
         this.bookmarkFolderTree
       );
-      console.log("======= with parent context =====");
-      console.log(this.bookmarkFolderTree);
       this.cardDataBookmarkGrowth = prepareBookmarkGrowthAnalyticsData(
         this.bookmarkCreationDates,
         flattenedBookmarks.length
@@ -445,13 +441,12 @@ class BookmarkDashboard extends Component {
         let bodyHeight = document.documentElement.scrollHeight - windowHeight;
         let scrollPercentage = scrollTop / bodyHeight;
 
-        console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
-
-        if(scrollTop > 400) {
-          document.querySelector(".analytics-container").style.display = 'none';
+        if (scrollTop > 400) {
+          document.querySelector(".analytics-container").style.display = "none";
         }
-        if(scrollTop <= 10) {
-          document.querySelector(".analytics-container").style.display = 'block';
+        if (scrollTop <= 10) {
+          document.querySelector(".analytics-container").style.display =
+            "block";
         }
 
         // if the scroll is more than 70% from the top, load more content.
@@ -461,6 +456,10 @@ class BookmarkDashboard extends Component {
         }
       }, 100);
       this.props.setBookmarks({ bookmarks: flattenedBookmarks }); //TODO need to think of destructuring
+      if (selectedFolder)
+        this.setSelectedFolderAndFilter(
+          selectedFolder ? selectedFolder : this.props.selectedFolder
+        );
     });
   };
 
@@ -529,213 +528,11 @@ class BookmarkDashboard extends Component {
   };
 
   render() {
-    let Bookamrks = [...this.state.bookmarks];
-    // let cardDataBookmarkGrowthAnalytics = {
-    //   data:this.dataBookmarkGrowthAnalytics,
-    //   totalBookmarkCount: 333,
-    //   firstBookmarkAddeddate: "2010-07"
-    // };
-
-    // const dataBookmarkGrowthAnalytics = [
-    //   {
-    //     id: "Total Number of Bookmarks",
-    //     color: "hsl(275, 70%, 50%)",
-    //     data: [
-    //       {
-    //         x: "Jan",
-    //         y: 10
-    //       },
-    //       {
-    //         x: "Feb",
-    //         y: 25
-    //       },
-    //       {
-    //         x: "Mar",
-    //         y: 30
-    //       },
-    //       {
-    //         x: "Apr",
-    //         y: 60
-    //       },
-    //       {
-    //         x: "May",
-    //         y: 80
-    //       },
-    //       {
-    //         x: "Jun",
-    //         y: 75
-    //       },
-    //       {
-    //         x: "Jul",
-    //         y: 80
-    //       },
-    //       {
-    //         x: "Aug",
-    //         y: 81
-    //       },
-    //       {
-    //         x: "Sep",
-    //         y: 90
-    //       },
-    //       {
-    //         x: "Oct",
-    //         y: 95
-    //       },
-    //       {
-    //         x: "Nov",
-    //         y: 93
-    //       },
-    //       {
-    //         x: "Dec",
-    //         y: 100
-    //       }
-    //     ]
-    //   }
-    //   // ,
-    //   // {
-    //   //   "id": "JS",
-    //   //   "color": "hsl(231, 70%, 50%)",
-    //   //   "data": [
-    //   //     {
-    //   //       "x": "plane",
-    //   //       "y": 13
-    //   //     },
-    //   //     {
-    //   //       "x": "helicopter",
-    //   //       "y": 141
-    //   //     },
-    //   //     {
-    //   //       "x": "boat",
-    //   //       "y": 274
-    //   //     },
-    //   //     {
-    //   //       "x": "train",
-    //   //       "y": 153
-    //   //     },
-    //   //     {
-    //   //       "x": "subway",
-    //   //       "y": 150
-    //   //     },
-    //   //     {
-    //   //       "x": "bus",
-    //   //       "y": 45
-    //   //     },
-    //   //     {
-    //   //       "x": "car",
-    //   //       "y": 292
-    //   //     },
-    //   //     {
-    //   //       "x": "moto",
-    //   //       "y": 238
-    //   //     },
-    //   //     {
-    //   //       "x": "bicycle",
-    //   //       "y": 23
-    //   //     },
-    //   //     {
-    //   //       "x": "horse",
-    //   //       "y": 258
-    //   //     },
-    //   //     {
-    //   //       "x": "skateboard",
-    //   //       "y": 100
-    //   //     },
-    //   //     {
-    //   //       "x": "others",
-    //   //       "y": 165
-    //   //     }
-    //   //   ]
-    //   // },
-    //   // {
-    //   //   "id": "Finance",
-    //   //   "color": "hsl(41, 70%, 50%)",
-    //   //   "data": [
-    //   //     {
-    //   //       "x": "plane",
-    //   //       "y": 13
-    //   //     },
-    //   //     {
-    //   //       "x": "helicopter",
-    //   //       "y": 282
-    //   //     },
-    //   //     {
-    //   //       "x": "boat",
-    //   //       "y": 110
-    //   //     },
-    //   //     {
-    //   //       "x": "train",
-    //   //       "y": 154
-    //   //     },
-    //   //     {
-    //   //       "x": "subway",
-    //   //       "y": 110
-    //   //     },
-    //   //     {
-    //   //       "x": "bus",
-    //   //       "y": 296
-    //   //     },
-    //   //     {
-    //   //       "x": "car",
-    //   //       "y": 157
-    //   //     },
-    //   //     {
-    //   //       "x": "moto",
-    //   //       "y": 26
-    //   //     },
-    //   //     {
-    //   //       "x": "bicycle",
-    //   //       "y": 170
-    //   //     },
-    //   //     {
-    //   //       "x": "horse",
-    //   //       "y": 281
-    //   //     },
-    //   //     {
-    //   //       "x": "skateboard",
-    //   //       "y": 153
-    //   //     },
-    //   //     {
-    //   //       "x": "others",
-    //   //       "y": 110
-    //   //     }
-    //   //   ]
-    //   // }
-    // ];
-    // const dataPopularBookmarkLinkAnalytics = [
-    //   {
-    //     mostBookmarkedSite: "Youtube",
-    //     count: 2,
-    //     countColor: "hsl(106, 70%, 50%)"
-    //   },
-    //   {
-    //     mostBookmarkedSite: "Udemy",
-    //     count: 10,
-    //     countColor: "hsl(294, 70%, 50%)"
-    //   },
-    //   {
-    //     mostBookmarkedSite: "Medium",
-    //     count: 14,
-    //     countColor: "hsl(235, 70%, 50%)"
-    //   },
-    //   {
-    //     mostBookmarkedSite: "Netflix",
-    //     count: 20,
-    //     countColor: "hsl(235, 70%, 50%)"
-    //   },
-    //   {
-    //     mostBookmarkedSite: "TOI",
-    //     count: 27,
-    //     countColor: "hsl(235, 70%, 50%)"
-    //   }
-    // ];
-
+    let Bookamrks =
+      this.props.searchTerm || this.props.selectedFolder
+        ? [...this.props.FilteredBookmarks]
+        : [...this.props.bookmarks];
     return (
-      // // Anytime move to row layout by uncommenting these 5 lines and uncommenting <Grid.Column> in BookmarkCard
-      //   <Grid container columns={3} doubling stackable>
-      //   {this.state.bookmarks.map(bookmark =>
-      //     <BookmarkCard key={bookmark.id} bookmark={bookmark} />
-      //   )}
-      //   </Grid>
       <>
         <div ref={this.handleContextRef} style={{ marginTop: "2em" }}>
           <Rail
@@ -754,13 +551,18 @@ class BookmarkDashboard extends Component {
               >
                 <img src={BookmarkbuddyLogoGrey3} alt="BookmarkBuddy" />
                 <span className="about-icon-wrapper">
-                  <Icon link name="info circle" color="grey" className="about-icon"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.setState({ isAboutUs: !this.state.isAboutUs });
-                    e.stopPropagation();
-                    e.nativeEvent.stopImmediatePropagation();
-                  }} />
+                  <Icon
+                    link
+                    name="info circle"
+                    color="grey"
+                    className="about-icon"
+                    onClick={e => {
+                      e.preventDefault();
+                      this.setState({ isAboutUs: !this.state.isAboutUs });
+                      e.stopPropagation();
+                      e.nativeEvent.stopImmediatePropagation();
+                    }}
+                  />
                 </span>
                 <AboutUs
                   isOpen={this.state.isAboutUs}
@@ -831,7 +633,7 @@ class BookmarkDashboard extends Component {
                         <span className="display-count">
                           {" "}
                           Displaying{" "}
-                          {this.props.searchTerm
+                          {this.props.searchTerm || this.props.selectedFolder
                             ? this.props.FilteredBookmarks.length
                             : this.props.bookmarks.length}{" "}
                           items{" "}
