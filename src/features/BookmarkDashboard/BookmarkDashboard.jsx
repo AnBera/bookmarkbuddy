@@ -528,10 +528,7 @@ class BookmarkDashboard extends Component {
   };
 
   render() {
-    let Bookamrks =
-      this.props.searchTerm || this.props.selectedFolder
-        ? [...this.props.FilteredBookmarks]
-        : [...this.props.bookmarks];
+    let Bookamrks = [...this.state.bookmarks];
     return (
       <>
         <div ref={this.handleContextRef} style={{ marginTop: "2em" }}>
