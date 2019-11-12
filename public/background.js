@@ -42,6 +42,11 @@ const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmark
   };
 
   const getChromeBookmarkTree = () => {
+    flattenedBookmarks = [];
+    bookmarkCreationDates = []; 
+    bookmarkUrls = []; 
+    bookmarkFolderTree = [];
+
     chrome.bookmarks.getTree(treeNode => { 
         // bookmarkTree = treeNode;
         flattenNode(treeNode[0], flattenedBookmarks, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree);
