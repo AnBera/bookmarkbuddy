@@ -259,7 +259,9 @@ class PopupContainer extends Component {
             bottom: "0",
             backgroundColor: "#282c34",
             width: "100%",
-            padding: "1em"
+            padding: "1em",
+            textAlign: "center",
+            zIndex: "999"
           }}
         >
           <Button Id="openFull" basic color="green" inverted>

@@ -69,8 +69,21 @@
   color: #fff;
 }
 
+.search-container div.search .text, .search-container div.search .dropdown.icon {
+  color: #fff;
+}
+
+.search-container .filter-wrapper div.search.ui.dropdown{
+  min-width: 99%;
+}
+
 .search-container .filter-wrapper input.search {
   caret-color: #fff;
+  color: #fff;
+}
+
+.search-container .filter-wrapper input.search .menu .message {
+  color: #fff;
 }
 
 .search-container .select-folder {
