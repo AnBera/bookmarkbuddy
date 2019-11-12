@@ -202,7 +202,7 @@ class PopupContainer extends Component {
 
   render() {
     return (
-      <>
+      <div style={{width:"350px", overflowX:"clip"}}>
         <div
           style={{
             backgroundColor: "#161626",
@@ -266,7 +266,7 @@ class PopupContainer extends Component {
             <Icon name="external alternate" /> Open Full view
           </Button>
         </div>
-      </>
+      </div>
     );
   }
 }

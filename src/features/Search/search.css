@@ -11,13 +11,13 @@
   }
   .search-container div.filter-wrapper {
     width: 100%;
+    padding-top: 1.5em;
   }
 }
 
 .search-container .text-wrapper {
   width: 75%;
   display: inline-block;
-  border-right: 1px solid #4c4c4c;
 }
 
 .search-container .inputSearch {
