@@ -1,12 +1,18 @@
 /*global chrome*/
-import React, { useState } from "react";
-import { Button, Header, Image, Modal, Card, Icon } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Button, Image, Modal, Card, Icon } from "semantic-ui-react";
 import FileExplorer from "../Treeview/FileExplorer";
 import { debounce } from "../../app/common/util/Util";
 
 const EditBookmark = props => {
   const [selectedFolder, updateselectedFolder] = useState(null);
+  const [bookmark, selectedBookmar] = useState(null);
 
+  useEffect(() => {
+    if (props.selectedBookmark) {
+      selectedBookmar(props.selectedBookmark);
+    }
+  }, [props.selectedBookmark]);
   const updateChromeBookmark = bookmark => {
     chrome.bookmarks.update(
       bookmark.id,
@@ -64,16 +70,13 @@ const EditBookmark = props => {
                   type="text"
                   onChange={e => {
                     debounce(
-                      props.updateBookamark({
-                        ...props.selectedBookmark,
-                        title: e.target.value
-                      }),
+                      selectedBookmar({ ...bookmark, title: e.target.value }),
                       250
                     );
                   }}
                   required
                   name="title"
-                  value={props.selectedBookmark.title}
+                  value={bookmark ? bookmark.title : ""}
                   placeholder="Title"
                 />
               </div>
@@ -84,10 +87,7 @@ const EditBookmark = props => {
                   onChange={e => {
                     props.updateBookamark(
                       debounce(
-                        props.updateBookamark({
-                          ...props.selectedBookmark,
-                          url: e.target.value
-                        })
+                        selectedBookmar({ ...bookmark, url: e.target.value })
                       ),
                       250
                     );
@@ -95,7 +95,7 @@ const EditBookmark = props => {
                   type="text"
                   required
                   name="url"
-                  value={props.selectedBookmark.url}
+                  value={bookmark ? bookmark.url : ""}
                   placeholder="Url"
                 />
               </div>
@@ -122,6 +122,7 @@ const EditBookmark = props => {
           onClick={e => {
             e.preventDefault();
             props.closeModal("cancel");
+            selectedBookmar(props.selectedBookmark);
           }}
           basic
           inverted
@@ -133,7 +134,7 @@ const EditBookmark = props => {
           inverted
           onClick={e => {
             e.preventDefault();
-            updateChromeBookmark(props.selectedBookmark);
+            updateChromeBookmark(bookmark);
           }}
         >
           <Icon name="save" /> Save
