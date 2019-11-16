@@ -18,7 +18,6 @@ const Tree = props => {
         props.changedBookamrkFolder.push(updatedTree[i]);
         updatedTree[i].isSelected = true;
         openParentNode(updatedTree[i]);
-        // console.log(JSON.stringify(openedFolderTree));
         return updatedTree;
       } else {
         preselectNode(updatedTree[i].children);

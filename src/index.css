@@ -302,8 +302,9 @@ a.ui.fluid.card.recommendation-card:last-child {
 }
 
 .popup-card-container {
-  height: 28em;
+  height: 375px;
   overflow-y: scroll;
+  margin-bottom: 3.5em;
 }
 
 /* body {

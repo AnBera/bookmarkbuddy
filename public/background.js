@@ -42,17 +42,20 @@ const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmark
   };
 
   const getChromeBookmarkTree = () => {
+    flattenedBookmarks = [];
+    bookmarkCreationDates = []; 
+    bookmarkUrls = []; 
+    bookmarkFolderTree = [];
+
     chrome.bookmarks.getTree(treeNode => { 
         // bookmarkTree = treeNode;
         flattenNode(treeNode[0], flattenedBookmarks, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree);
-        console.log(flattenedBookmarks);
     });
   }
 
 chrome.extension.onConnect.addListener(function(port) {
     console.log("Connected .....");
     port.onMessage.addListener(function(msg) {
-         console.log("message recieved" + msg);
         //  port.postMessage("Hi from background Script");
          port.postMessage(flattenedBookmarks);
     });

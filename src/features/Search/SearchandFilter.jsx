@@ -39,7 +39,8 @@ class SearchAndFilter extends Component {
     const input = (
       <input
         className="inputSearch"
-        placeholder="Search here"
+        placeholder="Search your bookmarks..."
+        autofocus="autofocus"
         onChange={e => debounce(this.onSearch(e), 250)}
         value={this.props.SearchedText}
       />
