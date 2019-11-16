@@ -227,7 +227,7 @@ export const preparePopularBookmarkAnalyticsData = (urls) => {
   return cardDataPopularBookmarks;
 };
 
-export const generateUrlImagePair = async (bookmarks) => {
+export const generateUrlImagePair = (bookmarks) => {
   let urls = [];
 
   if (bookmarks.length) {
@@ -241,7 +241,7 @@ export const generateUrlImagePair = async (bookmarks) => {
       });
     })
   }
-  return await urls;
+  return urls;
 };
 
 export const generateImageName = (url) => {

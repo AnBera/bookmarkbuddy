@@ -67,22 +67,22 @@ class BookmarkDashboard extends Component {
   };
 
   componentWillMount() {
-    this.setUserID();
+    // this.setUserID();
     this.getBookmarks();
   }
 
-  setUserID = () => {
-    chrome.storage.sync.get(["uniqueID"], items => {
-      if (Object.keys(items).length === 0 && items.constructor === Object) {
-        let userid = this.getRandomToken();
-        chrome.storage.sync.set({ uniqueID: userid }, () => {
-          this.setState({ userId: items.uniqueID });
-        });
-      } else {
-        this.setState({ userId: items.uniqueID });
-      }
-    });
-  };
+  // setUserID = () => {
+  //   chrome.storage.sync.get(["uniqueID"], items => {
+  //     if (Object.keys(items).length === 0 && items.constructor === Object) {
+  //       let userid = this.getRandomToken();
+  //       chrome.storage.sync.set({ uniqueID: userid }, () => {
+  //         this.setState({ userId: items.uniqueID });
+  //       });
+  //     } else {
+  //       this.setState({ userId: items.uniqueID });
+  //     }
+  //   });
+  // };
 
   getRandomToken = () => {
     let randomPool = new Uint8Array(32);
@@ -140,17 +140,47 @@ class BookmarkDashboard extends Component {
       nextProps.bookmarks.length > 0 &&
       this.props.bookmarks !== nextProps.bookmarks
     ) {
-      generateUrlImagePair(nextProps.bookmarks)
-        .then(urls => {
-          let bookmarkObj = {
-            uniqueID: this.state.userId
-              ? this.state.userId
-              : "qwerty1234567ojhjhcxfxb",
-            bookmarks: urls
-          };
-          this.props.callSaveUrls(bookmarkObj);
-        })
-        .catch(err => console.error(err));
+      let urls = generateUrlImagePair(nextProps.bookmarks)
+        // .then(urls => {
+//==========
+          chrome.storage.sync.get(["uniqueID"], items => {
+            if (Object.keys(items).length === 0 && items.constructor === Object) {
+              let userid = this.getRandomToken();
+              chrome.storage.sync.set({ uniqueID: userid }, () => {
+                this.setState({ userId: items.uniqueID });
+                //----------
+                let bookmarkObj = {
+                  uniqueID: items.uniqueID
+                    ? items.uniqueID
+                    : "qwerty1234567ojhjhcxfxb",
+                  bookmarks: urls
+                };
+                this.props.callSaveUrls(bookmarkObj);
+                //---------
+              });
+            } else {
+              this.setState({ userId: items.uniqueID });
+              //----------
+              let bookmarkObj = {
+                uniqueID: items.uniqueID
+                  ? items.uniqueID
+                  : "qwerty1234567ojhjhcxfxb",
+                bookmarks: urls
+              };
+              this.props.callSaveUrls(bookmarkObj);
+              //---------
+            }
+          });
+//==========
+          // let bookmarkObj = {
+          //   uniqueID: this.state.userId
+          //     ? this.state.userId
+          //     : "qwerty1234567ojhjhcxfxb",
+          //   bookmarks: urls
+          // };
+          // this.props.callSaveUrls(bookmarkObj);
+        // })
+        // .catch(err => console.error(err));
     }
   }
 
