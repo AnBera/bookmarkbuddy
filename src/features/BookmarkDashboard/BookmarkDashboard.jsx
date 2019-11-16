@@ -141,8 +141,7 @@ class BookmarkDashboard extends Component {
       this.props.bookmarks !== nextProps.bookmarks
     ) {
       let urls = generateUrlImagePair(nextProps.bookmarks)
-        // .then(urls => {
-//==========
+// set or get Unique ID
           chrome.storage.sync.get(["uniqueID"], items => {
             if (Object.keys(items).length === 0 && items.constructor === Object) {
               let userid = this.getRandomToken();
@@ -171,16 +170,6 @@ class BookmarkDashboard extends Component {
               //---------
             }
           });
-//==========
-          // let bookmarkObj = {
-          //   uniqueID: this.state.userId
-          //     ? this.state.userId
-          //     : "qwerty1234567ojhjhcxfxb",
-          //   bookmarks: urls
-          // };
-          // this.props.callSaveUrls(bookmarkObj);
-        // })
-        // .catch(err => console.error(err));
     }
   }
 

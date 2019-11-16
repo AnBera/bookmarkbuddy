@@ -164,8 +164,6 @@ export const gruoupDatesByMonth = (dates) => {
 
 export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) => {
   let groupByYearMonth = gruoupDatesByMonth(dates);
-  console.log("======");
-  console.log(groupByYearMonth);
   let firstBookmarkAddeddate = "";
   let dataBookmarkGrowthAnalytics = [];
   let cardDataBookmarkGrowth = {};
@@ -187,7 +185,6 @@ export const prepareBookmarkGrowthAnalyticsData = (dates, totalBookmarkCount) =>
   cardDataBookmarkGrowth.totalBookmarkCount = totalBookmarkCount;
   cardDataBookmarkGrowth.firstBookmarkAddeddate = firstBookmarkAddeddate;
 
-  console.log(resultingXYCoordinateData);
   return cardDataBookmarkGrowth;
 }
 
@@ -223,7 +220,6 @@ export const preparePopularBookmarkAnalyticsData = (urls) => {
   cardDataPopularBookmarks.totalTopBookmarksCount = totalTopBookmarksCount;
   cardDataPopularBookmarks.topFiveSites = topFiveSites;
 
-  console.log(cardDataPopularBookmarks);
   return cardDataPopularBookmarks;
 };
 

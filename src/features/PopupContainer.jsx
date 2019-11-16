@@ -34,10 +34,7 @@ class PopupContainer extends Component {
     port.postMessage("Hi BackGround");
     port.onMessage.addListener(function(msg) {
       that.setState({ flattenedBookmarks: msg }, () => {
-        console.log(
-          "Bookmarks recieved \n" +
-            JSON.stringify(that.state.flattenedBookmarks)
-        );
+        console.log("Bookmarks recieved");
       });
     });
   }
@@ -61,7 +58,6 @@ class PopupContainer extends Component {
     for (var i = 0; i < randomPool.length; ++i) {
       hex += randomPool[i].toString(16);
     }
-    console.log(hex);
     return hex;
   };
   updateHitCount = (url, shardKey) => {
@@ -83,18 +79,12 @@ class PopupContainer extends Component {
     });
   };
   handleContextRef = ref => {
-    console.log(ref);
     if (ref) {
-      console.log(ref.current);
-
       ref.onscroll = debounce(() => {
-        console.log("scrolling happening!");
         let scrollTop = ref.scrollTop;
         let windowHeight = ref.clientHeight; //ref.innerHeight;
         let bodyHeight = ref.scrollHeight - windowHeight;
         let scrollPercentage = scrollTop / bodyHeight;
-
-        console.log(scrollTop, windowHeight, bodyHeight, scrollPercentage);
 
         // if the scroll is more than 70% from the top, load more content.
         if (scrollPercentage > 0.7) {
