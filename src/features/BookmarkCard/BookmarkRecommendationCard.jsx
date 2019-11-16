@@ -5,12 +5,21 @@ import { getPopularBookmarks } from "../../services/PreviewBookmarkService";
 import { increaseHitCount } from "../../services/PreviewBookmarkService";
 const BookmarkRecommendationCard = props => {
   const [topBookmarks, settopBookmarks] = useState([]);
+  const [showLoader, setshowLoader] = useState(true);
   useEffect(() => {
-    getPopularBookmarks(props.userId).then(response => {
-      if (response && response.bookmarks && response.bookmarks.length > 0)
-        settopBookmarks(response.bookmarks);
-    });
+    getpopularBookmarkServiceCall();
   }, []);
+
+  const getpopularBookmarkServiceCall = () => {
+    setshowLoader(true);
+    getPopularBookmarks(props.userId)
+      .then(response => {
+        if (response && response.bookmarks && response.bookmarks.length > 0)
+          settopBookmarks(response.bookmarks);
+      })
+      .catch(err => setshowLoader(false));
+  };
+
   const updateHitCount = (url, shardKey) => {
     increaseHitCount({
       uniqueID: props.userId,
@@ -66,12 +75,29 @@ const BookmarkRecommendationCard = props => {
       {topBookmarks && topBookmarks.length === 0 && (
         <>
           <div>
-            <Loader size="tiny" active inline="centered"/>
+            {showLoader && <Loader size="tiny" active inline="centered" />}
+            {!showLoader && (
+              <Icon
+                onClick={e => {
+                  getpopularBookmarkServiceCall();
+                }}
+                size="large"
+                name="refresh"
+              />
+            )}
           </div>
-          <div style={{ color: "#a9a9a9", padding: "1em" }}>
-            Your popular bookmark data is being generated. Meanwhile here are some
-            bookmarks you might be interested in.
-          </div>
+          {showLoader && (
+            <div style={{ color: "#a9a9a9", padding: "1em" }}>
+              Your popular bookmark data is being generated. Meanwhile here are
+              some bookmarks you might be interested in.
+            </div>
+          )}
+          {!showLoader && (
+            <div style={{ color: "#a9a9a9", padding: "1em" }}>
+              We encountered an error while fetching your most popular
+              bookmarks. Please try again by clicking the button above.
+            </div>
+          )}
         </>
       )}
 
