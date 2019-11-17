@@ -208,7 +208,7 @@ class BookmarkCard extends Component {
                 >
                   <FacebookShareButton
                     url={bookmark.Url}
-                    quote={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                    quote={`- shared via Bookmarkby`}
                   >
                     <FacebookIcon round={true} size={"1.5rem"}></FacebookIcon>
                   </FacebookShareButton>
@@ -216,21 +216,21 @@ class BookmarkCard extends Component {
                   <TwitterShareButton
                     round={true}
                     url={bookmark.Url}
-                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                    title={`- shared via Bookmarkby`}
                   >
                     <TwitterIcon round={true} size={"1.5rem"}></TwitterIcon>
                   </TwitterShareButton>
                   <LinkedinShareButton
                     round={true}
                     url={bookmark.Url}
-                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                    title={`- shared via Bookmarkby`}
                   >
                     <LinkedinIcon round={true} size={"1.5rem"}></LinkedinIcon>
                   </LinkedinShareButton>
                   <WhatsappShareButton
                     round={true}
                     url={bookmark.Url}
-                    title={`Shared via Bookmarkbuddy:${bookmark.title}`}
+                    title={`- shared via Bookmarkby`}
                   >
                     <WhatsappIcon round={true} size={"1.5rem"}></WhatsappIcon>
                   </WhatsappShareButton>
