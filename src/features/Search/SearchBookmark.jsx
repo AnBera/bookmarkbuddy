@@ -10,7 +10,7 @@ import {
   setColorsMap
 } from "../../redux/Actions/ActionTypes/DashBoardActions";
 import SearchAndFilter from "./SearchandFilter";
-import { populateRandomColor,filterList } from "../../app/common/util/Util";
+import { populateRandomColor, filterList } from "../../app/common/util/Util";
 
 class SearchComponent extends Component {
   constructor(props) {
@@ -28,39 +28,47 @@ class SearchComponent extends Component {
           folders.push({
             key: name.category,
             text: name.category,
-            value: name.category,
+            value: name.category
           });
         }
       });
       folders.sort();
       folders.unshift({
         key: "-- Select all --",
-        text:"-- Select all --",
-        value:"-- Select all --",
+        text: "-- Select all --",
+        value: "-- Select all --"
       });
       this.props.setBookmarkFolders(folders);
       this.props.setColorsMap(populateRandomColor(folders));
     }
   };
+  setSearchedText = searchText => {
+    this.props.setSearchedTerm(searchText);
+    this.filterResult(searchText, "SearchText");
+  };
 
-  
+  searchBookmarkWithinFolder = selectedFolder => {
+    this.props.setSelectedFolder(
+      selectedFolder === "-- Select all --" ? "" : selectedFolder
+    );
+    this.filterResult(selectedFolder, "Folder");
+  };
 
-  searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
-    this.props.setSearchedTerm(searchedText);
-    this.props.setSelectedFolder(selectedFolder==="-- Select all --"?"":selectedFolder);
+  filterResult = (value, type) => {
+    let selectedFolder = type === "Folder" ? value : this.props.selectedFolder;
+    let searchTerm = type === "SearchText" ? value : this.props.searchTerm;
+
     let filteredBookmarks = [];
-
     //no folder selected
     if (selectedFolder === "-- Select all --" || selectedFolder === "") {
       //no folder selected no searchtext selected
-      if (searchedText === "") filteredBookmarks = [...this.props.bookmarks];
+      if (searchTerm === "") filteredBookmarks = [...this.props.bookmarks];
       //no folder selected some searchtext selected
-      else
-        filteredBookmarks = filterList(searchedText, this.props.bookmarks);
+      else filteredBookmarks = filterList(searchTerm, this.props.bookmarks);
       //some folder selected
     } else {
       //some folder selected no searchtext selected
-      if (searchedText === "") {
+      if (searchTerm === "") {
         filteredBookmarks = this.props.bookmarks.filter(
           element => element.category === selectedFolder
         );
@@ -69,18 +77,11 @@ class SearchComponent extends Component {
       //some folder selected some searchtext selected
       else
         filteredBookmarks = filterList(
-          searchedText,
+          searchTerm,
           this.props.bookmarks.filter(
             element => element.category === selectedFolder
           )
         );
-
-      // filteredBookmarks.filter(
-      //   element =>
-      //     // element.category !== "-- Select all --" &&
-      //     element.category === selectedFolder &&
-      //     (element.title.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || element.url.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
-      // )
     }
     this.props.setLocalBookmarks(filteredBookmarks);
     this.props.addBookmarksInState(15);
@@ -97,7 +98,7 @@ class SearchComponent extends Component {
         <Grid.Column width={11}>
           <SearchAndFilter
             optionList={this.props.bookmarkFolders}
-            setSearchedText={this.searchBookmarkWithinFolder}
+            setSearchedText={this.setSearchedText}
             setSelectedFolder={this.searchBookmarkWithinFolder}
             open_CloseDropdown={this.open_CloseDropdown}
             SearchedText={this.props.searchTerm}
@@ -133,10 +134,10 @@ class SearchComponent extends Component {
                 }}
               >
                 <div className="info-header" style={{ fontSize: "1.15em" }}>
-                Folder <strong>{this.props.selectedFolder}</strong>
+                  Folder <strong>{this.props.selectedFolder}</strong>
                 </div>
                 <div className="info-body">
-                  Contains {this.state.bookmarksInsideFolder} Bookmarks. Appx {" "}
+                  Contains {this.state.bookmarksInsideFolder} Bookmarks. Appx{" "}
                   {Math.ceil(
                     (this.state.bookmarksInsideFolder /
                       this.props.bookmarks.length) *
@@ -157,7 +158,8 @@ class SearchComponent extends Component {
               }}
             >
               <div className="info-header" style={{ fontSize: "1.15em" }}>
-               Total <strong>{this.props.bookmarkFolders.length}</strong> folders
+                Total <strong>{this.props.bookmarkFolders.length}</strong>{" "}
+                folders
               </div>
               <div className="info-body">
                 Contains {this.props.bookmarks.length} bookmarks.
@@ -202,7 +204,4 @@ const mapStateToProps = state => ({
   FilteredBookmarks: state.DashBoardReducer.FilteredBookmarks
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SearchComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchComponent);

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List, Icon } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import {
+  filterList,
   flattenNode,
   generateUrlImagePair,
   extractHostname,
@@ -140,36 +141,36 @@ class BookmarkDashboard extends Component {
       nextProps.bookmarks.length > 0 &&
       this.props.bookmarks !== nextProps.bookmarks
     ) {
-      let urls = generateUrlImagePair(nextProps.bookmarks)
-// set or get Unique ID
-          chrome.storage.sync.get(["uniqueID"], items => {
-            if (Object.keys(items).length === 0 && items.constructor === Object) {
-              let userid = this.getRandomToken();
-              chrome.storage.sync.set({ uniqueID: userid }, () => {
-                this.setState({ userId: items.uniqueID });
-                //----------
-                let bookmarkObj = {
-                  uniqueID: items.uniqueID
-                    ? items.uniqueID
-                    : "qwerty1234567ojhjhcxfxb",
-                  bookmarks: urls
-                };
-                this.props.callSaveUrls(bookmarkObj);
-                //---------
-              });
-            } else {
-              this.setState({ userId: items.uniqueID });
-              //----------
-              let bookmarkObj = {
-                uniqueID: items.uniqueID
-                  ? items.uniqueID
-                  : "qwerty1234567ojhjhcxfxb",
-                bookmarks: urls
-              };
-              this.props.callSaveUrls(bookmarkObj);
-              //---------
-            }
+      let urls = generateUrlImagePair(nextProps.bookmarks);
+      // set or get Unique ID
+      chrome.storage.sync.get(["uniqueID"], items => {
+        if (Object.keys(items).length === 0 && items.constructor === Object) {
+          let userid = this.getRandomToken();
+          chrome.storage.sync.set({ uniqueID: userid }, () => {
+            this.setState({ userId: items.uniqueID });
+            //----------
+            let bookmarkObj = {
+              uniqueID: items.uniqueID
+                ? items.uniqueID
+                : "qwerty1234567ojhjhcxfxb",
+              bookmarks: urls
+            };
+            this.props.callSaveUrls(bookmarkObj);
+            //---------
           });
+        } else {
+          this.setState({ userId: items.uniqueID });
+          //----------
+          let bookmarkObj = {
+            uniqueID: items.uniqueID
+              ? items.uniqueID
+              : "qwerty1234567ojhjhcxfxb",
+            bookmarks: urls
+          };
+          this.props.callSaveUrls(bookmarkObj);
+          //---------
+        }
+      });
     }
   }
 
@@ -490,14 +491,36 @@ class BookmarkDashboard extends Component {
 
   setSelectedFolderAndFilter = selectedFolder => {
     this.props.setSelectedFolder(selectedFolder);
-    this.props.setSearchedTerm("");
-    let filteredBookmarks = [...this.props.bookmarks];
-    if (selectedFolder !== "-- Select all --") {
-      filteredBookmarks = filteredBookmarks.filter(
-        element =>
-          element.category !== "-- Select all --" &&
-          element.category === selectedFolder
-      );
+    //this.props.setSearchedTerm("");
+    let filteredBookmarks = [];
+    //no folder selected
+    if (selectedFolder === "-- Select all --" || selectedFolder === "") {
+      //no folder selected no searchtext selected
+      if (this.props.searchTerm === "")
+        filteredBookmarks = [...this.props.bookmarks];
+      //no folder selected some searchtext selected
+      else
+        filteredBookmarks = filterList(
+          this.props.searchTerm,
+          this.props.bookmarks
+        );
+      //some folder selected
+    } else {
+      //some folder selected no searchtext selected
+      if (this.props.searchTerm === "") {
+        filteredBookmarks = this.props.bookmarks.filter(
+          element => element.category === selectedFolder
+        );
+        this.setState({ bookmarksInsideFolder: filteredBookmarks.length });
+      }
+      //some folder selected some searchtext selected
+      else
+        filteredBookmarks = filterList(
+          this.props.searchTerm,
+          this.props.bookmarks.filter(
+            element => element.category === selectedFolder
+          )
+        );
     }
     this.setLocalBookmarks(filteredBookmarks);
     this.addBookmarksInState(15);
@@ -808,7 +831,4 @@ const mapStateToProps = state => ({
   colorsMap: state.DashBoardReducer.colorsMap,
   isImagesConverted: state.DashBoardReducer.isImagesConverted
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BookmarkDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(BookmarkDashboard);

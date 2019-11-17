@@ -7,47 +7,22 @@ class Select extends Component {
     this.props.open_closeDropdown();
   };
 
-  onOptionClick = (searchText, selectedFolder) => {
-    this.props.setSelectedFolder(searchText, selectedFolder);
+  onOptionClick = selectedFolder => {
+    this.props.setSelectedFolder(selectedFolder);
   };
 
   render() {
-    // const optionList = this.props.options.map((option, index) => {
-    //   return (
-    //     <div
-    //       key={index}
-    //       className={"option"}
-    //       onClick={(e) => this.onOptionClick(e.target.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.value,
-    //         option)}
-    //     >
-    //       {option}
-    //     </div>
-    //   );
-    // });
-    // const dropDown = this.props.IsDropDownOpen ? (
-    //   <div className="dropDown-items">{optionList}</div>
-    // ) : null;
-
     return (
       <Dropdown
         placeholder="Select folder"
         value={this.props.SelectedFolder}
         onChange={e => {
-          this.onOptionClick(
-            e.target.parentElement.parentElement.parentElement.parentElement
-              .firstElementChild.firstElementChild.value,
-            e.target.innerText
-          );
+          this.onOptionClick(e.target.innerText);
         }}
         search
         selection
         options={this.props.options}
       />
-      // <div className="select-folder" onClick={() => this.onSelectClick()}>
-      //   {this.props.SelectedFolder || "Select option"}
-      //   <Icon name="caret down" />
-      //   {dropDown}
-      // </div>
     );
   }
 }
