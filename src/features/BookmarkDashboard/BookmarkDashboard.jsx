@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Grid, Sticky, Rail, Segment, List, Icon } from "semantic-ui-react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import {
+  filterList,
   flattenNode,
   generateUrlImagePair,
   extractHostname,
@@ -490,14 +491,36 @@ class BookmarkDashboard extends Component {
 
   setSelectedFolderAndFilter = selectedFolder => {
     this.props.setSelectedFolder(selectedFolder);
-    this.props.setSearchedTerm("");
-    let filteredBookmarks = [...this.props.bookmarks];
-    if (selectedFolder !== "-- Select all --") {
-      filteredBookmarks = filteredBookmarks.filter(
-        element =>
-          element.category !== "-- Select all --" &&
-          element.category === selectedFolder
-      );
+    //this.props.setSearchedTerm("");
+    let filteredBookmarks = [];
+    //no folder selected
+    if (selectedFolder === "-- Select all --" || selectedFolder === "") {
+      //no folder selected no searchtext selected
+      if (this.props.searchTerm === "")
+        filteredBookmarks = [...this.props.bookmarks];
+      //no folder selected some searchtext selected
+      else
+        filteredBookmarks = filterList(
+          this.props.searchTerm,
+          this.props.bookmarks
+        );
+      //some folder selected
+    } else {
+      //some folder selected no searchtext selected
+      if (this.props.searchTerm === "") {
+        filteredBookmarks = this.props.bookmarks.filter(
+          element => element.category === selectedFolder
+        );
+        this.setState({ bookmarksInsideFolder: filteredBookmarks.length });
+      }
+      //some folder selected some searchtext selected
+      else
+        filteredBookmarks = filterList(
+          this.props.searchTerm,
+          this.props.bookmarks.filter(
+            element => element.category === selectedFolder
+          )
+        );
     }
     this.setLocalBookmarks(filteredBookmarks);
     this.addBookmarksInState(15);
