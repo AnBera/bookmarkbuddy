@@ -3,7 +3,7 @@
   "name": "BookmarkBy",
   "author": "Anirban, Animesh, Ayan, Soham",
   "version": "1.0.1",
-  "description": "An elegant bookmark manager which lets you manage your bookmarks efficiently and see analytics.",
+  "description": "An elegant bookmark manager which lets you manage your bookmarks efficiently & see analytics.",
   "icons": { 
     "16": "bookmarkby_icon16.png",
     "48": "bookmarkby_icon48.png",
