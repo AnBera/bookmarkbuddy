@@ -67,12 +67,9 @@ class PopupContainer extends Component {
       shardKey: shardKey
     });
   };
-  onBookmarkLinkClick = (bookmark) => (event) => {
+  onBookmarkLinkClick = bookmark => event => {
     event.preventDefault();
-    this.updateHitCount(
-      bookmark.url,
-      extractHostname(bookmark.url).charAt(0)
-    );
+    this.updateHitCount(bookmark.url, extractHostname(bookmark.url).charAt(0));
     chrome.tabs.create({
       url: bookmark.url,
       active: false
@@ -150,9 +147,19 @@ class PopupContainer extends Component {
     this.setState({ isDropDownOpen: !this.state.isDropDownOpen });
   };
 
-  searchBookmarkWithinFolder = (searchedText, selectedFolder) => {
+  setSearchedText = searchedText => {
     this.setState({ searchedText: searchedText });
+    this.filterResult(searchedText, "SearchText");
+  };
+
+  searchBookmarkWithinFolder = selectedFolder => {
     this.setState({ selectedFolder: selectedFolder });
+    this.filterResult(selectedFolder, "Folder");
+  };
+
+  filterResult = (value, type) => {
+    let selectedFolder = type === "Folder" ? value : this.state.selectedFolder;
+    let searchedText = type === "SearchText" ? value : this.state.searchedText;
     let filteredBookmarks = [];
     //no folder selected
     if (selectedFolder === "-- Select all --" || selectedFolder === "") {
@@ -192,7 +199,7 @@ class PopupContainer extends Component {
 
   render() {
     return (
-      <div style={{width:"350px", overflowX:"clip"}}>
+      <div style={{ width: "350px", overflowX: "clip" }}>
         <div
           style={{
             backgroundColor: "#161626",
@@ -210,7 +217,7 @@ class PopupContainer extends Component {
         <div style={{ padding: "0 1em" }}>
           <SearchAndFilter
             optionList={this.state.bookmarkFolders}
-            setSearchedText={this.searchBookmarkWithinFolder}
+            setSearchedText={this.setSearchedText}
             setSelectedFolder={this.searchBookmarkWithinFolder}
             open_CloseDropdown={this.open_CloseDropdown}
             SearchedText={this.state.searchedText}

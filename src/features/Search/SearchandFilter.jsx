@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import SelectFolder from "./SelectFolder";
 import { Icon } from "semantic-ui-react";
 import "./search.css";
-import {debounce} from "../../app/common/util/Util";
+import { debounce } from "../../app/common/util/Util";
 
 class SearchAndFilter extends Component {
   open_closeDropdown = () => {
     this.props.open_CloseDropdown();
   };
 
-  setSelectedFolder = (searchTerm, folderName) => {
-    this.props.setSelectedFolder(searchTerm || "", folderName);
+  setSelectedFolder = folderName => {
+    this.props.setSelectedFolder(folderName);
   };
 
   onSearch = e => {

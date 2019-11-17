@@ -140,36 +140,36 @@ class BookmarkDashboard extends Component {
       nextProps.bookmarks.length > 0 &&
       this.props.bookmarks !== nextProps.bookmarks
     ) {
-      let urls = generateUrlImagePair(nextProps.bookmarks)
-// set or get Unique ID
-          chrome.storage.sync.get(["uniqueID"], items => {
-            if (Object.keys(items).length === 0 && items.constructor === Object) {
-              let userid = this.getRandomToken();
-              chrome.storage.sync.set({ uniqueID: userid }, () => {
-                this.setState({ userId: items.uniqueID });
-                //----------
-                let bookmarkObj = {
-                  uniqueID: items.uniqueID
-                    ? items.uniqueID
-                    : "qwerty1234567ojhjhcxfxb",
-                  bookmarks: urls
-                };
-                this.props.callSaveUrls(bookmarkObj);
-                //---------
-              });
-            } else {
-              this.setState({ userId: items.uniqueID });
-              //----------
-              let bookmarkObj = {
-                uniqueID: items.uniqueID
-                  ? items.uniqueID
-                  : "qwerty1234567ojhjhcxfxb",
-                bookmarks: urls
-              };
-              this.props.callSaveUrls(bookmarkObj);
-              //---------
-            }
+      let urls = generateUrlImagePair(nextProps.bookmarks);
+      // set or get Unique ID
+      chrome.storage.sync.get(["uniqueID"], items => {
+        if (Object.keys(items).length === 0 && items.constructor === Object) {
+          let userid = this.getRandomToken();
+          chrome.storage.sync.set({ uniqueID: userid }, () => {
+            this.setState({ userId: items.uniqueID });
+            //----------
+            let bookmarkObj = {
+              uniqueID: items.uniqueID
+                ? items.uniqueID
+                : "qwerty1234567ojhjhcxfxb",
+              bookmarks: urls
+            };
+            this.props.callSaveUrls(bookmarkObj);
+            //---------
           });
+        } else {
+          this.setState({ userId: items.uniqueID });
+          //----------
+          let bookmarkObj = {
+            uniqueID: items.uniqueID
+              ? items.uniqueID
+              : "qwerty1234567ojhjhcxfxb",
+            bookmarks: urls
+          };
+          this.props.callSaveUrls(bookmarkObj);
+          //---------
+        }
+      });
     }
   }
 
@@ -808,7 +808,4 @@ const mapStateToProps = state => ({
   colorsMap: state.DashBoardReducer.colorsMap,
   isImagesConverted: state.DashBoardReducer.isImagesConverted
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BookmarkDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(BookmarkDashboard);
