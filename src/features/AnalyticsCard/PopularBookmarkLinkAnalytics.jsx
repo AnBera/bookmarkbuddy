@@ -24,7 +24,11 @@ const theme = {
 const CustomTick = tick => {
     const theme = useTheme();
         return (
-            <g transform={`translate(-50, ${tick.y})`} width={400}>
+            <>
+            <clipPath id="clip1">
+                <rect transform={`translate(0, -10)`} x="0" y="0" width="60" height="210"/>
+            </clipPath>
+            <g transform={`translate(-50, ${tick.y})`} clip-path="url(#clip1)" width={400}>
                 <text
                 className="animation"
                 textAnchor="left"
@@ -38,6 +42,7 @@ const CustomTick = tick => {
                 {tick.value}
                 </text>
             </g>
+            </>
         )
   };
 
