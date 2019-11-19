@@ -26,7 +26,7 @@ const CustomTick = tick => {
         return (
             <>
             <clipPath id="clip1">
-                <rect transform={`translate(0, -10)`} x="0" y="0" width="60" height="210"/>
+                <rect transform={`translate(0, -10)`} x="0" y="0" width="60" height="240"/>
             </clipPath>
             <g transform={`translate(-50, ${tick.y})`} clip-path="url(#clip1)" width={400}>
                 <text
@@ -154,7 +154,9 @@ const PopularBookmarkLinkAnalytics = ({ data, totalTopBookmarksCount, topFiveSit
     />
     </Card.Content>
     
-    <Card.Content>
+    <Card.Content style={{
+    maxHeight: "9em",
+    overflowY: "auto" }}>
       <Card.Header>Most Bookmarked sites</Card.Header>
       <Card.Meta>Your top 5 Sites consists of total {totalTopBookmarksCount} bookmarks</Card.Meta>
       <Card.Description>
