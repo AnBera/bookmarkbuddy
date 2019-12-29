@@ -1,69 +1,55 @@
 /*global chrome*/
-// let bookmarkTree;
-let flattenedBookmarks = [], bookmarkCreationDates = [], bookmarkUrls = [], bookmarkFolderTree = [];
 
-const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree, parentFolder) => {
-    if (node.children) {
-      //if it is a folder
-      let folderObj={};  
-      folderObj.id=node.id;
-      folderObj.children=[];
-      folderObj.dateAdded= node.dateAdded;
-      folderObj.index= node.index;
-      folderObj.parentId=node.parentId;
-      folderObj.title=node.title;
-      folderObj.isSelected=false;
-      folderObj.isOpen=false;
-      folderObj.parent = parentFolder;
-      bookmarkFolderTree.push(folderObj);
-  
-      node.children.forEach(child => {
-        //if it is a bookmark
-        if (child.url && child.title) {
-          result.push(
-              {
-                title: child.title,
-                url:child.url,
-                dateAdded:child.dateAdded,
-                id:child.id,
-                index:child.index,
-                parentId:child.parentId,
-                category:node.title
-              }
-          );
-          //data for bookmark analytics TODO need to think of optimization
-          bookmarkCreationDates.push(child.dateAdded);
-          bookmarkUrls.push(child.url);
-        }
-        flattenNode(child, result, bookmarkCreationDates, bookmarkUrls, folderObj.children, folderObj);
-      });
-      
+const flattenNode = (node, result = [], bookmarkCreationDates = [], bookmarkUrls = [], bookmarkFolderTree = [], parentFolder) => {
+    const { children, id, dateAdded, index, parentId, title } = node;
+    if (children) {
+        const folderObj = {
+            id,
+            children: [],
+            dateAdded,
+            index,
+            parentId,
+            title,
+            isSelected: false,
+            isOpen: false,
+            parent: parentFolder
+        };
+        bookmarkFolderTree.push(folderObj);
+        node.children.forEach(child => {
+            const { url, title, dateAdded, id, index, parentId } = child;
+            if (url && title) {
+                result.push({
+                    title,
+                    url,
+                    dateAdded,
+                    id,
+                    index,
+                    parentId,
+                    category: node.title
+                });
+                bookmarkCreationDates.push(dateAdded);
+                bookmarkUrls.push(url);
+            }
+            flattenNode(child, result, bookmarkCreationDates, bookmarkUrls, folderObj.children, folderObj);
+        });
     }
-  };
+};
 
-  const getChromeBookmarkTree = () => {
-    flattenedBookmarks = [];
-    bookmarkCreationDates = []; 
-    bookmarkUrls = []; 
-    bookmarkFolderTree = [];
-
-    chrome.bookmarks.getTree(treeNode => { 
-        // bookmarkTree = treeNode;
-        flattenNode(treeNode[0], flattenedBookmarks, bookmarkCreationDates, bookmarkUrls, bookmarkFolderTree);
+const getChromeBookmarkTree = () => {
+    chrome.bookmarks.getTree(treeNode => {
+        flattenNode(treeNode[0]);
     });
-  }
+}
 
-chrome.extension.onConnect.addListener(function(port) {
+chrome.extension.onConnect.addListener(port => {
     console.log("Connected .....");
-    port.onMessage.addListener(function(msg) {
-        //  port.postMessage("Hi from background Script");
-         port.postMessage(flattenedBookmarks);
+    port.onMessage.addListener(() => {
+        port.postMessage(flattenedBookmarks);
     });
 });
 
 chrome.bookmarks.onCreated.addListener(getChromeBookmarkTree);
 chrome.bookmarks.onRemoved.addListener(getChromeBookmarkTree);
 chrome.bookmarks.onChanged.addListener(getChromeBookmarkTree);
-
 
 getChromeBookmarkTree();
