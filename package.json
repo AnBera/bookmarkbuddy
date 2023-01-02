@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "dotenv-cli": "^2.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "redux-devtools-extension": "^2.13.8"
   }
 }
