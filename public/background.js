@@ -53,7 +53,7 @@ const flattenNode = (node, result, bookmarkCreationDates, bookmarkUrls, bookmark
     });
   }
 
-chrome.extension.onConnect.addListener(function(port) {
+chrome.runtime.onConnect.addListener(function(port) {
     console.log("Connected .....");
     port.onMessage.addListener(function(msg) {
         //  port.postMessage("Hi from background Script");

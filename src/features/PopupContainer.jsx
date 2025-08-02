@@ -28,7 +28,7 @@ class PopupContainer extends Component {
   }
   componentDidMount() {
     var that = this;
-    var port = chrome.extension.connect({
+    var port = chrome.runtime.connect({
       name: "Sample Communication"
     });
     port.postMessage("Hi BackGround");
