@@ -119,6 +119,10 @@ a.ui.card:hover, .ui.fluid.card:hover {
   font-size: 1.25em;
 }
 
+.ui.card .url-heading img {
+  max-width: 1em;
+}
+
 .ui.card>.content>.header {
   font-family: "Rubik";
   font-size: 1.25em;

@@ -11,7 +11,8 @@
   },
   "permissions": [
     "bookmarks",
-    "storage"
+    "storage",
+    "favicon"
   ],
   "host_permissions": [
     "chrome://favicon/"

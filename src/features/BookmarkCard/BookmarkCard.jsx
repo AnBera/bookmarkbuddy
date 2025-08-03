@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from "react";
 import { Card, Image, Label, Icon } from "semantic-ui-react";
-import { extractHostname, generateImageName } from "../../app/common/util/Util";
+import { extractHostname, generateImageName, getFaviconUrl } from "../../app/common/util/Util";
 import Hover from "../../app/common/Component/Hover";
 import Configs from "../../app/common/constants";
 import {
@@ -165,7 +165,7 @@ class BookmarkCard extends Component {
               <div className="url-heading">
                 <Image
                   className="padding-right-medium"
-                  src={`chrome://favicon/${bookmark.Url}`}
+                  src={getFaviconUrl(bookmark.Url, chrome.runtime.id)}
                 />
                 {hostName.length > 23
                   ? hostName.substring(0, 23 - 3) + "..."

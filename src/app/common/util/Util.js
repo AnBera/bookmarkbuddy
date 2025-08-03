@@ -303,3 +303,14 @@ export const filterList = (q, list) => {
     }
   }, []);
 };
+
+export const getFaviconUrl = (url, extensionId) => {
+  try {
+    const domain = new URL(url).hostname;
+    // Use a more reliable favicon service
+    return `chrome-extension://${extensionId}/_favicon/?pageUrl=${encodeURIComponent(url)}&size=32`;
+  } catch (error) {
+    // If URL parsing fails, try the original chrome://favicon/ approach
+    // return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+  }
+};
