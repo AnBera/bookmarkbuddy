@@ -1,0 +1,5 @@
+[33m33bcd33[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m fix(favicon): resolve CSP blocking for favicon
+[33md08f6ec[m feat: upgrade Chrome extension to Manifest V3
+[33m29e6589[m bumped up minor version
+[33m6d3cf86[m #56 scroll added for overflown text in 'Most Bookmarked sites' card Height increased for clipped rect
+[33m073995b[m #56 added clip for ticks in chart. so that overflow could not be visible

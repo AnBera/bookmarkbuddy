@@ -8,7 +8,6 @@
     "axios": "^1.6.0",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.4",
-    "sass": "^1.69.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
@@ -16,6 +15,7 @@
     "react-share": "^4.4.1",
     "redux": "^4.2.1",
     "redux-saga": "^1.2.3",
+    "sass": "^1.69.0",
     "seamless-immutable": "^7.1.4",
     "semantic-ui-css": "^2.4.2",
     "semantic-ui-react": "^2.1.4",
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build-dev": "dotenv -e .env.development react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -45,8 +45,9 @@
     ]
   },
   "devDependencies": {
+    "@redux-devtools/extension": "^3.2.6",
+    "cross-env": "^10.0.0",
     "dotenv-cli": "^7.3.0",
-    "react-scripts": "5.0.1",
-    "@redux-devtools/extension": "^3.2.6"
+    "react-scripts": "5.0.1"
   }
 }
