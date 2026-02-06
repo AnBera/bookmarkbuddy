@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/bar": "^0.84.0",
-    "@nivo/line": "^0.84.0",
+    "@nivo/bar": "^0.99.0",
+    "@nivo/line": "^0.99.0",
     "axios": "^1.6.0",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.4",
